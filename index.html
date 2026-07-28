@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Random Jingle</title>
+<meta name="description" content="Random Jingle – lokale Soundboard-PWA">
+<meta name="theme-color" content="#121212">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="logo">
+    <span class="logo-mark" aria-hidden="true">🎧</span>
+    <span class="logo-text">Random Jingle</span>
+  </div>
+  <button id="addMenuBtn" class="icon-btn" type="button" aria-haspopup="menu" aria-expanded="false" title="Neu anlegen">
+    <span aria-hidden="true">+</span>
+    <span class="sr-only">Neu anlegen</span>
+  </button>
+  <div id="addMenu" class="add-menu hidden" role="menu">
+    <button id="addCategoryMenuItem" class="add-menu-item" type="button" role="menuitem">
+      <span class="add-menu-icon" aria-hidden="true">📁</span> Neue Kategorie
+    </button>
+    <button id="addJingleMenuItem" class="add-menu-item" type="button" role="menuitem" disabled>
+      <span class="add-menu-icon" aria-hidden="true">🎵</span> Neuer Jingle
+    </button>
+  </div>
+</header>
+
+<main id="mainContent" class="main-content">
+  <div id="categoryList" class="category-list"></div>
+  <p id="emptyState" class="empty-state hidden">
+    Noch keine Kategorien vorhanden. Tippe oben rechts auf <strong>+</strong>, um deine erste Kategorie anzulegen.
+  </p>
+</main>
+
+<div class="bottom-bar">
+  <div class="volume-control">
+    <span aria-hidden="true">🔉</span>
+    <input id="masterVolume" type="range" min="0" max="100" value="80" aria-label="Master-Lautstärke">
+    <span aria-hidden="true">🔊</span>
+  </div>
+  <button id="stopAllBtn" class="stop-all-btn" type="button">⏹ Stop All</button>
+</div>
+
+<footer class="app-footer">
+  <a href="#" class="footer-link" data-placeholder="Impressum">Impressum</a>
+  <a href="#" class="footer-link" data-placeholder="Datenschutz">Datenschutz</a>
+  <a href="#" class="footer-link" data-placeholder="AGB">AGB</a>
+</footer>
+
+<!-- Category modal (create/edit) -->
+<dialog id="categoryDialog" class="app-dialog">
+  <form id="categoryForm" method="dialog">
+    <h2 id="categoryDialogTitle">Neue Kategorie</h2>
+    <input type="hidden" id="categoryId">
+
+    <label class="field">
+      <span>Name</span>
+      <input id="categoryName" type="text" required maxlength="40" placeholder="z. B. Applaus">
+    </label>
+
+    <label class="field">
+      <span>Farbe</span>
+      <input id="categoryColor" type="color" value="#7c3aed">
+    </label>
+
+    <div class="dialog-actions">
+      <button type="button" id="deleteCategoryBtn" class="btn btn-danger hidden">Löschen</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn btn-ghost" data-close-dialog>Abbrechen</button>
+      <button type="submit" class="btn btn-primary">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Jingle modal (create/edit) -->
+<dialog id="jingleDialog" class="app-dialog">
+  <form id="jingleForm" method="dialog">
+    <h2 id="jingleDialogTitle">Neuer Jingle</h2>
+    <input type="hidden" id="jingleId">
+
+    <label class="field">
+      <span>Audiodatei (MP3/WAV)</span>
+      <input id="jingleFile" type="file" accept="audio/mpeg,audio/wav,audio/mp3,audio/*">
+    </label>
+    <p id="jingleFileHint" class="field-hint hidden"></p>
+
+    <label class="field">
+      <span>Anzeigename</span>
+      <input id="jingleName" type="text" required maxlength="40" placeholder="z. B. Applaus laut">
+    </label>
+
+    <label class="field">
+      <span>Kategorie</span>
+      <select id="jingleCategory" required></select>
+    </label>
+
+    <label class="field field-checkbox">
+      <input id="jingleColorOverrideEnabled" type="checkbox">
+      <span>Eigene Farbe verwenden</span>
+    </label>
+
+    <label class="field" id="jingleColorField">
+      <span>Farbe</span>
+      <input id="jingleColor" type="color" value="#7c3aed">
+    </label>
+
+    <div class="dialog-actions">
+      <button type="button" id="deleteJingleBtn" class="btn btn-danger hidden">Löschen</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn btn-ghost" data-close-dialog>Abbrechen</button>
+      <button type="submit" class="btn btn-primary">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Placeholder footer link content -->
+<dialog id="infoDialog" class="app-dialog">
+  <form method="dialog">
+    <h2 id="infoDialogTitle">Info</h2>
+    <p id="infoDialogText">Inhalt folgt.</p>
+    <div class="dialog-actions">
+      <span class="spacer"></span>
+      <button type="submit" class="btn btn-primary">OK</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<script src="js/db.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
