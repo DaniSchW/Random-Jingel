@@ -1,4 +1,6 @@
-/* Random Jingle - app logic (Phase 1, local only, no backend). */
+/* Random Jingle - app logic. IndexedDB is always the source of truth for
+ * the UI (offline-first); RJSync (Phase 2) is a best-effort layer that
+ * mirrors changes to Supabase when configured, online and authenticated. */
 (() => {
   'use strict';
 
@@ -43,6 +45,19 @@
   const infoDialog = document.getElementById('infoDialog');
   const infoDialogTitle = document.getElementById('infoDialogTitle');
   const infoDialogText = document.getElementById('infoDialogText');
+
+  const accountBtn = document.getElementById('accountBtn');
+  const accountDialog = document.getElementById('accountDialog');
+  const authForm = document.getElementById('authForm');
+  const authLoggedOutView = document.getElementById('authLoggedOutView');
+  const authLoggedInView = document.getElementById('authLoggedInView');
+  const authEmailInput = document.getElementById('authEmail');
+  const authMessage = document.getElementById('authMessage');
+  const authSendBtn = document.getElementById('authSendBtn');
+  const authUserEmail = document.getElementById('authUserEmail');
+  const syncStatusText = document.getElementById('syncStatusText');
+  const signOutBtn = document.getElementById('signOutBtn');
+  const syncNowBtn = document.getElementById('syncNowBtn');
 
   const masterVolumeInput = document.getElementById('masterVolume');
   const stopAllBtn = document.getElementById('stopAllBtn');
@@ -221,9 +236,21 @@
   async function playJingle(jingle, extraButtons = []) {
     const btn = jingleButtonEls.get(jingle.id);
     const buttons = [btn, ...extraButtons].filter(Boolean);
+
+    let blob = jingle.blob;
+    if (!blob) {
+      // Synced from another device but the audio hasn't been cached here yet.
+      showToast('Audio wird heruntergeladen…');
+      blob = await RJSync.ensureBlob(jingle);
+      if (!blob) {
+        showToast('Audiodatei ist (noch) nicht verfügbar. Später erneut versuchen.');
+        return;
+      }
+    }
+
     try {
       RJAudio.ensureContext();
-      await RJAudio.play(jingle.id, jingle.blob, {
+      await RJAudio.play(jingle.id, blob, {
         onStart: () => buttons.forEach((b) => b.classList.add('playing')),
         onEnd: () => buttons.forEach((b) => b.classList.remove('playing')),
       });
@@ -309,7 +336,7 @@
     const color = categoryColorInput.value;
     if (!name) return;
 
-    const id = categoryIdInput.value ? Number(categoryIdInput.value) : null;
+    const id = categoryIdInput.value || null;
     try {
       if (id) {
         await RJDB.updateCategory(id, { name, color });
@@ -320,6 +347,7 @@
       }
       closeDialog(categoryDialog);
       await loadState();
+      RJSync.pushSoon();
     } catch (err) {
       console.error(err);
       showToast('Speichern fehlgeschlagen.');
@@ -327,7 +355,7 @@
   });
 
   deleteCategoryBtn.addEventListener('click', async () => {
-    const id = Number(categoryIdInput.value);
+    const id = categoryIdInput.value;
     if (!id) return;
     const jingleCount = (state.jinglesByCategory.get(id) || []).length;
     const msg = jingleCount > 0
@@ -338,6 +366,7 @@
     closeDialog(categoryDialog);
     showToast('Kategorie gelöscht.');
     await loadState();
+    RJSync.pushSoon();
   });
 
   // ---- Jingle dialog ----
@@ -367,7 +396,7 @@
       jingleFileHint.classList.add('hidden');
       if (presetCategoryId != null) jingleCategorySelect.value = String(presetCategoryId);
       jingleColorOverrideEnabled.checked = false;
-      jingleColorInput.value = categoryColorOf(presetCategoryId ?? Number(jingleCategorySelect.value));
+      jingleColorInput.value = categoryColorOf(presetCategoryId ?? jingleCategorySelect.value);
       jingleColorField.classList.add('hidden');
       deleteJingleBtn.classList.add('hidden');
     }
@@ -391,16 +420,16 @@
 
   jingleCategorySelect.addEventListener('change', () => {
     if (!jingleColorOverrideEnabled.checked) {
-      jingleColorInput.value = categoryColorOf(Number(jingleCategorySelect.value));
+      jingleColorInput.value = categoryColorOf(jingleCategorySelect.value);
     }
   });
 
   jingleForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = jingleNameInput.value.trim();
-    const categoryId = Number(jingleCategorySelect.value);
+    const categoryId = jingleCategorySelect.value;
     const color = jingleColorOverrideEnabled.checked ? jingleColorInput.value : null;
-    const id = jingleIdInput.value ? Number(jingleIdInput.value) : null;
+    const id = jingleIdInput.value || null;
     const file = jingleFileInput.files[0];
 
     if (!name || !categoryId) return;
@@ -427,6 +456,7 @@
       }
       closeDialog(jingleDialog);
       await loadState();
+      RJSync.pushSoon();
     } catch (err) {
       console.error(err);
       showToast('Speichern fehlgeschlagen.');
@@ -434,7 +464,7 @@
   });
 
   deleteJingleBtn.addEventListener('click', async () => {
-    const id = Number(jingleIdInput.value);
+    const id = jingleIdInput.value;
     if (!id) return;
     if (!confirm('Jingle wirklich löschen?')) return;
     RJAudio.stop(id);
@@ -443,6 +473,7 @@
     closeDialog(jingleDialog);
     showToast('Jingle gelöscht.');
     await loadState();
+    RJSync.pushSoon();
   });
 
   // ---- Generic dialog close buttons ----
@@ -480,10 +511,81 @@
     });
   }
 
+  // ---- Account / Cloud-Sync ----
+  function formatSyncStatus(status) {
+    if (status.syncing) return 'Synchronisiere…';
+    if (status.lastError) return `Synchronisierung fehlgeschlagen: ${status.lastError}`;
+    if (!status.online) return 'Offline — wird synchronisiert, sobald wieder online.';
+    if (status.lastSyncAt) return `Zuletzt synchronisiert: ${new Date(status.lastSyncAt).toLocaleTimeString('de-DE')}`;
+    return 'Noch nicht synchronisiert.';
+  }
+
+  function refreshAccountDialog() {
+    const status = RJSync.getStatus();
+    authLoggedOutView.classList.toggle('hidden', status.authenticated);
+    authLoggedInView.classList.toggle('hidden', !status.authenticated);
+    if (status.authenticated) {
+      authUserEmail.textContent = status.email || '';
+      syncStatusText.textContent = formatSyncStatus(status);
+    } else {
+      authMessage.classList.add('hidden');
+      authSendBtn.disabled = false;
+    }
+  }
+
+  accountBtn.addEventListener('click', () => {
+    refreshAccountDialog();
+    accountDialog.showModal();
+  });
+
+  authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = authEmailInput.value.trim();
+    if (!email) return;
+    authSendBtn.disabled = true;
+    authMessage.textContent = 'Link wird gesendet…';
+    authMessage.classList.remove('hidden');
+    try {
+      await RJSync.signInWithEmail(email);
+      authMessage.textContent = `Magic Link an ${email} gesendet. Bitte E-Mail-Postfach prüfen und den Link öffnen.`;
+    } catch (err) {
+      console.error(err);
+      authMessage.textContent = `Senden fehlgeschlagen: ${err.message || err}`;
+    } finally {
+      authSendBtn.disabled = false;
+    }
+  });
+
+  signOutBtn.addEventListener('click', async () => {
+    await RJSync.signOut();
+    closeDialog(accountDialog);
+    showToast('Abgemeldet. Das Board bleibt lokal nutzbar.');
+  });
+
+  syncNowBtn.addEventListener('click', () => {
+    RJSync.syncNow();
+  });
+
+  RJSync.onStatusChange((status) => {
+    accountBtn.classList.toggle('hidden', !status.configured);
+    accountBtn.classList.toggle('is-authed', status.authenticated);
+    accountBtn.classList.toggle('is-syncing', status.syncing);
+    accountBtn.classList.toggle('is-error', Boolean(status.lastError) && !status.syncing);
+    accountBtn.title = status.authenticated
+      ? `Angemeldet als ${status.email} — Konto & Synchronisierung`
+      : 'Anmelden für Cloud-Sync';
+    if (accountDialog.open) refreshAccountDialog();
+  });
+
+  RJSync.onRemoteChange(() => {
+    loadState().catch((err) => console.error(err));
+  });
+
   // ---- Init ----
   RJAudio.setMasterVolume(Number(masterVolumeInput.value) / 100);
   loadState().catch((err) => {
     console.error(err);
     showToast('Daten konnten nicht geladen werden.');
   });
+  RJSync.init().catch((err) => console.error('RJSync.init fehlgeschlagen', err));
 })();

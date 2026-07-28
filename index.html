@@ -18,17 +18,23 @@
     <span class="logo-mark" aria-hidden="true">🎧</span>
     <span class="logo-text">Random Jingle</span>
   </div>
-  <button id="addMenuBtn" class="icon-btn" type="button" aria-haspopup="menu" aria-expanded="false" title="Neu anlegen">
-    <span aria-hidden="true">+</span>
-    <span class="sr-only">Neu anlegen</span>
-  </button>
-  <div id="addMenu" class="add-menu hidden" role="menu">
-    <button id="addCategoryMenuItem" class="add-menu-item" type="button" role="menuitem">
-      <span class="add-menu-icon" aria-hidden="true">📁</span> Neue Kategorie
+  <div class="header-actions">
+    <button id="accountBtn" class="icon-btn icon-btn-ghost hidden" type="button" title="Anmelden für Cloud-Sync">
+      <span id="accountIcon" aria-hidden="true">☁️</span>
+      <span class="sr-only">Konto &amp; Synchronisierung</span>
     </button>
-    <button id="addJingleMenuItem" class="add-menu-item" type="button" role="menuitem" disabled>
-      <span class="add-menu-icon" aria-hidden="true">🎵</span> Neuer Jingle
+    <button id="addMenuBtn" class="icon-btn" type="button" aria-haspopup="menu" aria-expanded="false" title="Neu anlegen">
+      <span aria-hidden="true">+</span>
+      <span class="sr-only">Neu anlegen</span>
     </button>
+    <div id="addMenu" class="add-menu hidden" role="menu">
+      <button id="addCategoryMenuItem" class="add-menu-item" type="button" role="menuitem">
+        <span class="add-menu-icon" aria-hidden="true">📁</span> Neue Kategorie
+      </button>
+      <button id="addJingleMenuItem" class="add-menu-item" type="button" role="menuitem" disabled>
+        <span class="add-menu-icon" aria-hidden="true">🎵</span> Neuer Jingle
+      </button>
+    </div>
   </div>
 </header>
 
@@ -120,6 +126,44 @@
   </form>
 </dialog>
 
+<!-- Account & sync -->
+<dialog id="accountDialog" class="app-dialog">
+  <form id="authForm">
+    <h2>Konto &amp; Synchronisierung</h2>
+
+    <div id="authLoggedOutView">
+      <p class="field-hint" style="margin-top: -4px;">
+        Melde dich per Magic Link an, um deine Kategorien und Jingles
+        geräteübergreifend zu synchronisieren. Ohne Anmeldung funktioniert
+        die App weiterhin komplett offline und lokal.
+      </p>
+      <label class="field">
+        <span>E-Mail-Adresse</span>
+        <input id="authEmail" type="email" required placeholder="du@example.com" autocomplete="email">
+      </label>
+      <p id="authMessage" class="field-hint hidden" role="status" aria-live="polite"></p>
+      <div class="dialog-actions">
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-ghost" data-close-dialog>Schließen</button>
+        <button type="submit" id="authSendBtn" class="btn btn-primary">Magic Link senden</button>
+      </div>
+    </div>
+
+    <div id="authLoggedInView" class="hidden">
+      <p class="field-hint" style="margin: -4px 0 4px;">
+        Angemeldet als <strong id="authUserEmail"></strong>
+      </p>
+      <p id="syncStatusText" class="field-hint" style="margin-bottom: 14px;"></p>
+      <div class="dialog-actions">
+        <button type="button" id="signOutBtn" class="btn btn-danger">Abmelden</button>
+        <span class="spacer"></span>
+        <button type="button" id="syncNowBtn" class="btn btn-ghost">Jetzt synchronisieren</button>
+        <button type="button" class="btn btn-primary" data-close-dialog>Fertig</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
 <!-- Placeholder footer link content -->
 <dialog id="infoDialog" class="app-dialog">
   <form method="dialog">
@@ -134,8 +178,11 @@
 
 <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
+<script src="js/vendor/supabase.js"></script>
+<script src="js/config.js"></script>
 <script src="js/db.js"></script>
 <script src="js/audio.js"></script>
+<script src="js/sync.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,9 @@
+{
+  "name": "random-jingle",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Random Jingle – lokales Soundboard als PWA mit optionaler Supabase-Synchronisierung.",
+  "scripts": {
+    "config": "node scripts/gen-config.js"
+  }
+}

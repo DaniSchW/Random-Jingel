@@ -1,16 +1,22 @@
 /* Service Worker for Random Jingle - caches the app shell for offline use. */
-const CACHE_VERSION = 'random-jingle-v1';
+const CACHE_VERSION = 'random-jingle-v2';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
   './css/style.css',
+  './js/vendor/supabase.js',
   './js/db.js',
   './js/audio.js',
+  './js/sync.js',
   './js/app.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
 ];
+// js/config.js is intentionally NOT precached: it may not exist (no
+// Supabase configured) and cache.addAll() is all-or-nothing — one missing
+// URL would fail the whole install. The generic fetch handler below still
+// opportunistically caches it at runtime if/when it does exist.
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

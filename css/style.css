@@ -42,6 +42,11 @@ body {
   white-space: nowrap;
 }
 
+/* Generic utility; more specific .foo.hidden rules below (e.g. .toast.hidden's
+   fade-out) intentionally override this where a component needs different
+   hide behavior. */
+.hidden { display: none; }
+
 button {
   font: inherit;
   color: inherit;
@@ -73,6 +78,12 @@ button {
 
 .logo-mark { font-size: 1.4rem; }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .icon-btn {
   width: 40px;
   height: 40px;
@@ -91,6 +102,32 @@ button {
 
 .icon-btn:hover { background: #8b46f4; }
 .icon-btn:active { transform: scale(0.94); }
+.icon-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+.icon-btn-ghost {
+  position: relative;
+  background: var(--bg-elevated-2);
+  font-size: 1.15rem;
+}
+
+.icon-btn-ghost:hover { background: #34343a; }
+.icon-btn-ghost.hidden { display: none; }
+
+.icon-btn-ghost::after {
+  content: "";
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  border: 2px solid var(--bg-elevated);
+}
+
+.icon-btn-ghost.is-authed::after { background: #22c55e; }
+.icon-btn-ghost.is-syncing::after { background: #f59e0b; animation: pulse 0.8s ease-in-out infinite; }
+.icon-btn-ghost.is-error::after { background: var(--danger); }
 
 .add-menu {
   position: absolute;
@@ -455,8 +492,21 @@ button {
 .dialog-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 8px;
+}
+
+.dialog-actions .spacer {
+  flex-basis: 100%;
+  height: 0;
+}
+
+@media (min-width: 420px) {
+  .dialog-actions .spacer {
+    flex-basis: 0;
+    flex: 1 1 auto;
+  }
 }
 
 .spacer { flex: 1 1 auto; }
