@@ -340,6 +340,71 @@ const RJDB = (() => {
     await reqToPromise(t.objectStore(storeName).delete(id));
   }
 
+  // ---- Local export/import (Phase 5) ----
+
+  // Overwrite-mode import: tombstone every existing row first (same
+  // soft-delete convention as deleteCategory/deleteJingle) so the following
+  // import starts from a clean board and the deletion still propagates
+  // through sync like any other change.
+  async function wipeAll() {
+    const now = Date.now();
+    const tCats = await tx(STORE_CATEGORIES, 'readwrite');
+    const catStore = tCats.objectStore(STORE_CATEGORIES);
+    for (const cat of await reqToPromise(catStore.getAll())) {
+      if (cat.deleted) continue;
+      await reqToPromise(catStore.put({ ...cat, deleted: true, updatedAt: now, dirty: true }));
+    }
+    const tJingles = await tx(STORE_JINGLES, 'readwrite');
+    const jingleStore = tJingles.objectStore(STORE_JINGLES);
+    for (const j of await reqToPromise(jingleStore.getAll())) {
+      if (j.deleted) continue;
+      await reqToPromise(jingleStore.put({ ...j, deleted: true, blob: null, updatedAt: now, dirty: true }));
+    }
+  }
+
+  // put() by an explicit id (rather than addCategory's auto id) so
+  // re-importing the same export is idempotent: an id already present gets
+  // updated in place instead of duplicated. Used only by RJExport.
+  async function putCategoryForImport({ id, name, color, order }) {
+    const t = await tx(STORE_CATEGORIES, 'readwrite');
+    const store = t.objectStore(STORE_CATEGORIES);
+    const existing = await reqToPromise(store.get(id));
+    const now = Date.now();
+    const record = {
+      id, name, color, order: order ?? 0, deleted: false,
+      userId: existing ? existing.userId : currentUserId,
+      createdAt: existing ? existing.createdAt : now,
+      updatedAt: now, dirty: true,
+    };
+    await reqToPromise(store.put(record));
+    return record;
+  }
+
+  async function putJingleForImport({ id, name, categoryId, color, order, trimStart, trimEnd, fileName, mimeType, blob }) {
+    const t = await tx(STORE_JINGLES, 'readwrite');
+    const store = t.objectStore(STORE_JINGLES);
+    const existing = await reqToPromise(store.get(id));
+    const now = Date.now();
+    const record = {
+      id, name, categoryId, color: color || null,
+      blob: blob || (existing ? existing.blob : null),
+      mimeType: mimeType || null,
+      fileName: fileName || null,
+      storagePath: blob ? null : (existing ? existing.storagePath : null),
+      order: order ?? 0,
+      deleted: false,
+      // Optional pass-through fields — no editing UI exists yet, but the
+      // export/import round trip preserves them for whenever one does.
+      trimStart: trimStart ?? null,
+      trimEnd: trimEnd ?? null,
+      userId: existing ? existing.userId : currentUserId,
+      createdAt: existing ? existing.createdAt : now,
+      updatedAt: now, dirty: true,
+    };
+    await reqToPromise(store.put(record));
+    return record;
+  }
+
   // Local-only records (created while logged out) get attached to the
   // account on first login so they sync up instead of staying orphaned.
   async function claimUnownedRecords(userId) {
@@ -376,5 +441,8 @@ const RJDB = (() => {
     patchLocal,
     removeLocal,
     claimUnownedRecords,
+    wipeAll,
+    putCategoryForImport,
+    putJingleForImport,
   };
 })();

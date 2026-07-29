@@ -38,10 +38,7 @@
   "footer": {
     "imprint": "Imprint",
     "privacy": "Privacy Policy",
-    "terms": "Terms",
-    "imprintText": "Placeholder for the imprint. Will be filled in during a later phase.",
-    "privacyText": "Placeholder for the privacy policy. Will be filled in during a later phase.",
-    "termsText": "Placeholder for the terms of service. Will be filled in during a later phase."
+    "terms": "Terms"
   },
   "dialogCommon": {
     "cancel": "Cancel",
@@ -99,7 +96,13 @@
     "languageLabel": "Language",
     "languageGerman": "Deutsch",
     "languageEnglish": "English",
-    "languageHint": "Saved locally and, once signed in, synced across your devices."
+    "languageHint": "Saved locally and, once signed in, synced across your devices.",
+    "dataLabel": "Data",
+    "exportButton": "Export all data",
+    "importButton": "Import data",
+    "exportFailed": "Export failed: {error}",
+    "importFailed": "Import failed: {error}",
+    "importDone": "Import complete: {categories} categories, {jingles} jingles."
   },
   "ads": {
     "adsensePlaceholder": "Advertisement – AdSense",
@@ -113,6 +116,12 @@
     "settingsLabel": "Ad cookies",
     "settingsGranted": "Accepted (AdSense)",
     "settingsDenied": "Declined (EthicalAds)"
+  },
+  "importChoice": {
+    "title": "Import: merge or overwrite?",
+    "text": "There's already data here. Should the imported data be merged with what's there, or should the import replace all existing data?",
+    "merge": "Merge",
+    "overwrite": "Overwrite"
   },
   "admin": {
     "navTitle": "Admin dashboard",

@@ -42,10 +42,6 @@
   const jingleColorInput = document.getElementById('jingleColor');
   const deleteJingleBtn = document.getElementById('deleteJingleBtn');
 
-  const infoDialog = document.getElementById('infoDialog');
-  const infoDialogTitle = document.getElementById('infoDialogTitle');
-  const infoDialogText = document.getElementById('infoDialogText');
-
   const accountBtn = document.getElementById('accountBtn');
   const accountDialog = document.getElementById('accountDialog');
   const authForm = document.getElementById('authForm');
@@ -82,17 +78,17 @@
   const adminStat30 = document.getElementById('adminStat30');
   const adminUserRows = document.getElementById('adminUserRows');
 
+  const exportDataBtn = document.getElementById('exportDataBtn');
+  const importDataBtn = document.getElementById('importDataBtn');
+  const importFileInput = document.getElementById('importFileInput');
+  const importChoiceDialog = document.getElementById('importChoiceDialog');
+  const importMergeBtn = document.getElementById('importMergeBtn');
+  const importOverwriteBtn = document.getElementById('importOverwriteBtn');
+  const importCancelBtn = document.getElementById('importCancelBtn');
+
   const masterVolumeInput = document.getElementById('masterVolume');
   const stopAllBtn = document.getElementById('stopAllBtn');
   const toastEl = document.getElementById('toast');
-
-  // Maps each footer link's data-info-key to the i18n key prefix for its
-  // placeholder dialog title/body (footer.imprint/footer.imprintText, etc.).
-  const FOOTER_INFO_KEYS = {
-    imprint: 'imprint',
-    privacy: 'privacy',
-    terms: 'terms',
-  };
 
   // ---- Utilities ----
   let toastTimer = null;
@@ -518,16 +514,8 @@
 
   stopAllBtn.addEventListener('click', stopAll);
 
-  // ---- Footer placeholders ----
-  document.querySelectorAll('.footer-link').forEach((link) => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const infoKey = FOOTER_INFO_KEYS[link.dataset.infoKey];
-      infoDialogTitle.textContent = RJI18n.t(`footer.${infoKey}`);
-      infoDialogText.textContent = RJI18n.t(`footer.${infoKey}Text`);
-      infoDialog.showModal();
-    });
-  });
+  // Footer links (Impressum/Datenschutz/AGB) are real pages now — plain
+  // <a href> navigation, no JS needed.
 
   // ---- Service worker registration ----
   if ('serviceWorker' in navigator) {
@@ -708,6 +696,64 @@
 
   adConsentSelect.addEventListener('change', () => {
     RJConsent.setStatus(adConsentSelect.value);
+  });
+
+  // ---- Local export/import (Phase 5) ----
+  exportDataBtn.addEventListener('click', async () => {
+    closeDialog(settingsDialog);
+    try {
+      await RJExport.exportAll();
+    } catch (err) {
+      console.error(err);
+      showToast(RJI18n.t('settings.exportFailed', { error: err.message || err }));
+    }
+  });
+
+  importDataBtn.addEventListener('click', () => importFileInput.click());
+
+  // Resolves 'merge' | 'overwrite' | null (cancelled) once the user picks a
+  // button in importChoiceDialog, including the native Esc/cancel path.
+  function askImportMode() {
+    return new Promise((resolve) => {
+      function finish(mode) {
+        importMergeBtn.removeEventListener('click', onMerge);
+        importOverwriteBtn.removeEventListener('click', onOverwrite);
+        importCancelBtn.removeEventListener('click', onCancel);
+        importChoiceDialog.removeEventListener('cancel', onCancel);
+        closeDialog(importChoiceDialog);
+        resolve(mode);
+      }
+      const onMerge = () => finish('merge');
+      const onOverwrite = () => finish('overwrite');
+      const onCancel = () => finish(null);
+      importMergeBtn.addEventListener('click', onMerge);
+      importOverwriteBtn.addEventListener('click', onOverwrite);
+      importCancelBtn.addEventListener('click', onCancel);
+      importChoiceDialog.addEventListener('cancel', onCancel);
+      importChoiceDialog.showModal();
+    });
+  }
+
+  importFileInput.addEventListener('change', async () => {
+    const file = importFileInput.files[0];
+    importFileInput.value = '';
+    if (!file) return;
+    closeDialog(settingsDialog);
+    try {
+      const parsed = await RJExport.readImportFile(file);
+      let mode = 'merge';
+      if (state.categories.length > 0) {
+        mode = await askImportMode();
+        if (!mode) return;
+      }
+      const result = await RJExport.applyImport(parsed, mode);
+      await loadState();
+      RJSync.pushSoon();
+      showToast(RJI18n.t('settings.importDone', { categories: result.categoriesImported, jingles: result.jinglesImported }));
+    } catch (err) {
+      console.error(err);
+      showToast(RJI18n.t('settings.importFailed', { error: err.message || err }));
+    }
   });
 
   RJI18n.onChange(() => {

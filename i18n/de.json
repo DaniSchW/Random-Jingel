@@ -38,10 +38,7 @@
   "footer": {
     "imprint": "Impressum",
     "privacy": "Datenschutz",
-    "terms": "AGB",
-    "imprintText": "Platzhalter für das Impressum. Wird in einer späteren Phase ergänzt.",
-    "privacyText": "Platzhalter für die Datenschutzerklärung. Wird in einer späteren Phase ergänzt.",
-    "termsText": "Platzhalter für die AGB. Wird in einer späteren Phase ergänzt."
+    "terms": "AGB"
   },
   "dialogCommon": {
     "cancel": "Abbrechen",
@@ -99,7 +96,13 @@
     "languageLabel": "Sprache",
     "languageGerman": "Deutsch",
     "languageEnglish": "English",
-    "languageHint": "Wird lokal gespeichert und, sobald angemeldet, geräteübergreifend synchronisiert."
+    "languageHint": "Wird lokal gespeichert und, sobald angemeldet, geräteübergreifend synchronisiert.",
+    "dataLabel": "Daten",
+    "exportButton": "Alle Daten exportieren",
+    "importButton": "Daten importieren",
+    "exportFailed": "Export fehlgeschlagen: {error}",
+    "importFailed": "Import fehlgeschlagen: {error}",
+    "importDone": "Import abgeschlossen: {categories} Kategorie(n), {jingles} Jingle(s)."
   },
   "ads": {
     "adsensePlaceholder": "Werbung – AdSense",
@@ -113,6 +116,12 @@
     "settingsLabel": "Werbe-Cookies",
     "settingsGranted": "Akzeptiert (AdSense)",
     "settingsDenied": "Abgelehnt (EthicalAds)"
+  },
+  "importChoice": {
+    "title": "Import: Zusammenführen oder überschreiben?",
+    "text": "Es sind bereits Daten vorhanden. Sollen die importierten Daten mit den vorhandenen zusammengeführt werden, oder sollen alle vorhandenen Daten durch den Import ersetzt werden?",
+    "merge": "Zusammenführen",
+    "overwrite": "Überschreiben"
   },
   "admin": {
     "navTitle": "Admin-Dashboard",

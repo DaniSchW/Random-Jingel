@@ -137,9 +137,9 @@
 </div>
 
 <footer class="app-footer">
-  <a href="#" class="footer-link" data-info-key="imprint" data-i18n="footer.imprint">Impressum</a>
-  <a href="#" class="footer-link" data-info-key="privacy" data-i18n="footer.privacy">Datenschutz</a>
-  <a href="#" class="footer-link" data-info-key="terms" data-i18n="footer.terms">AGB</a>
+  <a href="impressum.html" class="footer-link" data-i18n="footer.imprint">Impressum</a>
+  <a href="datenschutz.html" class="footer-link" data-i18n="footer.privacy">Datenschutz</a>
+  <a href="agb.html" class="footer-link" data-i18n="footer.terms">AGB</a>
 </footer>
 
 <!-- Category modal (create/edit) -->
@@ -270,6 +270,15 @@
       </select>
     </label>
 
+    <div class="field">
+      <span data-i18n="settings.dataLabel">Daten</span>
+      <div class="settings-data-actions">
+        <button type="button" id="exportDataBtn" class="btn btn-ghost" data-i18n="settings.exportButton">Alle Daten exportieren</button>
+        <button type="button" id="importDataBtn" class="btn btn-ghost" data-i18n="settings.importButton">Daten importieren</button>
+      </div>
+      <input type="file" id="importFileInput" accept=".zip,application/zip" class="hidden">
+    </div>
+
     <div class="dialog-actions">
       <span class="spacer"></span>
       <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.done">Fertig</button>
@@ -277,14 +286,21 @@
   </form>
 </dialog>
 
-<!-- Placeholder footer link content -->
-<dialog id="infoDialog" class="app-dialog">
+<!-- Import: merge or overwrite? Only shown when a board already has data —
+     an empty board just imports directly. -->
+<dialog id="importChoiceDialog" class="app-dialog">
   <form method="dialog">
-    <h2 id="infoDialogTitle">Info</h2>
-    <p id="infoDialogText">Inhalt folgt.</p>
+    <h2 data-i18n="importChoice.title">Import: Zusammenführen oder überschreiben?</h2>
+    <p class="field-hint" style="margin-top: -4px;" data-i18n="importChoice.text">
+      Es sind bereits Daten vorhanden. Sollen die importierten Daten mit den
+      vorhandenen zusammengeführt werden, oder sollen alle vorhandenen Daten
+      durch den Import ersetzt werden?
+    </p>
     <div class="dialog-actions">
+      <button type="button" id="importCancelBtn" class="btn btn-ghost" data-i18n="dialogCommon.cancel">Abbrechen</button>
       <span class="spacer"></span>
-      <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.ok">OK</button>
+      <button type="button" id="importOverwriteBtn" class="btn btn-danger" data-i18n="importChoice.overwrite">Überschreiben</button>
+      <button type="button" id="importMergeBtn" class="btn btn-primary" data-i18n="importChoice.merge">Zusammenführen</button>
     </div>
   </form>
 </dialog>
@@ -298,6 +314,8 @@
 <script src="js/i18n.js"></script>
 <script src="js/consent.js"></script>
 <script src="js/sync.js"></script>
+<script src="js/zip.js"></script>
+<script src="js/export.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

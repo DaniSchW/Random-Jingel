@@ -74,6 +74,8 @@ button {
   font-weight: 700;
   font-size: 1.15rem;
   letter-spacing: 0.2px;
+  color: inherit;
+  text-decoration: none;
 }
 
 .logo-mark { font-size: 1.4rem; }
@@ -652,6 +654,12 @@ button {
 
 #jingleColorField.hidden { display: none; }
 
+.settings-data-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .dialog-actions {
   display: flex;
   align-items: center;
@@ -715,3 +723,14 @@ button {
   .bottom-bar { padding: 0 24px; }
   .ad-area { margin-left: 24px; margin-right: 24px; }
 }
+
+/* ---------- Standalone legal pages (impressum/datenschutz/agb) ---------- */
+.legal-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+  line-height: 1.6;
+}
+
+.legal-content h1 { margin-top: 0; }
+.legal-content a { color: var(--accent); }
