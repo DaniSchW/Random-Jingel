@@ -1,6 +1,11 @@
 -- Random Jingle – Phase 2 Supabase schema
 -- Run this once in your project's SQL editor (Supabase Dashboard -> SQL Editor).
--- Safe to re-run: every statement is idempotent (create-if-not-exists / drop-then-create policy).
+-- Safe to re-run: every statement is idempotent. The SQL editor runs a pasted
+-- script as a single transaction, so ANY non-idempotent statement failing
+-- (e.g. a plain "alter publication ... add table" on a second run) rolls
+-- back the entire script, including everything below it — that is why the
+-- realtime publication changes are wrapped in existence checks rather than
+-- run directly.
 
 -- ---------------------------------------------------------------------------
 -- Tables
@@ -80,12 +85,6 @@ create policy jingles_delete_own on public.jingles
   for delete using (auth.uid() = user_id);
 
 -- ---------------------------------------------------------------------------
--- Realtime: let clients subscribe to postgres_changes for cross-device sync.
--- ---------------------------------------------------------------------------
-alter publication supabase_realtime add table public.categories;
-alter publication supabase_realtime add table public.jingles;
-
--- ---------------------------------------------------------------------------
 -- Storage: private bucket for jingle audio, one folder per user
 -- (path convention: "<user_id>/<jingle_id>.<ext>").
 -- ---------------------------------------------------------------------------
@@ -116,3 +115,26 @@ create policy jingle_audio_delete_own on storage.objects
   for delete using (
     bucket_id = 'jingle-audio' and auth.uid()::text = (storage.foldername(name))[1]
   );
+
+-- ---------------------------------------------------------------------------
+-- Realtime: let clients subscribe to postgres_changes for cross-device sync.
+-- Placed last, with an explicit existence check, so a table already being a
+-- publication member (which plain "add table" errors on) can never roll
+-- back the tables/RLS/storage setup above.
+-- ---------------------------------------------------------------------------
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'categories'
+  ) then
+    alter publication supabase_realtime add table public.categories;
+  end if;
+
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'jingles'
+  ) then
+    alter publication supabase_realtime add table public.jingles;
+  end if;
+end $$;
