@@ -114,6 +114,21 @@
     "settingsGranted": "Accepted (AdSense)",
     "settingsDenied": "Declined (EthicalAds)"
   },
+  "admin": {
+    "navTitle": "Admin dashboard",
+    "navAriaLabel": "Admin dashboard",
+    "dashboardTitle": "Admin dashboard",
+    "back": "Back",
+    "loading": "Loading…",
+    "accessDenied": "No access. This area is admins only.",
+    "loadFailed": "Couldn't load admin data.",
+    "statTotal": "Total users",
+    "stat7": "New (7 days)",
+    "stat30": "New (30 days)",
+    "colEmail": "Email",
+    "colRegistered": "Registered on",
+    "colJingles": "Jingles"
+  },
   "toast": {
     "categoryUpdated": "Category updated.",
     "categoryCreated": "Category created.",

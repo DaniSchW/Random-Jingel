@@ -70,6 +70,18 @@
   const consentAcceptBtn = document.getElementById('consentAcceptBtn');
   const consentDeclineBtn = document.getElementById('consentDeclineBtn');
 
+  const appViewEl = document.getElementById('appView');
+  const adminBtn = document.getElementById('adminBtn');
+  const adminView = document.getElementById('adminView');
+  const adminBackBtn = document.getElementById('adminBackBtn');
+  const adminLoading = document.getElementById('adminLoading');
+  const adminDenied = document.getElementById('adminDenied');
+  const adminContent = document.getElementById('adminContent');
+  const adminStatTotal = document.getElementById('adminStatTotal');
+  const adminStat7 = document.getElementById('adminStat7');
+  const adminStat30 = document.getElementById('adminStat30');
+  const adminUserRows = document.getElementById('adminUserRows');
+
   const masterVolumeInput = document.getElementById('masterVolume');
   const stopAllBtn = document.getElementById('stopAllBtn');
   const toastEl = document.getElementById('toast');
@@ -84,6 +96,7 @@
 
   // ---- Utilities ----
   let toastTimer = null;
+  let lastAdminGate = null;
   function showToast(message) {
     toastEl.textContent = message;
     toastEl.classList.remove('hidden');
@@ -592,11 +605,95 @@
       ? RJI18n.t('header.accountTitleLoggedIn', { email: status.email })
       : RJI18n.t('header.accountTitleLoggedOut');
     if (accountDialog.open) refreshAccountDialog();
+
+    const adminGate = status.authenticated && status.isAdmin;
+    adminBtn.classList.toggle('hidden', !adminGate);
+    if (isAdminRouteActive() && adminGate !== lastAdminGate) applyRoute();
+    lastAdminGate = adminGate;
   });
 
   RJSync.onRemoteChange(() => {
     loadState().catch((err) => console.error(err));
   });
+
+  // ---- Admin dashboard (Phase 4) ----
+  // #/admin is a real, deep-linkable route, but the button/route being
+  // hidden client-side is only a UX nicety. The actual gate is server-side:
+  // adminUserStats() re-checks the caller's role itself (see
+  // supabase/schema.sql), so a non-admin who navigates here directly always
+  // just gets the "no access" message, never real data.
+  function isAdminRouteActive() {
+    return window.location.hash === '#/admin';
+  }
+
+  function formatAdminDate(iso) {
+    const locale = RJI18n.getLanguage() === 'en' ? 'en-US' : 'de-DE';
+    return new Date(iso).toLocaleDateString(locale);
+  }
+
+  function renderAdminStats(rows) {
+    const now = Date.now();
+    const DAY_MS = 24 * 60 * 60 * 1000;
+    adminStatTotal.textContent = String(rows.length);
+    adminStat7.textContent = String(rows.filter((r) => now - Date.parse(r.created_at) <= 7 * DAY_MS).length);
+    adminStat30.textContent = String(rows.filter((r) => now - Date.parse(r.created_at) <= 30 * DAY_MS).length);
+
+    adminUserRows.innerHTML = '';
+    for (const row of rows) {
+      const tr = document.createElement('tr');
+      const emailTd = document.createElement('td');
+      emailTd.textContent = row.email;
+      const dateTd = document.createElement('td');
+      dateTd.textContent = formatAdminDate(row.created_at);
+      const countTd = document.createElement('td');
+      countTd.textContent = String(row.jingle_count);
+      tr.append(emailTd, dateTd, countTd);
+      adminUserRows.appendChild(tr);
+    }
+  }
+
+  async function enterAdminRoute() {
+    appViewEl.classList.add('hidden');
+    consentBanner.classList.add('hidden');
+    adminView.classList.remove('hidden');
+    adminContent.classList.add('hidden');
+    adminDenied.classList.add('hidden');
+
+    const status = RJSync.getStatus();
+    if (!status.authenticated || !status.isAdmin) {
+      adminLoading.classList.add('hidden');
+      adminDenied.classList.remove('hidden');
+      return;
+    }
+
+    adminLoading.classList.remove('hidden');
+    try {
+      const rows = await RJSync.adminUserStats();
+      renderAdminStats(rows);
+      adminContent.classList.remove('hidden');
+    } catch (err) {
+      console.error('Admin: Laden fehlgeschlagen', err);
+      adminDenied.textContent = RJI18n.t('admin.loadFailed');
+      adminDenied.classList.remove('hidden');
+    } finally {
+      adminLoading.classList.add('hidden');
+    }
+  }
+
+  function exitAdminRoute() {
+    adminView.classList.add('hidden');
+    appViewEl.classList.remove('hidden');
+    updateConsentBanner();
+  }
+
+  function applyRoute() {
+    if (isAdminRouteActive()) enterAdminRoute();
+    else exitAdminRoute();
+  }
+
+  adminBtn.addEventListener('click', () => { window.location.hash = '#/admin'; });
+  adminBackBtn.addEventListener('click', () => { window.location.hash = ''; });
+  window.addEventListener('hashchange', applyRoute);
 
   // ---- Settings (language + ad-cookie consent) ----
   settingsBtn.addEventListener('click', () => {
@@ -661,6 +758,7 @@
       console.error(err);
       showToast(RJI18n.t('toast.loadFailed'));
     }
+    applyRoute();
     RJSync.init().catch((err) => console.error('RJSync.init fehlgeschlagen', err));
   }
   boot();

@@ -250,6 +250,101 @@ button {
   .consent-banner { padding: 14px 24px; }
 }
 
+/* ---------- Admin dashboard ---------- */
+.admin-view {
+  padding: 0 16px;
+}
+
+.admin-view.hidden { display: none; }
+
+.admin-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.admin-view-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.admin-loading,
+.admin-denied {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.admin-loading.hidden,
+.admin-denied.hidden {
+  display: none;
+}
+
+.admin-content.hidden { display: none; }
+
+.admin-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.admin-stat {
+  flex: 1 1 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.admin-stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.admin-stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 10px 14px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.admin-table thead th {
+  background: var(--bg-elevated-2);
+  color: var(--text-muted);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-table tbody tr:not(:last-child) td {
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 720px) {
+  .admin-view { padding: 0 24px; }
+}
+
 /* ---------- Category row ---------- */
 .category-row {
   background: var(--bg-elevated);

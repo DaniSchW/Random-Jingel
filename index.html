@@ -23,6 +23,10 @@
       <span id="accountIcon" aria-hidden="true">☁️</span>
       <span class="sr-only" data-i18n="header.accountAriaLabel">Konto &amp; Synchronisierung</span>
     </button>
+    <button id="adminBtn" class="icon-btn icon-btn-ghost hidden" type="button" title="Admin-Dashboard" data-i18n-title="admin.navTitle">
+      <span aria-hidden="true">🛡️</span>
+      <span class="sr-only" data-i18n="admin.navAriaLabel">Admin-Dashboard</span>
+    </button>
     <button id="settingsBtn" class="icon-btn icon-btn-ghost" type="button" title="Einstellungen" data-i18n-title="header.settingsTitle">
       <span aria-hidden="true">⚙️</span>
       <span class="sr-only" data-i18n="header.settingsAriaLabel">Einstellungen</span>
@@ -43,22 +47,66 @@
 </header>
 
 <main id="mainContent" class="main-content">
-  <div id="categoryList" class="category-list"></div>
-  <p id="emptyState" class="empty-state hidden" data-i18n-html="empty.noCategories">
-    Noch keine Kategorien vorhanden. Tippe oben rechts auf <strong>+</strong>, um deine erste Kategorie anzulegen.
-  </p>
-  <div id="adArea" class="ad-area">
-    <!-- Exactly one of these is shown at a time, decided in app.js by
-         RJConsent + navigator.onLine. Both are placeholders only — to go
-         live, replace the inner markup of the active one with that
-         provider's real ad-unit snippet. Position (below the category
-         list, outside the fixed bottom bar and the sticky random-button
-         area) and the offline-hiding behavior stay unchanged either way. -->
-    <div id="adSlotAdsense" class="ad-slot ad-slot-adsense hidden" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
-      <span class="ad-slot-label" data-i18n="ads.adsensePlaceholder">Werbung – AdSense</span>
+  <div id="appView">
+    <div id="categoryList" class="category-list"></div>
+    <p id="emptyState" class="empty-state hidden" data-i18n-html="empty.noCategories">
+      Noch keine Kategorien vorhanden. Tippe oben rechts auf <strong>+</strong>, um deine erste Kategorie anzulegen.
+    </p>
+    <div id="adArea" class="ad-area">
+      <!-- Exactly one of these is shown at a time, decided in app.js by
+           RJConsent + navigator.onLine. Both are placeholders only — to go
+           live, replace the inner markup of the active one with that
+           provider's real ad-unit snippet. Position (below the category
+           list, outside the fixed bottom bar and the sticky random-button
+           area) and the offline-hiding behavior stay unchanged either way. -->
+      <div id="adSlotAdsense" class="ad-slot ad-slot-adsense hidden" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
+        <span class="ad-slot-label" data-i18n="ads.adsensePlaceholder">Werbung – AdSense</span>
+      </div>
+      <div id="adSlotEthical" class="ad-slot ad-slot-ethicalads hidden" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
+        <span class="ad-slot-label" data-i18n="ads.ethicalPlaceholder">Werbung – EthicalAds</span>
+      </div>
     </div>
-    <div id="adSlotEthical" class="ad-slot ad-slot-ethicalads hidden" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
-      <span class="ad-slot-label" data-i18n="ads.ethicalPlaceholder">Werbung – EthicalAds</span>
+  </div>
+
+  <!-- Admin dashboard (Phase 4): reachable via #/admin, only ever populated
+       for an authenticated admin. The frontend hides #adminBtn and shows
+       adminDenied for everyone else, but that's a UX nicety — the real
+       gate is server-side (admin_user_stats() re-checks the role itself,
+       see supabase/schema.sql). -->
+  <div id="adminView" class="admin-view hidden">
+    <div class="admin-view-header">
+      <h2 data-i18n="admin.dashboardTitle">Admin-Dashboard</h2>
+      <button id="adminBackBtn" type="button" class="btn btn-ghost" data-i18n="admin.back">Zurück</button>
+    </div>
+    <p id="adminLoading" class="admin-loading hidden" data-i18n="admin.loading">Lädt…</p>
+    <p id="adminDenied" class="admin-denied hidden" data-i18n="admin.accessDenied">Kein Zugriff. Dieser Bereich ist nur für Admins.</p>
+    <div id="adminContent" class="admin-content hidden">
+      <div class="admin-stats">
+        <div class="admin-stat">
+          <span id="adminStatTotal" class="admin-stat-value">0</span>
+          <span class="admin-stat-label" data-i18n="admin.statTotal">Nutzer gesamt</span>
+        </div>
+        <div class="admin-stat">
+          <span id="adminStat7" class="admin-stat-value">0</span>
+          <span class="admin-stat-label" data-i18n="admin.stat7">Neu (7 Tage)</span>
+        </div>
+        <div class="admin-stat">
+          <span id="adminStat30" class="admin-stat-value">0</span>
+          <span class="admin-stat-label" data-i18n="admin.stat30">Neu (30 Tage)</span>
+        </div>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th data-i18n="admin.colEmail">E-Mail</th>
+              <th data-i18n="admin.colRegistered">Registriert am</th>
+              <th data-i18n="admin.colJingles">Jingles</th>
+            </tr>
+          </thead>
+          <tbody id="adminUserRows"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </main>

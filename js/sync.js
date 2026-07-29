@@ -25,6 +25,7 @@ const RJSync = (() => {
     online: navigator.onLine,
     authenticated: false,
     email: null,
+    isAdmin: false,
     syncing: false,
     lastSyncAt: null,
     lastError: null,
@@ -353,12 +354,42 @@ const RJSync = (() => {
     }
   }
 
+  // ---- Admin (Phase 4) ----
+  // Whether the signed-in user is an admin is decided server-side (RLS +
+  // admin_user_stats()'s own is_admin() check) — this is only read here to
+  // decide whether to show the admin nav entry point at all. A user could
+  // set isAdmin locally via devtools and still get nothing back from
+  // adminUserStats(), since that RPC re-checks the role itself.
+  async function fetchIsAdmin() {
+    if (!client || !userId) {
+      setStatus({ isAdmin: false });
+      return;
+    }
+    try {
+      const { data, error } = await client.from('profiles').select('role').eq('id', userId);
+      if (error) throw error;
+      const role = data && data[0] && data[0].role;
+      setStatus({ isAdmin: role === 'admin' });
+    } catch (err) {
+      console.warn('Sync: Rollen-Check fehlgeschlagen', err);
+      setStatus({ isAdmin: false });
+    }
+  }
+
+  async function adminUserStats() {
+    if (!client) throw new Error('Supabase ist nicht konfiguriert.');
+    const { data, error } = await client.rpc('admin_user_stats');
+    if (error) throw error;
+    return data || [];
+  }
+
   // ---- Auth ----
   async function handleAuthChange(session) {
     userId = session?.user?.id ?? null;
     userEmail = session?.user?.email ?? null;
     RJDB.setCurrentUserId(userId);
     setStatus({ authenticated: !!userId, email: userEmail });
+    await fetchIsAdmin();
   }
 
   async function onSignedIn(session) {
@@ -432,5 +463,6 @@ const RJSync = (() => {
     syncNow: syncAll,
     pushSoon,
     ensureBlob,
+    adminUserStats,
   };
 })();

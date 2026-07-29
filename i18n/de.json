@@ -114,6 +114,21 @@
     "settingsGranted": "Akzeptiert (AdSense)",
     "settingsDenied": "Abgelehnt (EthicalAds)"
   },
+  "admin": {
+    "navTitle": "Admin-Dashboard",
+    "navAriaLabel": "Admin-Dashboard",
+    "dashboardTitle": "Admin-Dashboard",
+    "back": "Zurück",
+    "loading": "Lädt…",
+    "accessDenied": "Kein Zugriff. Dieser Bereich ist nur für Admins.",
+    "loadFailed": "Admin-Daten konnten nicht geladen werden.",
+    "statTotal": "Nutzer gesamt",
+    "stat7": "Neu (7 Tage)",
+    "stat30": "Neu (30 Tage)",
+    "colEmail": "E-Mail",
+    "colRegistered": "Registriert am",
+    "colJingles": "Jingles"
+  },
   "toast": {
     "categoryUpdated": "Kategorie aktualisiert.",
     "categoryCreated": "Kategorie angelegt.",
