@@ -184,12 +184,17 @@ button {
   padding: 0 16px;
 }
 
-/* Placeholder ad slot: deliberately plain/dashed so it reads as "not a real
-   ad yet" and reserves realistic banner height to avoid layout shift once a
+/* Ad area: exactly one of #adSlotAdsense / #adSlotEthical is unhidden at a
+   time (app.js, driven by RJConsent + navigator.onLine) — both share this
+   placeholder look, deliberately plain/dashed so it reads as "not a real ad
+   yet", and reserve realistic banner height to avoid layout shift once a
    real provider's unit replaces the inner markup. Scrolls with the page —
    never in the fixed bottom bar or the sticky random-button column. */
-.ad-slot {
+.ad-area {
   margin: 18px 16px 0;
+}
+
+.ad-slot {
   min-height: 90px;
   display: flex;
   align-items: center;
@@ -204,6 +209,46 @@ button {
 }
 
 .ad-slot.hidden { display: none; }
+
+.ad-slot-adsense { border-color: #d97706; }
+.ad-slot-ethicalads { border-color: #059669; }
+
+/* ---------- Cookie consent banner ---------- */
+.consent-banner {
+  position: sticky;
+  bottom: calc(var(--footer-h) + var(--bottombar-h));
+  z-index: 16;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-elevated-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.consent-banner.hidden { display: none; }
+
+.consent-banner p {
+  flex: 1 1 240px;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+@media (min-width: 720px) {
+  .consent-banner { padding: 14px 24px; }
+}
 
 /* ---------- Category row ---------- */
 .category-row {
@@ -573,5 +618,5 @@ button {
   .category-list { padding: 0 24px; }
   .app-header { padding: 0 24px; }
   .bottom-bar { padding: 0 24px; }
-  .ad-slot { margin-left: 24px; margin-right: 24px; }
+  .ad-area { margin-left: 24px; margin-right: 24px; }
 }

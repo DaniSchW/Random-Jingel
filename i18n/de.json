@@ -102,8 +102,17 @@
     "languageHint": "Wird lokal gespeichert und, sobald angemeldet, geräteübergreifend synchronisiert."
   },
   "ads": {
-    "placeholder": "Werbung",
+    "adsensePlaceholder": "Werbung – AdSense",
+    "ethicalPlaceholder": "Werbung – EthicalAds",
     "ariaLabel": "Werbung"
+  },
+  "consent": {
+    "text": "Wir würden dir gerne Werbung über Google AdSense zeigen — dafür setzen wir Werbe-Cookies. Lehnst du ab, zeigen wir stattdessen Werbung über EthicalAds, das ganz ohne Tracking auskommt.",
+    "accept": "Werbe-Cookies akzeptieren",
+    "decline": "Ablehnen",
+    "settingsLabel": "Werbe-Cookies",
+    "settingsGranted": "Akzeptiert (AdSense)",
+    "settingsDenied": "Abgelehnt (EthicalAds)"
   },
   "toast": {
     "categoryUpdated": "Kategorie aktualisiert.",

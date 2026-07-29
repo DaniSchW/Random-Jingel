@@ -47,15 +47,37 @@
   <p id="emptyState" class="empty-state hidden" data-i18n-html="empty.noCategories">
     Noch keine Kategorien vorhanden. Tippe oben rechts auf <strong>+</strong>, um deine erste Kategorie anzulegen.
   </p>
-  <div id="adSlot" class="ad-slot" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
-    <!-- Placeholder only. To go live with a real provider (e.g. Google
-         AdSense), replace this inner markup with the provider's ad-unit
-         snippet — #adSlot's position (below the category list, outside the
-         fixed bottom bar and the sticky random-button area) and its
-         offline-hiding behavior (toggled in app.js) stay unchanged. -->
-    <span class="ad-slot-label" data-i18n="ads.placeholder">Werbung</span>
+  <div id="adArea" class="ad-area">
+    <!-- Exactly one of these is shown at a time, decided in app.js by
+         RJConsent + navigator.onLine. Both are placeholders only — to go
+         live, replace the inner markup of the active one with that
+         provider's real ad-unit snippet. Position (below the category
+         list, outside the fixed bottom bar and the sticky random-button
+         area) and the offline-hiding behavior stay unchanged either way. -->
+    <div id="adSlotAdsense" class="ad-slot ad-slot-adsense hidden" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
+      <span class="ad-slot-label" data-i18n="ads.adsensePlaceholder">Werbung – AdSense</span>
+    </div>
+    <div id="adSlotEthical" class="ad-slot ad-slot-ethicalads hidden" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
+      <span class="ad-slot-label" data-i18n="ads.ethicalPlaceholder">Werbung – EthicalAds</span>
+    </div>
   </div>
 </main>
+
+<!-- Ad-cookie consent banner: only shown while RJConsent.getStatus() is
+     null (no decision yet). Accept -> AdSense placeholder; Decline -> stays
+     on EthicalAds (same as the undecided default, but now an explicit,
+     remembered choice). Reachable again later via Settings. -->
+<div id="consentBanner" class="consent-banner hidden" role="region" aria-label="Cookie-Einstellungen">
+  <p data-i18n="consent.text">
+    Wir würden dir gerne Werbung über Google AdSense zeigen — dafür setzen
+    wir Werbe-Cookies. Lehnst du ab, zeigen wir stattdessen Werbung über
+    EthicalAds, das ganz ohne Tracking auskommt.
+  </p>
+  <div class="consent-actions">
+    <button id="consentDeclineBtn" type="button" class="btn btn-ghost" data-i18n="consent.decline">Ablehnen</button>
+    <button id="consentAcceptBtn" type="button" class="btn btn-primary" data-i18n="consent.accept">Werbe-Cookies akzeptieren</button>
+  </div>
+</div>
 
 <div class="bottom-bar">
   <div class="volume-control">
@@ -192,6 +214,14 @@
       Wird lokal gespeichert und, sobald angemeldet, geräteübergreifend synchronisiert.
     </p>
 
+    <label class="field">
+      <span data-i18n="consent.settingsLabel">Werbe-Cookies</span>
+      <select id="adConsentSelect">
+        <option value="denied" data-i18n="consent.settingsDenied">Abgelehnt (EthicalAds)</option>
+        <option value="granted" data-i18n="consent.settingsGranted">Akzeptiert (AdSense)</option>
+      </select>
+    </label>
+
     <div class="dialog-actions">
       <span class="spacer"></span>
       <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.done">Fertig</button>
@@ -218,6 +248,7 @@
 <script src="js/db.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/i18n.js"></script>
+<script src="js/consent.js"></script>
 <script src="js/sync.js"></script>
 <script src="js/app.js"></script>
 </body>

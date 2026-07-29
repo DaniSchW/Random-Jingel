@@ -62,8 +62,13 @@
   const settingsBtn = document.getElementById('settingsBtn');
   const settingsDialog = document.getElementById('settingsDialog');
   const languageSelect = document.getElementById('languageSelect');
+  const adConsentSelect = document.getElementById('adConsentSelect');
 
-  const adSlot = document.getElementById('adSlot');
+  const adSlotAdsense = document.getElementById('adSlotAdsense');
+  const adSlotEthical = document.getElementById('adSlotEthical');
+  const consentBanner = document.getElementById('consentBanner');
+  const consentAcceptBtn = document.getElementById('consentAcceptBtn');
+  const consentDeclineBtn = document.getElementById('consentDeclineBtn');
 
   const masterVolumeInput = document.getElementById('masterVolume');
   const stopAllBtn = document.getElementById('stopAllBtn');
@@ -593,14 +598,19 @@
     loadState().catch((err) => console.error(err));
   });
 
-  // ---- Settings (language) ----
+  // ---- Settings (language + ad-cookie consent) ----
   settingsBtn.addEventListener('click', () => {
     languageSelect.value = RJI18n.getLanguage();
+    adConsentSelect.value = RJConsent.getStatus() === 'granted' ? 'granted' : 'denied';
     settingsDialog.showModal();
   });
 
   languageSelect.addEventListener('change', () => {
     RJI18n.setLanguage(languageSelect.value).then(() => RJSync.pushSoon());
+  });
+
+  adConsentSelect.addEventListener('change', () => {
+    RJConsent.setStatus(adConsentSelect.value);
   });
 
   RJI18n.onChange(() => {
@@ -611,17 +621,35 @@
     if (accountDialog.open) refreshAccountDialog();
   });
 
-  // ---- Ad slot: never forces network access, just hides while offline ----
-  function updateAdSlotVisibility() {
-    adSlot.classList.toggle('hidden', !navigator.onLine);
+  // ---- Ad area: which placeholder shows depends on consent, not just
+  // connectivity — never forces network access itself, either way. ----
+  function updateAdArea() {
+    const online = navigator.onLine;
+    const consent = RJConsent.getStatus();
+    adSlotAdsense.classList.toggle('hidden', !(online && consent === 'granted'));
+    adSlotEthical.classList.toggle('hidden', !(online && consent !== 'granted'));
   }
-  window.addEventListener('online', updateAdSlotVisibility);
-  window.addEventListener('offline', updateAdSlotVisibility);
+
+  function updateConsentBanner() {
+    consentBanner.classList.toggle('hidden', RJConsent.getStatus() !== null);
+  }
+
+  consentAcceptBtn.addEventListener('click', () => RJConsent.setStatus('granted'));
+  consentDeclineBtn.addEventListener('click', () => RJConsent.setStatus('denied'));
+
+  RJConsent.onChange(() => {
+    updateAdArea();
+    updateConsentBanner();
+  });
+
+  window.addEventListener('online', updateAdArea);
+  window.addEventListener('offline', updateAdArea);
 
   // ---- Init ----
   async function boot() {
     RJAudio.setMasterVolume(Number(masterVolumeInput.value) / 100);
-    updateAdSlotVisibility();
+    updateAdArea();
+    updateConsentBanner();
     try {
       await RJI18n.init();
     } catch (err) {

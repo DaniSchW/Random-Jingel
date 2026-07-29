@@ -102,8 +102,17 @@
     "languageHint": "Saved locally and, once signed in, synced across your devices."
   },
   "ads": {
-    "placeholder": "Advertisement",
+    "adsensePlaceholder": "Advertisement – AdSense",
+    "ethicalPlaceholder": "Advertisement – EthicalAds",
     "ariaLabel": "Advertisement"
+  },
+  "consent": {
+    "text": "We'd like to show you ads via Google AdSense — that needs advertising cookies. If you decline, we'll show ads via EthicalAds instead, which works without any tracking.",
+    "accept": "Accept ad cookies",
+    "decline": "Decline",
+    "settingsLabel": "Ad cookies",
+    "settingsGranted": "Accepted (AdSense)",
+    "settingsDenied": "Declined (EthicalAds)"
   },
   "toast": {
     "categoryUpdated": "Category updated.",
