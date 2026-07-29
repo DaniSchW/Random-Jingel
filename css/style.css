@@ -113,7 +113,7 @@ button {
 .icon-btn-ghost:hover { background: #34343a; }
 .icon-btn-ghost.hidden { display: none; }
 
-.icon-btn-ghost::after {
+.icon-btn-ghost.has-status-dot::after {
   content: "";
   position: absolute;
   right: 2px;
@@ -183,6 +183,27 @@ button {
   gap: 18px;
   padding: 0 16px;
 }
+
+/* Placeholder ad slot: deliberately plain/dashed so it reads as "not a real
+   ad yet" and reserves realistic banner height to avoid layout shift once a
+   real provider's unit replaces the inner markup. Scrolls with the page —
+   never in the fixed bottom bar or the sticky random-button column. */
+.ad-slot {
+  margin: 18px 16px 0;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ad-slot.hidden { display: none; }
 
 /* ---------- Category row ---------- */
 .category-row {
@@ -277,7 +298,9 @@ button {
 }
 
 .jingle-scroll:empty::after {
-  content: "Noch keine Jingles. Nutze + oben rechts, um einen hinzuzufügen.";
+  /* Text comes from the data-i18n-empty attribute (set in app.js from the
+     current language) since CSS generated content can't use data-i18n. */
+  content: attr(data-i18n-empty);
   color: var(--text-muted);
   font-size: 0.85rem;
   white-space: nowrap;
@@ -550,4 +573,5 @@ button {
   .category-list { padding: 0 24px; }
   .app-header { padding: 0 24px; }
   .bottom-bar { padding: 0 24px; }
+  .ad-slot { margin-left: 24px; margin-right: 24px; }
 }

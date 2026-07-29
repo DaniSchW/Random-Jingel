@@ -1,0 +1,122 @@
+{
+  "app": {
+    "title": "Random Jingle",
+    "description": "Random Jingle – a local soundboard PWA with optional cloud sync."
+  },
+  "header": {
+    "accountAriaLabel": "Account & sync",
+    "accountTitleLoggedOut": "Sign in for cloud sync",
+    "accountTitleLoggedIn": "Signed in as {email} — Account & sync",
+    "settingsTitle": "Settings",
+    "settingsAriaLabel": "Settings",
+    "addMenuTitle": "Add new",
+    "addMenuAriaLabel": "Add new",
+    "addCategory": "New category",
+    "addJingle": "New jingle"
+  },
+  "empty": {
+    "noCategories": "No categories yet. Tap <strong>+</strong> in the top right to create your first one.",
+    "noJingles": "No jingles yet. Use + on the right to add one."
+  },
+  "category": {
+    "editTitle": "Edit category",
+    "jingleCountOne": "{count} jingle",
+    "jingleCountOther": "{count} jingles",
+    "noJinglesToast": "No jingles in \"{name}\"."
+  },
+  "jingle": {
+    "editTitle": "Edit jingle",
+    "addToCategoryTitle": "Add a jingle to this category"
+  },
+  "random": {
+    "label": "Random"
+  },
+  "bottomBar": {
+    "volumeAriaLabel": "Master volume",
+    "stopAll": "Stop All"
+  },
+  "footer": {
+    "imprint": "Imprint",
+    "privacy": "Privacy Policy",
+    "terms": "Terms",
+    "imprintText": "Placeholder for the imprint. Will be filled in during a later phase.",
+    "privacyText": "Placeholder for the privacy policy. Will be filled in during a later phase.",
+    "termsText": "Placeholder for the terms of service. Will be filled in during a later phase."
+  },
+  "dialogCommon": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "done": "Done",
+    "ok": "OK",
+    "delete": "Delete"
+  },
+  "categoryDialog": {
+    "newTitle": "New category",
+    "editTitle": "Edit category",
+    "nameLabel": "Name",
+    "namePlaceholder": "e.g. Applause",
+    "colorLabel": "Color",
+    "deleteConfirmWithJingles": "Delete this category and its {count} jingle(s)?",
+    "deleteConfirm": "Delete this category?"
+  },
+  "jingleDialog": {
+    "newTitle": "New jingle",
+    "editTitle": "Edit jingle",
+    "fileLabel": "Audio file (MP3/WAV)",
+    "fileHintKeepNamed": "Current file: {fileName} (leave empty to keep it)",
+    "fileHintKeepGeneric": "Leave empty to keep the current file.",
+    "nameLabel": "Display name",
+    "namePlaceholder": "e.g. Applause loud",
+    "categoryLabel": "Category",
+    "colorOverrideLabel": "Use a custom color",
+    "colorLabel": "Color",
+    "deleteConfirm": "Delete this jingle?"
+  },
+  "account": {
+    "dialogTitle": "Account & sync",
+    "loggedOutIntro": "Sign in with a magic link to sync your categories and jingles across devices. Without signing in, the app keeps working fully offline and locally.",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "sendMagicLink": "Send magic link",
+    "loggedInAs": "Signed in as",
+    "signOut": "Sign out",
+    "syncNow": "Sync now",
+    "sendingLink": "Sending link…",
+    "linkSent": "Magic link sent to {email}. Check your inbox and open it.",
+    "sendFailed": "Couldn't send it: {error}",
+    "signedOutToast": "Signed out. The board keeps working locally.",
+    "syncStatus": {
+      "syncing": "Syncing…",
+      "failed": "Sync failed: {error}",
+      "offline": "Offline — will sync once you're back online.",
+      "lastSync": "Last synced: {time}",
+      "never": "Not synced yet."
+    }
+  },
+  "settings": {
+    "dialogTitle": "Settings",
+    "languageLabel": "Language",
+    "languageGerman": "Deutsch",
+    "languageEnglish": "English",
+    "languageHint": "Saved locally and, once signed in, synced across your devices."
+  },
+  "ads": {
+    "placeholder": "Advertisement",
+    "ariaLabel": "Advertisement"
+  },
+  "toast": {
+    "categoryUpdated": "Category updated.",
+    "categoryCreated": "Category created.",
+    "categoryDeleted": "Category deleted.",
+    "jingleUpdated": "Jingle updated.",
+    "jingleCreated": "Jingle created.",
+    "jingleDeleted": "Jingle deleted.",
+    "saveFailed": "Couldn't save.",
+    "fileRequired": "Please choose an audio file.",
+    "playbackFailed": "Playback failed.",
+    "downloadingAudio": "Downloading audio…",
+    "audioUnavailable": "Audio isn't available yet. Try again later.",
+    "loadFailed": "Couldn't load your data."
+  }
+}

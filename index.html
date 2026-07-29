@@ -19,20 +19,24 @@
     <span class="logo-text">Random Jingle</span>
   </div>
   <div class="header-actions">
-    <button id="accountBtn" class="icon-btn icon-btn-ghost hidden" type="button" title="Anmelden für Cloud-Sync">
+    <button id="accountBtn" class="icon-btn icon-btn-ghost has-status-dot hidden" type="button" title="Anmelden für Cloud-Sync" data-i18n-title="header.accountTitleLoggedOut">
       <span id="accountIcon" aria-hidden="true">☁️</span>
-      <span class="sr-only">Konto &amp; Synchronisierung</span>
+      <span class="sr-only" data-i18n="header.accountAriaLabel">Konto &amp; Synchronisierung</span>
     </button>
-    <button id="addMenuBtn" class="icon-btn" type="button" aria-haspopup="menu" aria-expanded="false" title="Neu anlegen">
+    <button id="settingsBtn" class="icon-btn icon-btn-ghost" type="button" title="Einstellungen" data-i18n-title="header.settingsTitle">
+      <span aria-hidden="true">⚙️</span>
+      <span class="sr-only" data-i18n="header.settingsAriaLabel">Einstellungen</span>
+    </button>
+    <button id="addMenuBtn" class="icon-btn" type="button" aria-haspopup="menu" aria-expanded="false" title="Neu anlegen" data-i18n-title="header.addMenuTitle">
       <span aria-hidden="true">+</span>
-      <span class="sr-only">Neu anlegen</span>
+      <span class="sr-only" data-i18n="header.addMenuAriaLabel">Neu anlegen</span>
     </button>
     <div id="addMenu" class="add-menu hidden" role="menu">
       <button id="addCategoryMenuItem" class="add-menu-item" type="button" role="menuitem">
-        <span class="add-menu-icon" aria-hidden="true">📁</span> Neue Kategorie
+        <span class="add-menu-icon" aria-hidden="true">📁</span> <span data-i18n="header.addCategory">Neue Kategorie</span>
       </button>
       <button id="addJingleMenuItem" class="add-menu-item" type="button" role="menuitem" disabled>
-        <span class="add-menu-icon" aria-hidden="true">🎵</span> Neuer Jingle
+        <span class="add-menu-icon" aria-hidden="true">🎵</span> <span data-i18n="header.addJingle">Neuer Jingle</span>
       </button>
     </div>
   </div>
@@ -40,47 +44,55 @@
 
 <main id="mainContent" class="main-content">
   <div id="categoryList" class="category-list"></div>
-  <p id="emptyState" class="empty-state hidden">
+  <p id="emptyState" class="empty-state hidden" data-i18n-html="empty.noCategories">
     Noch keine Kategorien vorhanden. Tippe oben rechts auf <strong>+</strong>, um deine erste Kategorie anzulegen.
   </p>
+  <div id="adSlot" class="ad-slot" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
+    <!-- Placeholder only. To go live with a real provider (e.g. Google
+         AdSense), replace this inner markup with the provider's ad-unit
+         snippet — #adSlot's position (below the category list, outside the
+         fixed bottom bar and the sticky random-button area) and its
+         offline-hiding behavior (toggled in app.js) stay unchanged. -->
+    <span class="ad-slot-label" data-i18n="ads.placeholder">Werbung</span>
+  </div>
 </main>
 
 <div class="bottom-bar">
   <div class="volume-control">
     <span aria-hidden="true">🔉</span>
-    <input id="masterVolume" type="range" min="0" max="100" value="80" aria-label="Master-Lautstärke">
+    <input id="masterVolume" type="range" min="0" max="100" value="80" aria-label="Master-Lautstärke" data-i18n-aria-label="bottomBar.volumeAriaLabel">
     <span aria-hidden="true">🔊</span>
   </div>
-  <button id="stopAllBtn" class="stop-all-btn" type="button">⏹ Stop All</button>
+  <button id="stopAllBtn" class="stop-all-btn" type="button">⏹ <span data-i18n="bottomBar.stopAll">Stop All</span></button>
 </div>
 
 <footer class="app-footer">
-  <a href="#" class="footer-link" data-placeholder="Impressum">Impressum</a>
-  <a href="#" class="footer-link" data-placeholder="Datenschutz">Datenschutz</a>
-  <a href="#" class="footer-link" data-placeholder="AGB">AGB</a>
+  <a href="#" class="footer-link" data-info-key="imprint" data-i18n="footer.imprint">Impressum</a>
+  <a href="#" class="footer-link" data-info-key="privacy" data-i18n="footer.privacy">Datenschutz</a>
+  <a href="#" class="footer-link" data-info-key="terms" data-i18n="footer.terms">AGB</a>
 </footer>
 
 <!-- Category modal (create/edit) -->
 <dialog id="categoryDialog" class="app-dialog">
   <form id="categoryForm" method="dialog">
-    <h2 id="categoryDialogTitle">Neue Kategorie</h2>
+    <h2 id="categoryDialogTitle" data-i18n="categoryDialog.newTitle">Neue Kategorie</h2>
     <input type="hidden" id="categoryId">
 
     <label class="field">
-      <span>Name</span>
-      <input id="categoryName" type="text" required maxlength="40" placeholder="z. B. Applaus">
+      <span data-i18n="categoryDialog.nameLabel">Name</span>
+      <input id="categoryName" type="text" required maxlength="40" placeholder="z. B. Applaus" data-i18n-placeholder="categoryDialog.namePlaceholder">
     </label>
 
     <label class="field">
-      <span>Farbe</span>
+      <span data-i18n="categoryDialog.colorLabel">Farbe</span>
       <input id="categoryColor" type="color" value="#7c3aed">
     </label>
 
     <div class="dialog-actions">
-      <button type="button" id="deleteCategoryBtn" class="btn btn-danger hidden">Löschen</button>
+      <button type="button" id="deleteCategoryBtn" class="btn btn-danger hidden" data-i18n="dialogCommon.delete">Löschen</button>
       <span class="spacer"></span>
-      <button type="button" class="btn btn-ghost" data-close-dialog>Abbrechen</button>
-      <button type="submit" class="btn btn-primary">Speichern</button>
+      <button type="button" class="btn btn-ghost" data-close-dialog data-i18n="dialogCommon.cancel">Abbrechen</button>
+      <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.save">Speichern</button>
     </div>
   </form>
 </dialog>
@@ -88,40 +100,40 @@
 <!-- Jingle modal (create/edit) -->
 <dialog id="jingleDialog" class="app-dialog">
   <form id="jingleForm" method="dialog">
-    <h2 id="jingleDialogTitle">Neuer Jingle</h2>
+    <h2 id="jingleDialogTitle" data-i18n="jingleDialog.newTitle">Neuer Jingle</h2>
     <input type="hidden" id="jingleId">
 
     <label class="field">
-      <span>Audiodatei (MP3/WAV)</span>
+      <span data-i18n="jingleDialog.fileLabel">Audiodatei (MP3/WAV)</span>
       <input id="jingleFile" type="file" accept="audio/mpeg,audio/wav,audio/mp3,audio/*">
     </label>
     <p id="jingleFileHint" class="field-hint hidden"></p>
 
     <label class="field">
-      <span>Anzeigename</span>
-      <input id="jingleName" type="text" required maxlength="40" placeholder="z. B. Applaus laut">
+      <span data-i18n="jingleDialog.nameLabel">Anzeigename</span>
+      <input id="jingleName" type="text" required maxlength="40" placeholder="z. B. Applaus laut" data-i18n-placeholder="jingleDialog.namePlaceholder">
     </label>
 
     <label class="field">
-      <span>Kategorie</span>
+      <span data-i18n="jingleDialog.categoryLabel">Kategorie</span>
       <select id="jingleCategory" required></select>
     </label>
 
     <label class="field field-checkbox">
       <input id="jingleColorOverrideEnabled" type="checkbox">
-      <span>Eigene Farbe verwenden</span>
+      <span data-i18n="jingleDialog.colorOverrideLabel">Eigene Farbe verwenden</span>
     </label>
 
     <label class="field" id="jingleColorField">
-      <span>Farbe</span>
+      <span data-i18n="jingleDialog.colorLabel">Farbe</span>
       <input id="jingleColor" type="color" value="#7c3aed">
     </label>
 
     <div class="dialog-actions">
-      <button type="button" id="deleteJingleBtn" class="btn btn-danger hidden">Löschen</button>
+      <button type="button" id="deleteJingleBtn" class="btn btn-danger hidden" data-i18n="dialogCommon.delete">Löschen</button>
       <span class="spacer"></span>
-      <button type="button" class="btn btn-ghost" data-close-dialog>Abbrechen</button>
-      <button type="submit" class="btn btn-primary">Speichern</button>
+      <button type="button" class="btn btn-ghost" data-close-dialog data-i18n="dialogCommon.cancel">Abbrechen</button>
+      <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.save">Speichern</button>
     </div>
   </form>
 </dialog>
@@ -129,37 +141,60 @@
 <!-- Account & sync -->
 <dialog id="accountDialog" class="app-dialog">
   <form id="authForm">
-    <h2>Konto &amp; Synchronisierung</h2>
+    <h2 data-i18n="account.dialogTitle">Konto &amp; Synchronisierung</h2>
 
     <div id="authLoggedOutView">
-      <p class="field-hint" style="margin-top: -4px;">
+      <p class="field-hint" style="margin-top: -4px;" data-i18n="account.loggedOutIntro">
         Melde dich per Magic Link an, um deine Kategorien und Jingles
         geräteübergreifend zu synchronisieren. Ohne Anmeldung funktioniert
         die App weiterhin komplett offline und lokal.
       </p>
       <label class="field">
-        <span>E-Mail-Adresse</span>
-        <input id="authEmail" type="email" required placeholder="du@example.com" autocomplete="email">
+        <span data-i18n="account.emailLabel">E-Mail-Adresse</span>
+        <input id="authEmail" type="email" required placeholder="du@example.com" autocomplete="email" data-i18n-placeholder="account.emailPlaceholder">
       </label>
       <p id="authMessage" class="field-hint hidden" role="status" aria-live="polite"></p>
       <div class="dialog-actions">
         <span class="spacer"></span>
-        <button type="button" class="btn btn-ghost" data-close-dialog>Schließen</button>
-        <button type="submit" id="authSendBtn" class="btn btn-primary">Magic Link senden</button>
+        <button type="button" class="btn btn-ghost" data-close-dialog data-i18n="dialogCommon.close">Schließen</button>
+        <button type="submit" id="authSendBtn" class="btn btn-primary" data-i18n="account.sendMagicLink">Magic Link senden</button>
       </div>
     </div>
 
     <div id="authLoggedInView" class="hidden">
       <p class="field-hint" style="margin: -4px 0 4px;">
-        Angemeldet als <strong id="authUserEmail"></strong>
+        <span data-i18n="account.loggedInAs">Angemeldet als</span> <strong id="authUserEmail"></strong>
       </p>
       <p id="syncStatusText" class="field-hint" style="margin-bottom: 14px;"></p>
       <div class="dialog-actions">
-        <button type="button" id="signOutBtn" class="btn btn-danger">Abmelden</button>
+        <button type="button" id="signOutBtn" class="btn btn-danger" data-i18n="account.signOut">Abmelden</button>
         <span class="spacer"></span>
-        <button type="button" id="syncNowBtn" class="btn btn-ghost">Jetzt synchronisieren</button>
-        <button type="button" class="btn btn-primary" data-close-dialog>Fertig</button>
+        <button type="button" id="syncNowBtn" class="btn btn-ghost" data-i18n="account.syncNow">Jetzt synchronisieren</button>
+        <button type="button" class="btn btn-primary" data-close-dialog data-i18n="dialogCommon.done">Fertig</button>
       </div>
+    </div>
+  </form>
+</dialog>
+
+<!-- Settings -->
+<dialog id="settingsDialog" class="app-dialog">
+  <form id="settingsForm" method="dialog">
+    <h2 data-i18n="settings.dialogTitle">Einstellungen</h2>
+
+    <label class="field">
+      <span data-i18n="settings.languageLabel">Sprache</span>
+      <select id="languageSelect">
+        <option value="de" data-i18n="settings.languageGerman">Deutsch</option>
+        <option value="en" data-i18n="settings.languageEnglish">English</option>
+      </select>
+    </label>
+    <p class="field-hint" data-i18n="settings.languageHint">
+      Wird lokal gespeichert und, sobald angemeldet, geräteübergreifend synchronisiert.
+    </p>
+
+    <div class="dialog-actions">
+      <span class="spacer"></span>
+      <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.done">Fertig</button>
     </div>
   </form>
 </dialog>
@@ -171,7 +206,7 @@
     <p id="infoDialogText">Inhalt folgt.</p>
     <div class="dialog-actions">
       <span class="spacer"></span>
-      <button type="submit" class="btn btn-primary">OK</button>
+      <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.ok">OK</button>
     </div>
   </form>
 </dialog>
@@ -182,6 +217,7 @@
 <script src="js/config.js"></script>
 <script src="js/db.js"></script>
 <script src="js/audio.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/sync.js"></script>
 <script src="js/app.js"></script>
 </body>

@@ -1,0 +1,122 @@
+{
+  "app": {
+    "title": "Random Jingle",
+    "description": "Random Jingle – lokale Soundboard-PWA mit optionaler Cloud-Synchronisierung."
+  },
+  "header": {
+    "accountAriaLabel": "Konto & Synchronisierung",
+    "accountTitleLoggedOut": "Anmelden für Cloud-Sync",
+    "accountTitleLoggedIn": "Angemeldet als {email} — Konto & Synchronisierung",
+    "settingsTitle": "Einstellungen",
+    "settingsAriaLabel": "Einstellungen",
+    "addMenuTitle": "Neu anlegen",
+    "addMenuAriaLabel": "Neu anlegen",
+    "addCategory": "Neue Kategorie",
+    "addJingle": "Neuer Jingle"
+  },
+  "empty": {
+    "noCategories": "Noch keine Kategorien vorhanden. Tippe oben rechts auf <strong>+</strong>, um deine erste Kategorie anzulegen.",
+    "noJingles": "Noch keine Jingles. Nutze + oben rechts, um einen hinzuzufügen."
+  },
+  "category": {
+    "editTitle": "Kategorie bearbeiten",
+    "jingleCountOne": "{count} Jingle",
+    "jingleCountOther": "{count} Jingles",
+    "noJinglesToast": "Keine Jingles in \"{name}\"."
+  },
+  "jingle": {
+    "editTitle": "Jingle bearbeiten",
+    "addToCategoryTitle": "Jingle zu dieser Kategorie hinzufügen"
+  },
+  "random": {
+    "label": "Random"
+  },
+  "bottomBar": {
+    "volumeAriaLabel": "Master-Lautstärke",
+    "stopAll": "Stop All"
+  },
+  "footer": {
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "terms": "AGB",
+    "imprintText": "Platzhalter für das Impressum. Wird in einer späteren Phase ergänzt.",
+    "privacyText": "Platzhalter für die Datenschutzerklärung. Wird in einer späteren Phase ergänzt.",
+    "termsText": "Platzhalter für die AGB. Wird in einer späteren Phase ergänzt."
+  },
+  "dialogCommon": {
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "close": "Schließen",
+    "done": "Fertig",
+    "ok": "OK",
+    "delete": "Löschen"
+  },
+  "categoryDialog": {
+    "newTitle": "Neue Kategorie",
+    "editTitle": "Kategorie bearbeiten",
+    "nameLabel": "Name",
+    "namePlaceholder": "z. B. Applaus",
+    "colorLabel": "Farbe",
+    "deleteConfirmWithJingles": "Kategorie und {count} zugehörige Jingle(s) wirklich löschen?",
+    "deleteConfirm": "Kategorie wirklich löschen?"
+  },
+  "jingleDialog": {
+    "newTitle": "Neuer Jingle",
+    "editTitle": "Jingle bearbeiten",
+    "fileLabel": "Audiodatei (MP3/WAV)",
+    "fileHintKeepNamed": "Aktuelle Datei: {fileName} (leer lassen, um sie zu behalten)",
+    "fileHintKeepGeneric": "Leer lassen, um die aktuelle Datei zu behalten.",
+    "nameLabel": "Anzeigename",
+    "namePlaceholder": "z. B. Applaus laut",
+    "categoryLabel": "Kategorie",
+    "colorOverrideLabel": "Eigene Farbe verwenden",
+    "colorLabel": "Farbe",
+    "deleteConfirm": "Jingle wirklich löschen?"
+  },
+  "account": {
+    "dialogTitle": "Konto & Synchronisierung",
+    "loggedOutIntro": "Melde dich per Magic Link an, um deine Kategorien und Jingles geräteübergreifend zu synchronisieren. Ohne Anmeldung funktioniert die App weiterhin komplett offline und lokal.",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "du@example.com",
+    "sendMagicLink": "Magic Link senden",
+    "loggedInAs": "Angemeldet als",
+    "signOut": "Abmelden",
+    "syncNow": "Jetzt synchronisieren",
+    "sendingLink": "Link wird gesendet…",
+    "linkSent": "Magic Link an {email} gesendet. Bitte E-Mail-Postfach prüfen und den Link öffnen.",
+    "sendFailed": "Senden fehlgeschlagen: {error}",
+    "signedOutToast": "Abgemeldet. Das Board bleibt lokal nutzbar.",
+    "syncStatus": {
+      "syncing": "Synchronisiere…",
+      "failed": "Synchronisierung fehlgeschlagen: {error}",
+      "offline": "Offline — wird synchronisiert, sobald wieder online.",
+      "lastSync": "Zuletzt synchronisiert: {time}",
+      "never": "Noch nicht synchronisiert."
+    }
+  },
+  "settings": {
+    "dialogTitle": "Einstellungen",
+    "languageLabel": "Sprache",
+    "languageGerman": "Deutsch",
+    "languageEnglish": "English",
+    "languageHint": "Wird lokal gespeichert und, sobald angemeldet, geräteübergreifend synchronisiert."
+  },
+  "ads": {
+    "placeholder": "Werbung",
+    "ariaLabel": "Werbung"
+  },
+  "toast": {
+    "categoryUpdated": "Kategorie aktualisiert.",
+    "categoryCreated": "Kategorie angelegt.",
+    "categoryDeleted": "Kategorie gelöscht.",
+    "jingleUpdated": "Jingle aktualisiert.",
+    "jingleCreated": "Jingle angelegt.",
+    "jingleDeleted": "Jingle gelöscht.",
+    "saveFailed": "Speichern fehlgeschlagen.",
+    "fileRequired": "Bitte eine Audiodatei auswählen.",
+    "playbackFailed": "Wiedergabe fehlgeschlagen.",
+    "downloadingAudio": "Audio wird heruntergeladen…",
+    "audioUnavailable": "Audiodatei ist (noch) nicht verfügbar. Später erneut versuchen.",
+    "loadFailed": "Daten konnten nicht geladen werden."
+  }
+}

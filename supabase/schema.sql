@@ -1,4 +1,4 @@
--- Random Jingle – Phase 2 Supabase schema
+-- Random Jingle – Supabase schema (Phase 2 sync + Phase 3 language setting)
 -- Run this once in your project's SQL editor (Supabase Dashboard -> SQL Editor).
 -- Safe to re-run: every statement is idempotent. The SQL editor runs a pasted
 -- script as a single transaction, so ANY non-idempotent statement failing
@@ -39,6 +39,15 @@ create table if not exists public.jingles (
   sort_order integer not null default 0,
   deleted boolean not null default false,
   created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+-- One row per user: their preferred UI language (Phase 3). Same
+-- client-timestamp-trusted updated_at / Last-Write-Wins convention as
+-- categories/jingles.
+create table if not exists public.user_settings (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  language text not null default 'de',
   updated_at timestamptz not null default now()
 );
 
@@ -83,6 +92,20 @@ create policy jingles_update_own on public.jingles
 drop policy if exists jingles_delete_own on public.jingles;
 create policy jingles_delete_own on public.jingles
   for delete using (auth.uid() = user_id);
+
+alter table public.user_settings enable row level security;
+
+drop policy if exists user_settings_select_own on public.user_settings;
+create policy user_settings_select_own on public.user_settings
+  for select using (auth.uid() = user_id);
+
+drop policy if exists user_settings_insert_own on public.user_settings;
+create policy user_settings_insert_own on public.user_settings
+  for insert with check (auth.uid() = user_id);
+
+drop policy if exists user_settings_update_own on public.user_settings;
+create policy user_settings_update_own on public.user_settings
+  for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
 -- ---------------------------------------------------------------------------
 -- Storage: private bucket for jingle audio, one folder per user

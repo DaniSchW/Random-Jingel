@@ -59,14 +59,22 @@
   const signOutBtn = document.getElementById('signOutBtn');
   const syncNowBtn = document.getElementById('syncNowBtn');
 
+  const settingsBtn = document.getElementById('settingsBtn');
+  const settingsDialog = document.getElementById('settingsDialog');
+  const languageSelect = document.getElementById('languageSelect');
+
+  const adSlot = document.getElementById('adSlot');
+
   const masterVolumeInput = document.getElementById('masterVolume');
   const stopAllBtn = document.getElementById('stopAllBtn');
   const toastEl = document.getElementById('toast');
 
-  const FOOTER_PLACEHOLDER_TEXT = {
-    Impressum: 'Platzhalter für das Impressum. Wird in einer späteren Phase ergänzt.',
-    Datenschutz: 'Platzhalter für die Datenschutzerklärung. Wird in einer späteren Phase ergänzt.',
-    AGB: 'Platzhalter für die AGB. Wird in einer späteren Phase ergänzt.',
+  // Maps each footer link's data-info-key to the i18n key prefix for its
+  // placeholder dialog title/body (footer.imprint/footer.imprintText, etc.).
+  const FOOTER_INFO_KEYS = {
+    imprint: 'imprint',
+    privacy: 'privacy',
+    terms: 'terms',
   };
 
   // ---- Utilities ----
@@ -154,13 +162,13 @@
     const nameBtn = document.createElement('button');
     nameBtn.type = 'button';
     nameBtn.className = 'category-name-btn';
-    nameBtn.title = 'Kategorie bearbeiten';
+    nameBtn.title = RJI18n.t('category.editTitle');
     nameBtn.innerHTML = `<span>${escapeHtml(cat.name)}</span><span class="edit-hint" aria-hidden="true">✎</span>`;
     nameBtn.addEventListener('click', () => openCategoryDialog(cat));
 
     const count = document.createElement('span');
     count.className = 'category-count';
-    count.textContent = `${jingles.length} Jingle${jingles.length === 1 ? '' : 's'}`;
+    count.textContent = RJI18n.tCount('category.jingleCount', jingles.length);
 
     heading.append(dot, nameBtn, count);
 
@@ -170,13 +178,14 @@
     const randomBtn = document.createElement('button');
     randomBtn.type = 'button';
     randomBtn.className = 'random-btn';
-    randomBtn.innerHTML = '<span class="random-icon" aria-hidden="true">🔀</span><span>Random</span>';
+    randomBtn.innerHTML = `<span class="random-icon" aria-hidden="true">🔀</span><span>${escapeHtml(RJI18n.t('random.label'))}</span>`;
     applyColorVars(randomBtn, cat.color);
     randomBtn.addEventListener('click', () => playRandom(cat));
     randomButtonEls.set(cat.id, randomBtn);
 
     const scroll = document.createElement('div');
     scroll.className = 'jingle-scroll';
+    scroll.dataset.i18nEmpty = RJI18n.t('empty.noJingles');
 
     for (const jingle of jingles) {
       scroll.appendChild(renderJingleItem(jingle));
@@ -185,7 +194,7 @@
     const addQuickBtn = document.createElement('button');
     addQuickBtn.type = 'button';
     addQuickBtn.className = 'add-jingle-quick';
-    addQuickBtn.title = 'Jingle zu dieser Kategorie hinzufügen';
+    addQuickBtn.title = RJI18n.t('jingle.addToCategoryTitle');
     addQuickBtn.textContent = '+';
     addQuickBtn.addEventListener('click', () => openJingleDialog(null, cat.id));
     scroll.appendChild(addQuickBtn);
@@ -209,7 +218,7 @@
     const editBtn = document.createElement('button');
     editBtn.type = 'button';
     editBtn.className = 'jingle-edit-btn';
-    editBtn.title = 'Jingle bearbeiten';
+    editBtn.title = RJI18n.t('jingle.editTitle');
     editBtn.textContent = '✎';
     editBtn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -240,10 +249,10 @@
     let blob = jingle.blob;
     if (!blob) {
       // Synced from another device but the audio hasn't been cached here yet.
-      showToast('Audio wird heruntergeladen…');
+      showToast(RJI18n.t('toast.downloadingAudio'));
       blob = await RJSync.ensureBlob(jingle);
       if (!blob) {
-        showToast('Audiodatei ist (noch) nicht verfügbar. Später erneut versuchen.');
+        showToast(RJI18n.t('toast.audioUnavailable'));
         return;
       }
     }
@@ -256,14 +265,14 @@
       });
     } catch (err) {
       console.error(err);
-      showToast('Wiedergabe fehlgeschlagen.');
+      showToast(RJI18n.t('toast.playbackFailed'));
     }
   }
 
   function playRandom(cat) {
     const jingles = state.jinglesByCategory.get(cat.id) || [];
     if (jingles.length === 0) {
-      showToast(`Keine Jingles in "${cat.name}".`);
+      showToast(RJI18n.t('category.noJinglesToast', { name: cat.name }));
       return;
     }
     const jingle = jingles[Math.floor(Math.random() * jingles.length)];
@@ -310,13 +319,13 @@
   function openCategoryDialog(cat) {
     categoryForm.reset();
     if (cat) {
-      categoryDialogTitle.textContent = 'Kategorie bearbeiten';
+      categoryDialogTitle.textContent = RJI18n.t('categoryDialog.editTitle');
       categoryIdInput.value = String(cat.id);
       categoryNameInput.value = cat.name;
       categoryColorInput.value = cat.color;
       deleteCategoryBtn.classList.remove('hidden');
     } else {
-      categoryDialogTitle.textContent = 'Neue Kategorie';
+      categoryDialogTitle.textContent = RJI18n.t('categoryDialog.newTitle');
       categoryIdInput.value = '';
       categoryColorInput.value = randomNiceColor();
       deleteCategoryBtn.classList.add('hidden');
@@ -340,17 +349,17 @@
     try {
       if (id) {
         await RJDB.updateCategory(id, { name, color });
-        showToast('Kategorie aktualisiert.');
+        showToast(RJI18n.t('toast.categoryUpdated'));
       } else {
         await RJDB.addCategory({ name, color });
-        showToast('Kategorie angelegt.');
+        showToast(RJI18n.t('toast.categoryCreated'));
       }
       closeDialog(categoryDialog);
       await loadState();
       RJSync.pushSoon();
     } catch (err) {
       console.error(err);
-      showToast('Speichern fehlgeschlagen.');
+      showToast(RJI18n.t('toast.saveFailed'));
     }
   });
 
@@ -359,12 +368,12 @@
     if (!id) return;
     const jingleCount = (state.jinglesByCategory.get(id) || []).length;
     const msg = jingleCount > 0
-      ? `Kategorie und ${jingleCount} zugehörige Jingle(s) wirklich löschen?`
-      : 'Kategorie wirklich löschen?';
+      ? RJI18n.t('categoryDialog.deleteConfirmWithJingles', { count: jingleCount })
+      : RJI18n.t('categoryDialog.deleteConfirm');
     if (!confirm(msg)) return;
     await RJDB.deleteCategory(id);
     closeDialog(categoryDialog);
-    showToast('Kategorie gelöscht.');
+    showToast(RJI18n.t('toast.categoryDeleted'));
     await loadState();
     RJSync.pushSoon();
   });
@@ -375,12 +384,12 @@
     populateCategorySelect();
 
     if (jingle) {
-      jingleDialogTitle.textContent = 'Jingle bearbeiten';
+      jingleDialogTitle.textContent = RJI18n.t('jingleDialog.editTitle');
       jingleIdInput.value = String(jingle.id);
       jingleFileInput.required = false;
       jingleFileHint.textContent = jingle.fileName
-        ? `Aktuelle Datei: ${jingle.fileName} (leer lassen, um sie zu behalten)`
-        : 'Leer lassen, um die aktuelle Datei zu behalten.';
+        ? RJI18n.t('jingleDialog.fileHintKeepNamed', { fileName: jingle.fileName })
+        : RJI18n.t('jingleDialog.fileHintKeepGeneric');
       jingleFileHint.classList.remove('hidden');
       jingleNameInput.value = jingle.name;
       jingleCategorySelect.value = String(jingle.categoryId);
@@ -390,7 +399,7 @@
       jingleColorField.classList.toggle('hidden', !hasOverride);
       deleteJingleBtn.classList.remove('hidden');
     } else {
-      jingleDialogTitle.textContent = 'Neuer Jingle';
+      jingleDialogTitle.textContent = RJI18n.t('jingleDialog.newTitle');
       jingleIdInput.value = '';
       jingleFileInput.required = true;
       jingleFileHint.classList.add('hidden');
@@ -434,7 +443,7 @@
 
     if (!name || !categoryId) return;
     if (!id && !file) {
-      showToast('Bitte eine Audiodatei auswählen.');
+      showToast(RJI18n.t('toast.fileRequired'));
       return;
     }
 
@@ -449,29 +458,29 @@
       if (id) {
         await RJDB.updateJingle(id, changes);
         RJAudio.invalidate(id);
-        showToast('Jingle aktualisiert.');
+        showToast(RJI18n.t('toast.jingleUpdated'));
       } else {
         await RJDB.addJingle(changes);
-        showToast('Jingle angelegt.');
+        showToast(RJI18n.t('toast.jingleCreated'));
       }
       closeDialog(jingleDialog);
       await loadState();
       RJSync.pushSoon();
     } catch (err) {
       console.error(err);
-      showToast('Speichern fehlgeschlagen.');
+      showToast(RJI18n.t('toast.saveFailed'));
     }
   });
 
   deleteJingleBtn.addEventListener('click', async () => {
     const id = jingleIdInput.value;
     if (!id) return;
-    if (!confirm('Jingle wirklich löschen?')) return;
+    if (!confirm(RJI18n.t('jingleDialog.deleteConfirm'))) return;
     RJAudio.stop(id);
     RJAudio.invalidate(id);
     await RJDB.deleteJingle(id);
     closeDialog(jingleDialog);
-    showToast('Jingle gelöscht.');
+    showToast(RJI18n.t('toast.jingleDeleted'));
     await loadState();
     RJSync.pushSoon();
   });
@@ -495,9 +504,9 @@
   document.querySelectorAll('.footer-link').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const key = link.dataset.placeholder;
-      infoDialogTitle.textContent = key;
-      infoDialogText.textContent = FOOTER_PLACEHOLDER_TEXT[key] || 'Inhalt folgt.';
+      const infoKey = FOOTER_INFO_KEYS[link.dataset.infoKey];
+      infoDialogTitle.textContent = RJI18n.t(`footer.${infoKey}`);
+      infoDialogText.textContent = RJI18n.t(`footer.${infoKey}Text`);
       infoDialog.showModal();
     });
   });
@@ -513,11 +522,14 @@
 
   // ---- Account / Cloud-Sync ----
   function formatSyncStatus(status) {
-    if (status.syncing) return 'Synchronisiere…';
-    if (status.lastError) return `Synchronisierung fehlgeschlagen: ${status.lastError}`;
-    if (!status.online) return 'Offline — wird synchronisiert, sobald wieder online.';
-    if (status.lastSyncAt) return `Zuletzt synchronisiert: ${new Date(status.lastSyncAt).toLocaleTimeString('de-DE')}`;
-    return 'Noch nicht synchronisiert.';
+    if (status.syncing) return RJI18n.t('account.syncStatus.syncing');
+    if (status.lastError) return RJI18n.t('account.syncStatus.failed', { error: status.lastError });
+    if (!status.online) return RJI18n.t('account.syncStatus.offline');
+    if (status.lastSyncAt) {
+      const locale = RJI18n.getLanguage() === 'en' ? 'en-US' : 'de-DE';
+      return RJI18n.t('account.syncStatus.lastSync', { time: new Date(status.lastSyncAt).toLocaleTimeString(locale) });
+    }
+    return RJI18n.t('account.syncStatus.never');
   }
 
   function refreshAccountDialog() {
@@ -543,14 +555,14 @@
     const email = authEmailInput.value.trim();
     if (!email) return;
     authSendBtn.disabled = true;
-    authMessage.textContent = 'Link wird gesendet…';
+    authMessage.textContent = RJI18n.t('account.sendingLink');
     authMessage.classList.remove('hidden');
     try {
       await RJSync.signInWithEmail(email);
-      authMessage.textContent = `Magic Link an ${email} gesendet. Bitte E-Mail-Postfach prüfen und den Link öffnen.`;
+      authMessage.textContent = RJI18n.t('account.linkSent', { email });
     } catch (err) {
       console.error(err);
-      authMessage.textContent = `Senden fehlgeschlagen: ${err.message || err}`;
+      authMessage.textContent = RJI18n.t('account.sendFailed', { error: err.message || err });
     } finally {
       authSendBtn.disabled = false;
     }
@@ -559,7 +571,7 @@
   signOutBtn.addEventListener('click', async () => {
     await RJSync.signOut();
     closeDialog(accountDialog);
-    showToast('Abgemeldet. Das Board bleibt lokal nutzbar.');
+    showToast(RJI18n.t('account.signedOutToast'));
   });
 
   syncNowBtn.addEventListener('click', () => {
@@ -572,8 +584,8 @@
     accountBtn.classList.toggle('is-syncing', status.syncing);
     accountBtn.classList.toggle('is-error', Boolean(status.lastError) && !status.syncing);
     accountBtn.title = status.authenticated
-      ? `Angemeldet als ${status.email} — Konto & Synchronisierung`
-      : 'Anmelden für Cloud-Sync';
+      ? RJI18n.t('header.accountTitleLoggedIn', { email: status.email })
+      : RJI18n.t('header.accountTitleLoggedOut');
     if (accountDialog.open) refreshAccountDialog();
   });
 
@@ -581,11 +593,47 @@
     loadState().catch((err) => console.error(err));
   });
 
-  // ---- Init ----
-  RJAudio.setMasterVolume(Number(masterVolumeInput.value) / 100);
-  loadState().catch((err) => {
-    console.error(err);
-    showToast('Daten konnten nicht geladen werden.');
+  // ---- Settings (language) ----
+  settingsBtn.addEventListener('click', () => {
+    languageSelect.value = RJI18n.getLanguage();
+    settingsDialog.showModal();
   });
-  RJSync.init().catch((err) => console.error('RJSync.init fehlgeschlagen', err));
+
+  languageSelect.addEventListener('change', () => {
+    RJI18n.setLanguage(languageSelect.value).then(() => RJSync.pushSoon());
+  });
+
+  RJI18n.onChange(() => {
+    // data-i18n elements are already updated by RJI18n itself; re-render
+    // dynamic, JS-generated text (category counts, button titles, the
+    // empty-jingle-list hint) and refresh whatever's currently open.
+    render();
+    if (accountDialog.open) refreshAccountDialog();
+  });
+
+  // ---- Ad slot: never forces network access, just hides while offline ----
+  function updateAdSlotVisibility() {
+    adSlot.classList.toggle('hidden', !navigator.onLine);
+  }
+  window.addEventListener('online', updateAdSlotVisibility);
+  window.addEventListener('offline', updateAdSlotVisibility);
+
+  // ---- Init ----
+  async function boot() {
+    RJAudio.setMasterVolume(Number(masterVolumeInput.value) / 100);
+    updateAdSlotVisibility();
+    try {
+      await RJI18n.init();
+    } catch (err) {
+      console.error('RJI18n.init fehlgeschlagen', err);
+    }
+    try {
+      await loadState();
+    } catch (err) {
+      console.error(err);
+      showToast(RJI18n.t('toast.loadFailed'));
+    }
+    RJSync.init().catch((err) => console.error('RJSync.init fehlgeschlagen', err));
+  }
+  boot();
 })();

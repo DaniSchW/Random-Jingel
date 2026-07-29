@@ -187,9 +187,53 @@ const RJSync = (() => {
     }
   }
 
+  // ---- Language preference (Phase 3) ----
+  // Same local-first, LWW-by-updatedAt convention as categories/jingles, but
+  // for the single per-user row in `user_settings` instead of a collection.
+  async function pushLanguage() {
+    if (!client || !userId) return;
+    const meta = await RJDB.getMeta('language');
+    if (!meta || !meta.dirty) return;
+    try {
+      const { error } = await client.from('user_settings').upsert({
+        user_id: userId,
+        language: meta.code,
+        updated_at: new Date(meta.updatedAt).toISOString(),
+      }, { onConflict: 'user_id' });
+      if (error) throw error;
+      await RJDB.setMeta('language', { ...meta, dirty: false });
+    } catch (err) {
+      console.warn('Sync: Sprachpräferenz-Push fehlgeschlagen', err);
+      setStatus({ lastError: err.message || String(err) });
+    }
+  }
+
+  async function pullLanguage() {
+    if (!client || !userId) return;
+    try {
+      const { data, error } = await client.from('user_settings').select('language, updated_at').eq('user_id', userId);
+      if (error) throw error;
+      const row = data && data[0];
+      if (!row || !row.language) return;
+
+      const remoteUpdatedAt = Date.parse(row.updated_at);
+      const local = (await RJDB.getMeta('language')) || { code: null, updatedAt: 0, dirty: false, auto: true };
+
+      if (local.dirty && local.updatedAt > remoteUpdatedAt) return; // unpushed local edit is newer
+      if (!local.auto && remoteUpdatedAt <= local.updatedAt && !local.dirty) return; // already up to date
+
+      if (typeof RJI18n !== 'undefined') await RJI18n.setLanguage(row.language, { persist: false });
+      await RJDB.setMeta('language', { code: row.language, updatedAt: remoteUpdatedAt, dirty: false });
+    } catch (err) {
+      console.warn('Sync: Sprachpräferenz-Pull fehlgeschlagen', err);
+    }
+  }
+
   // ---- Push (local dirty rows -> Supabase) ----
   async function pushDirty() {
     if (!client || !userId || !navigator.onLine) return;
+
+    await pushLanguage();
 
     const dirtyCats = (await RJDB.getDirty('categories')).filter((c) => c.userId === userId);
     for (const cat of dirtyCats) {
@@ -226,6 +270,7 @@ const RJSync = (() => {
   // ---- Pull (Supabase -> local, merged with LWW) ----
   async function pullAll() {
     if (!client || !userId) return;
+    await pullLanguage();
     const [catRes, jingleRes] = await Promise.all([
       client.from('categories').select('*').eq('user_id', userId),
       client.from('jingles').select('*').eq('user_id', userId),
