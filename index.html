@@ -56,15 +56,19 @@
       <!-- Shown only once ad-cookie consent is granted (RJConsent) and the
            device is online — decided in app.js. The AdSense script itself
            is injected dynamically by js/ads.js at that point, never loaded
-           upfront. The ad unit (data-ad-slot) still needs to be filled in
-           once it's created in the AdSense dashboard; this is a generic
-           responsive placeholder until then. -->
+           upfront, and adsbygoogle.push() (also in app.js) only ever runs
+           after that script has finished loading. in-article/fluid sizes
+           itself to fit here between the category rows, and collapses to
+           nothing (AdSense sets the <ins> to display:none itself) on a
+           no-fill impression — see .ad-slot in css/style.css, which
+           deliberately has no decorative placeholder box of its own. -->
       <div id="adSlotAdsense" class="ad-slot ad-slot-adsense hidden" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
         <ins class="adsbygoogle"
-             style="display:block; width:100%;"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
              data-ad-client="ca-pub-8453553622026562"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
+             data-ad-slot="9134213973"></ins>
       </div>
     </div>
   </div>
