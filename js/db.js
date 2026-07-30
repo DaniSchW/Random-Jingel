@@ -222,7 +222,7 @@ const RJDB = (() => {
     return reqToPromise(t.objectStore(STORE_JINGLES).get(id));
   }
 
-  async function addJingle({ name, categoryId, color, blob, mimeType, fileName }) {
+  async function addJingle({ name, categoryId, color, blob, mimeType, fileName, hotkey }) {
     const t = await tx(STORE_JINGLES, 'readwrite');
     const store = t.objectStore(STORE_JINGLES);
     const count = await reqToPromise(store.count());
@@ -240,6 +240,7 @@ const RJDB = (() => {
       deleted: false,
       trimStart: null,
       trimEnd: null,
+      hotkey: hotkey || null,
       userId: currentUserId,
       createdAt: now,
       updatedAt: now,

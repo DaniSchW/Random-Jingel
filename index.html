@@ -199,6 +199,19 @@
       <input id="jingleColor" type="color" value="#7c3aed">
     </label>
 
+    <label class="field">
+      <span data-i18n="jingleDialog.hotkeyLabel">Tastenkürzel</span>
+      <div class="hotkey-picker">
+        <span id="jingleHotkeyDisplay" class="hotkey-picker-display"></span>
+        <button type="button" id="jingleHotkeyAssignBtn" class="btn btn-ghost" data-i18n="jingleDialog.hotkeyAssign">Zuweisen…</button>
+        <button type="button" id="jingleHotkeyClearBtn" class="btn btn-ghost hidden" data-i18n="jingleDialog.hotkeyClear">Entfernen</button>
+      </div>
+      <input type="hidden" id="jingleHotkeyInput">
+    </label>
+    <p class="field-hint" data-i18n="jingleDialog.hotkeyHint">
+      Ziffer 1–9, optional mit Strg für mehr Kürzel. Funktioniert überall in der App, solange kein Textfeld fokussiert ist.
+    </p>
+
     <button type="button" id="jingleTrimBtn" class="btn btn-ghost hidden" style="margin-bottom: 14px;" data-i18n="trim.editButton">✂️ Zuschneiden…</button>
 
     <div class="dialog-actions">

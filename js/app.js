@@ -7,6 +7,7 @@
   const state = {
     categories: [],
     jinglesByCategory: new Map(), // categoryId -> jingle[]
+    hotkeyMap: new Map(), // hotkey string -> jingle
   };
 
   const jingleButtonEls = new Map(); // jingleId -> { btn, timeSpan, progressEl }
@@ -42,6 +43,10 @@
   const jingleColorInput = document.getElementById('jingleColor');
   const jingleTrimBtn = document.getElementById('jingleTrimBtn');
   const deleteJingleBtn = document.getElementById('deleteJingleBtn');
+  const jingleHotkeyDisplay = document.getElementById('jingleHotkeyDisplay');
+  const jingleHotkeyAssignBtn = document.getElementById('jingleHotkeyAssignBtn');
+  const jingleHotkeyClearBtn = document.getElementById('jingleHotkeyClearBtn');
+  const jingleHotkeyInput = document.getElementById('jingleHotkeyInput');
 
   const accountBtn = document.getElementById('accountBtn');
   const accountDialog = document.getElementById('accountDialog');
@@ -125,6 +130,25 @@
     if (dialog.open) dialog.close();
   }
 
+  // ---- Hotkeys (Phase 9) ----
+  // Stored/synced as "5" or "ctrl+5" (digits 1-9 only, optional Ctrl/Cmd).
+  function normalizeHotkeyEvent(e) {
+    const m = /^Digit([1-9])$/.exec(e.code);
+    if (!m) return null;
+    return (e.ctrlKey || e.metaKey) ? `ctrl+${m[1]}` : m[1];
+  }
+
+  function formatHotkeyBadge(hotkey) {
+    return hotkey.startsWith('ctrl+') ? `⌃${hotkey.slice(5)}` : hotkey;
+  }
+
+  function formatHotkeyFull(hotkey) {
+    if (!hotkey) return RJI18n.t('jingleDialog.hotkeyNone');
+    return hotkey.startsWith('ctrl+')
+      ? `${RJI18n.t('jingleDialog.hotkeyCtrlPrefix')}${hotkey.slice(5)}`
+      : hotkey;
+  }
+
   // ---- Data loading ----
   async function loadState() {
     const [categories, jingles] = await Promise.all([
@@ -139,6 +163,10 @@
         state.jinglesByCategory.set(jingle.categoryId, []);
       }
       state.jinglesByCategory.get(jingle.categoryId).push(jingle);
+    }
+    state.hotkeyMap = new Map();
+    for (const jingle of jingles) {
+      if (jingle.hotkey) state.hotkeyMap.set(jingle.hotkey, jingle);
     }
     render();
     syncAddJingleAvailability();
@@ -244,6 +272,12 @@
     progressEl.setAttribute('aria-hidden', 'true');
 
     btn.append(nameSpan, timeSpan, progressEl);
+    if (jingle.hotkey) {
+      const hotkeyBadge = document.createElement('span');
+      hotkeyBadge.className = 'jingle-btn-hotkey';
+      hotkeyBadge.textContent = formatHotkeyBadge(jingle.hotkey);
+      btn.appendChild(hotkeyBadge);
+    }
     applyColorVars(btn, jingle.color || categoryColorOf(jingle.categoryId));
     btn.addEventListener('click', () => playJingle(jingle, [btn]));
 
@@ -488,9 +522,81 @@
       jingleTrimBtn.classList.add('hidden');
       deleteJingleBtn.classList.add('hidden');
     }
+    jingleHotkeyInput.value = (jingle && jingle.hotkey) || '';
+    updateHotkeyDisplay();
     jingleDialog.showModal();
     jingleNameInput.focus();
   }
+
+  function updateHotkeyDisplay() {
+    jingleHotkeyDisplay.textContent = formatHotkeyFull(jingleHotkeyInput.value);
+    jingleHotkeyClearBtn.classList.toggle('hidden', !jingleHotkeyInput.value);
+  }
+
+  let hotkeyListening = false;
+  let hotkeyListenCleanup = null;
+
+  function cancelHotkeyListening() {
+    if (!hotkeyListening) return;
+    hotkeyListening = false;
+    if (hotkeyListenCleanup) hotkeyListenCleanup();
+    hotkeyListenCleanup = null;
+    updateHotkeyDisplay();
+  }
+
+  jingleHotkeyAssignBtn.addEventListener('click', () => {
+    if (hotkeyListening) return;
+    hotkeyListening = true;
+    const prevLabel = jingleHotkeyAssignBtn.textContent;
+    jingleHotkeyAssignBtn.textContent = RJI18n.t('jingleDialog.hotkeyListening');
+    jingleHotkeyDisplay.textContent = RJI18n.t('jingleDialog.hotkeyListening');
+
+    const onKey = (e) => {
+      // A Ctrl/Cmd+digit combo fires a keydown for the modifier itself
+      // first — ignore that one and keep listening for the actual key.
+      if (e.key === 'Control' || e.key === 'Meta' || e.key === 'Shift' || e.key === 'Alt' || e.key === 'AltGraph') {
+        return;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      hotkeyListening = false;
+      document.removeEventListener('keydown', onKey, true);
+      hotkeyListenCleanup = null;
+      jingleHotkeyAssignBtn.textContent = prevLabel;
+
+      if (e.key === 'Escape') {
+        updateHotkeyDisplay();
+        return;
+      }
+      const normalized = normalizeHotkeyEvent(e);
+      if (!normalized) {
+        updateHotkeyDisplay();
+        showToast(RJI18n.t('jingleDialog.hotkeyInvalid'));
+        return;
+      }
+      const excludeId = jingleIdInput.value || null;
+      const conflict = state.hotkeyMap.get(normalized);
+      if (conflict && conflict.id !== excludeId) {
+        updateHotkeyDisplay();
+        showToast(RJI18n.t('jingleDialog.hotkeyConflict', { name: conflict.name }));
+        return;
+      }
+      jingleHotkeyInput.value = normalized;
+      updateHotkeyDisplay();
+    };
+    hotkeyListenCleanup = () => {
+      document.removeEventListener('keydown', onKey, true);
+      jingleHotkeyAssignBtn.textContent = prevLabel;
+    };
+    document.addEventListener('keydown', onKey, true);
+  });
+
+  jingleHotkeyClearBtn.addEventListener('click', () => {
+    jingleHotkeyInput.value = '';
+    updateHotkeyDisplay();
+  });
+
+  jingleDialog.addEventListener('close', cancelHotkeyListening);
 
   jingleTrimBtn.addEventListener('click', async () => {
     if (!editingJingle) return;
@@ -553,7 +659,7 @@
     }
 
     try {
-      const changes = { name, categoryId, color };
+      const changes = { name, categoryId, color, hotkey: jingleHotkeyInput.value || null };
       if (file) {
         changes.blob = file;
         changes.mimeType = file.type;
@@ -604,6 +710,23 @@
   });
 
   stopAllBtn.addEventListener('click', stopAll);
+
+  // Global hotkey playback (Phase 9): active whenever the app has focus,
+  // except while typing in a field or while a dialog is open (both to avoid
+  // hijacking normal typing, and because the hotkey-assign flow above uses
+  // its own capture-phase listener that already stopPropagation()s).
+  document.addEventListener('keydown', (e) => {
+    if (hotkeyListening) return;
+    const tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) return;
+    if (document.querySelector('dialog[open]')) return;
+    const normalized = normalizeHotkeyEvent(e);
+    if (!normalized) return;
+    const jingle = state.hotkeyMap.get(normalized);
+    if (!jingle) return;
+    e.preventDefault();
+    playJingle(jingle);
+  });
 
   // Footer links (Impressum/Datenschutz/AGB) are real pages now — plain
   // <a href> navigation, no JS needed.

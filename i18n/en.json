@@ -68,6 +68,15 @@
     "categoryLabel": "Category",
     "colorOverrideLabel": "Use a custom color",
     "colorLabel": "Color",
+    "hotkeyLabel": "Keyboard shortcut",
+    "hotkeyNone": "No shortcut",
+    "hotkeyAssign": "Assign…",
+    "hotkeyClear": "Clear",
+    "hotkeyListening": "Press a key… (Esc to cancel)",
+    "hotkeyHint": "Digit 1–9, optionally with Ctrl for more shortcuts. Works anywhere in the app as long as no text field is focused.",
+    "hotkeyCtrlPrefix": "Ctrl+",
+    "hotkeyInvalid": "Only digits 1–9 (optionally with Ctrl) can be used as a shortcut.",
+    "hotkeyConflict": "Already assigned to \"{name}\".",
     "deleteConfirm": "Move this jingle to trash? (recoverable for 24h)"
   },
   "trim": {

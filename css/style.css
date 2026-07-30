@@ -692,6 +692,43 @@ button {
 
 #jingleColorField.hidden { display: none; }
 
+/* ---------- Hotkeys (Phase 9) ---------- */
+.hotkey-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hotkey-picker-display {
+  min-width: 90px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.jingle-btn-hotkey {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 1;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 5px;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .settings-data-actions {
   display: flex;
   flex-wrap: wrap;

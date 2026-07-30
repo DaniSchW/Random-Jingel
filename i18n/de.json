@@ -68,6 +68,15 @@
     "categoryLabel": "Kategorie",
     "colorOverrideLabel": "Eigene Farbe verwenden",
     "colorLabel": "Farbe",
+    "hotkeyLabel": "Tastenkürzel",
+    "hotkeyNone": "Kein Kürzel",
+    "hotkeyAssign": "Zuweisen…",
+    "hotkeyClear": "Entfernen",
+    "hotkeyListening": "Taste drücken… (Esc zum Abbrechen)",
+    "hotkeyHint": "Ziffer 1–9, optional mit Strg für mehr Kürzel. Funktioniert überall in der App, solange kein Textfeld fokussiert ist.",
+    "hotkeyCtrlPrefix": "Strg+",
+    "hotkeyInvalid": "Nur Ziffern 1–9 (optional mit Strg) sind als Tastenkürzel erlaubt.",
+    "hotkeyConflict": "Bereits vergeben an \"{name}\".",
     "deleteConfirm": "Jingle in den Papierkorb verschieben? (24 Std. wiederherstellbar)"
   },
   "trim": {

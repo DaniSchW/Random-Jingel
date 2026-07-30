@@ -47,9 +47,17 @@ create table if not exists public.jingles (
   -- stored audio itself is never modified.
   trim_start double precision,
   trim_end double precision,
+  -- Optional per-jingle keyboard shortcut (Phase 9): "1".."9" or
+  -- "ctrl+1".."ctrl+9". Uniqueness is enforced client-side (a device with
+  -- stale local state could otherwise briefly disagree with another about
+  -- who owns a given hotkey after a sync); no DB constraint here.
+  hotkey text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Idempotent for installs that ran schema.sql before Phase 9.
+alter table public.jingles add column if not exists hotkey text;
 
 -- Idempotent for installs that ran schema.sql before Phase 8.
 alter table public.jingles add column if not exists deleted_at timestamptz;
