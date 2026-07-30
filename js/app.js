@@ -9,7 +9,7 @@
     jinglesByCategory: new Map(), // categoryId -> jingle[]
   };
 
-  const jingleButtonEls = new Map(); // jingleId -> button element
+  const jingleButtonEls = new Map(); // jingleId -> { btn, timeSpan, progressEl }
   const randomButtonEls = new Map(); // categoryId -> button element
 
   // ---- DOM refs ----
@@ -226,7 +226,19 @@
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'jingle-btn';
-    btn.textContent = jingle.name;
+
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'jingle-btn-name';
+    nameSpan.textContent = jingle.name;
+
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'jingle-btn-time hidden';
+
+    const progressEl = document.createElement('span');
+    progressEl.className = 'jingle-btn-progress';
+    progressEl.setAttribute('aria-hidden', 'true');
+
+    btn.append(nameSpan, timeSpan, progressEl);
     applyColorVars(btn, jingle.color || categoryColorOf(jingle.categoryId));
     btn.addEventListener('click', () => playJingle(jingle, [btn]));
 
@@ -241,7 +253,7 @@
     });
 
     item.append(btn, editBtn);
-    jingleButtonEls.set(jingle.id, btn);
+    jingleButtonEls.set(jingle.id, { btn, timeSpan, progressEl });
     return item;
   }
 
@@ -265,8 +277,32 @@
     return { start, duration };
   }
 
+  // Progress bar + "0:03 / 0:08" readout (Phase 7) on the jingle's own
+  // button — driven by RJAudio's requestAnimationFrame loop, so this just
+  // paints whatever elapsed/total it's handed.
+  function formatTime(seconds) {
+    const s = Math.max(0, Math.floor(seconds));
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  }
+
+  function updateJingleProgress(refs, elapsed, total) {
+    if (!refs) return;
+    const pct = total > 0 ? Math.min(100, (elapsed / total) * 100) : 0;
+    refs.progressEl.style.width = `${pct}%`;
+    refs.timeSpan.textContent = `${formatTime(elapsed)} / ${formatTime(total)}`;
+    refs.timeSpan.classList.remove('hidden');
+  }
+
+  function resetJingleProgress(refs) {
+    if (!refs) return;
+    refs.progressEl.style.width = '0%';
+    refs.timeSpan.textContent = '';
+    refs.timeSpan.classList.add('hidden');
+  }
+
   async function playJingle(jingle, extraButtons = []) {
-    const btn = jingleButtonEls.get(jingle.id);
+    const refs = jingleButtonEls.get(jingle.id);
+    const btn = refs && refs.btn;
     const buttons = [btn, ...extraButtons].filter(Boolean);
 
     let blob = jingle.blob;
@@ -287,7 +323,11 @@
         start,
         duration,
         onStart: () => buttons.forEach((b) => b.classList.add('playing')),
-        onEnd: () => buttons.forEach((b) => b.classList.remove('playing')),
+        onProgress: (elapsed, total) => updateJingleProgress(refs, elapsed, total),
+        onEnd: () => {
+          buttons.forEach((b) => b.classList.remove('playing'));
+          resetJingleProgress(refs);
+        },
       });
     } catch (err) {
       console.error(err);
@@ -308,7 +348,10 @@
 
   function stopAll() {
     RJAudio.stopAll();
-    for (const btn of jingleButtonEls.values()) btn.classList.remove('playing');
+    for (const refs of jingleButtonEls.values()) {
+      refs.btn.classList.remove('playing');
+      resetJingleProgress(refs);
+    }
     for (const btn of randomButtonEls.values()) btn.classList.remove('playing');
   }
 
