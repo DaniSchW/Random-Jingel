@@ -652,6 +652,7 @@ button {
 }
 
 .field input[type="text"],
+.field input[type="number"],
 .field select {
   background: var(--bg);
   border: 1px solid var(--border);
