@@ -877,6 +877,25 @@ button {
 .btn-danger { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
 .btn-danger:hover { background: rgba(229,72,77,0.12); }
 
+/* Accept and Decline in the consent banner share this identical style on
+   purpose — see the comment on .consent-actions in index.html. Neither
+   uses --accent (that would read as "the recommended choice") or the
+   de-emphasized ghost look (that would read as "the discouraged choice").
+   Declared after the .btn base rule so its border isn't clobbered by
+   .btn's own `border: none`. */
+.btn-consent {
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  min-width: 160px;
+  text-align: center;
+}
+
+.btn-consent:hover {
+  background: var(--bg);
+  border-color: var(--text-muted);
+}
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed;

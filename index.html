@@ -121,9 +121,15 @@
     Wir würden dir gerne Werbung über Google AdSense zeigen — dafür setzen
     wir Werbe-Cookies. Lehnst du ab, wird keine Werbung angezeigt.
   </p>
+  <!-- Both buttons deliberately share the exact same visual weight (size,
+       border, background, font-weight) — neither is styled as the
+       "preferred" option. Consent must be freely given; a banner that
+       makes Accept visually louder than Decline (e.g. solid accent color
+       vs. a faint ghost button) is a recognized dark pattern and invalid
+       consent under GDPR. -->
   <div class="consent-actions">
-    <button id="consentDeclineBtn" type="button" class="btn btn-ghost" data-i18n="consent.decline">Ablehnen</button>
-    <button id="consentAcceptBtn" type="button" class="btn btn-primary" data-i18n="consent.accept">Werbe-Cookies akzeptieren</button>
+    <button id="consentDeclineBtn" type="button" class="btn btn-consent" data-i18n="consent.decline">Ablehnen</button>
+    <button id="consentAcceptBtn" type="button" class="btn btn-consent" data-i18n="consent.accept">Werbe-Cookies akzeptieren</button>
   </div>
 </div>
 
