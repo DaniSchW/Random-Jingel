@@ -318,6 +318,30 @@
       <input type="file" id="importFileInput" accept=".zip,application/zip" class="hidden">
     </div>
 
+    <div class="field">
+      <span data-i18n="settings.trashLabel">Papierkorb</span>
+      <div class="settings-data-actions">
+        <button type="button" id="openTrashBtn" class="btn btn-ghost" data-i18n="settings.trashButton">Gelöschte Jingles anzeigen</button>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <span class="spacer"></span>
+      <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.done">Fertig</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Trash: jingles deleted within the last 24h, restorable. -->
+<dialog id="trashDialog" class="app-dialog">
+  <form method="dialog">
+    <h2 data-i18n="trash.title">Papierkorb</h2>
+    <p class="field-hint" style="margin-top: -4px;" data-i18n="trash.hint">
+      Gelöschte Jingles bleiben 24 Stunden wiederherstellbar und werden danach
+      endgültig entfernt.
+    </p>
+    <ul id="trashList" class="trash-list"></ul>
+    <p id="trashEmptyHint" class="field-hint hidden" data-i18n="trash.empty">Der Papierkorb ist leer.</p>
     <div class="dialog-actions">
       <span class="spacer"></span>
       <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.done">Fertig</button>

@@ -261,12 +261,54 @@ const RJDB = (() => {
     return updated;
   }
 
+  // Soft delete into the trash (Phase 8): the blob is deliberately kept (not
+  // nulled) so a restore within the 24h window needs no re-download. Only
+  // purgeExpiredTrash() below does the final, unrecoverable removal.
   async function deleteJingle(id) {
     const t = await tx(STORE_JINGLES, 'readwrite');
     const store = t.objectStore(STORE_JINGLES);
     const existing = await reqToPromise(store.get(id));
     if (!existing) return;
-    await reqToPromise(store.put({ ...existing, deleted: true, blob: null, updatedAt: Date.now(), dirty: true }));
+    const now = Date.now();
+    await reqToPromise(store.put({ ...existing, deleted: true, deletedAt: now, updatedAt: now, dirty: true }));
+  }
+
+  async function restoreJingle(id) {
+    const t = await tx(STORE_JINGLES, 'readwrite');
+    const store = t.objectStore(STORE_JINGLES);
+    const existing = await reqToPromise(store.get(id));
+    if (!existing) return;
+    await reqToPromise(store.put({ ...existing, deleted: false, deletedAt: null, updatedAt: Date.now(), dirty: true }));
+  }
+
+  // Only jingles deleted through deleteJingle() (which stamps deletedAt)
+  // show up here — bulk paths like deleteCategory's cascade or wipeAll()
+  // don't set deletedAt, so they're not recoverable through the trash.
+  async function getTrash() {
+    const t = await tx(STORE_JINGLES, 'readonly');
+    const all = await reqToPromise(t.objectStore(STORE_JINGLES).getAll());
+    return all
+      .filter((j) => j.deleted && j.deletedAt != null)
+      .sort((a, b) => b.deletedAt - a.deletedAt);
+  }
+
+  // Hard-removes trash entries older than maxAgeMs (default 24h) from
+  // IndexedDB and returns what was purged so the caller (RJSync) can best-
+  // effort clean up the matching Supabase row + Storage object too.
+  const TRASH_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+  async function purgeExpiredTrash(maxAgeMs = TRASH_MAX_AGE_MS) {
+    const t = await tx(STORE_JINGLES, 'readwrite');
+    const store = t.objectStore(STORE_JINGLES);
+    const all = await reqToPromise(store.getAll());
+    const now = Date.now();
+    const purged = [];
+    for (const j of all) {
+      if (!j.deleted || j.deletedAt == null) continue;
+      if (now - j.deletedAt < maxAgeMs) continue;
+      await reqToPromise(store.delete(j.id));
+      purged.push({ id: j.id, storagePath: j.storagePath || null, userId: j.userId });
+    }
+    return purged;
   }
 
   // ---- Sync-only helpers (used by RJSync, not the UI) ----
@@ -291,16 +333,20 @@ const RJDB = (() => {
   }
 
   // Merges a row pulled from Supabase (or a realtime event) using
-  // Last-Write-Wins: whichever side has the newer updatedAt survives. A
-  // remote tombstone that wins hard-deletes the local row (tombstones are a
-  // sync-log detail, not something the local store needs to remember).
+  // Last-Write-Wins: whichever side has the newer updatedAt survives. For
+  // categories, a remote tombstone that wins hard-deletes the local row
+  // (tombstones are a sync-log detail there). For jingles (Phase 8), a
+  // remote tombstone instead merges as a soft-delete — so the 24h trash is
+  // shared across devices — and only a genuine DELETE (from purging an
+  // expired trash entry) removes the local row for good; see
+  // handleRealtime()'s DELETE branch and purgeExpiredTrash() in js/sync.js.
   async function upsertFromRemote(storeName, remote) {
     const t = await tx(storeName, 'readwrite');
     const store = t.objectStore(storeName);
     const existing = await reqToPromise(store.get(remote.id));
 
     if (!existing) {
-      if (remote.deleted) return;
+      if (remote.deleted && storeName !== STORE_JINGLES) return;
       await reqToPromise(store.add({ ...remote, blob: null, dirty: false }));
       return;
     }
@@ -312,7 +358,7 @@ const RJDB = (() => {
       return; // already up to date
     }
 
-    if (remote.deleted) {
+    if (remote.deleted && storeName !== STORE_JINGLES) {
       await reqToPromise(store.delete(remote.id));
       return;
     }
@@ -437,6 +483,10 @@ const RJDB = (() => {
     addJingle,
     updateJingle,
     deleteJingle,
+    restoreJingle,
+    getTrash,
+    purgeExpiredTrash,
+    TRASH_MAX_AGE_MS,
     getDirty,
     clearDirtyIfUnchanged,
     upsertFromRemote,

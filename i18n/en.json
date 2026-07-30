@@ -68,7 +68,7 @@
     "categoryLabel": "Category",
     "colorOverrideLabel": "Use a custom color",
     "colorLabel": "Color",
-    "deleteConfirm": "Delete this jingle?"
+    "deleteConfirm": "Move this jingle to trash? (recoverable for 24h)"
   },
   "trim": {
     "editButton": "✂️ Trim…",
@@ -114,7 +114,17 @@
     "importButton": "Import data",
     "exportFailed": "Export failed: {error}",
     "importFailed": "Import failed: {error}",
-    "importDone": "Import complete: {categories} categories, {jingles} jingles."
+    "importDone": "Import complete: {categories} categories, {jingles} jingles.",
+    "trashLabel": "Trash",
+    "trashButton": "Show deleted jingles"
+  },
+  "trash": {
+    "title": "Trash",
+    "hint": "Deleted jingles stay recoverable for 24 hours, then they're permanently removed.",
+    "empty": "The trash is empty.",
+    "restore": "Restore",
+    "restoredToast": "\"{name}\" restored.",
+    "expiresIn": "Expires in {hours}h"
   },
   "ads": {
     "adsensePlaceholder": "Advertisement – AdSense",

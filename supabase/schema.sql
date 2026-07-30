@@ -38,6 +38,10 @@ create table if not exists public.jingles (
   file_name text,
   sort_order integer not null default 0,
   deleted boolean not null default false,
+  -- Set when a jingle is soft-deleted (Phase 8): the trash retains it for
+  -- 24h from this timestamp, after which a purge does a real DELETE here
+  -- (and removes the audio from Storage) instead of just flipping `deleted`.
+  deleted_at timestamptz,
   -- Cut points (Phase 6), in seconds into the original audio file. Both
   -- null means "play the whole file" — trimming is metadata only, the
   -- stored audio itself is never modified.
@@ -46,6 +50,9 @@ create table if not exists public.jingles (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Idempotent for installs that ran schema.sql before Phase 8.
+alter table public.jingles add column if not exists deleted_at timestamptz;
 
 -- Idempotent for installs that ran schema.sql before Phase 6 and already
 -- have this table without these columns.

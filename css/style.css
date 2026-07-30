@@ -698,6 +698,49 @@ button {
   gap: 10px;
 }
 
+/* ---------- Trash (Phase 8) ---------- */
+.trash-list {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trash-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.trash-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.trash-item-name {
+  font-size: 0.9rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trash-item-expiry {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
 /* ---------- Trim editor (Phase 6) ---------- */
 .trim-dialog {
   width: min(480px, 92vw);

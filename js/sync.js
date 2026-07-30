@@ -94,6 +94,7 @@ const RJSync = (() => {
       trim_start: jingle.trimStart ?? null,
       trim_end: jingle.trimEnd ?? null,
       deleted: !!jingle.deleted,
+      deleted_at: jingle.deletedAt != null ? new Date(jingle.deletedAt).toISOString() : null,
       created_at: new Date(jingle.createdAt).toISOString(),
       updated_at: new Date(jingle.updatedAt).toISOString(),
     };
@@ -113,6 +114,7 @@ const RJSync = (() => {
       trimStart: row.trim_start ?? null,
       trimEnd: row.trim_end ?? null,
       deleted: !!row.deleted,
+      deletedAt: row.deleted_at != null ? Date.parse(row.deleted_at) : null,
       createdAt: Date.parse(row.created_at),
       updatedAt: Date.parse(row.updated_at),
     };
@@ -158,6 +160,27 @@ const RJSync = (() => {
     } catch (err) {
       console.warn('Konnte Audio nicht aus Storage entfernen', err);
     }
+  }
+
+  // Trash (Phase 8): hard-removes locally-expired (>24h) trash entries and,
+  // best-effort, their Supabase row + Storage object too. A genuine DELETE
+  // here (vs. the upsert-based tombstone used for the initial soft-delete)
+  // is what other devices see and hard-remove locally in response to, via
+  // handleRealtime()'s DELETE branch below.
+  async function purgeExpiredTrash() {
+    const purged = await RJDB.purgeExpiredTrash();
+    if (!purged.length || !client || !userId || !navigator.onLine) return purged;
+    for (const item of purged) {
+      if (item.userId !== userId) continue; // never owned remotely; nothing to clean up there
+      try {
+        if (item.storagePath) await removeAudio(item.storagePath);
+        const { error } = await client.from('jingles').delete().eq('id', item.id);
+        if (error) throw error;
+      } catch (err) {
+        console.warn('Sync: Papierkorb-Bereinigung (Remote) fehlgeschlagen', err);
+      }
+    }
+    return purged;
   }
 
   async function downloadMissingAudio() {
@@ -468,5 +491,6 @@ const RJSync = (() => {
     pushSoon,
     ensureBlob,
     adminUserStats,
+    purgeExpiredTrash,
   };
 })();

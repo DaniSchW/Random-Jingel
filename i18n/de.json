@@ -68,7 +68,7 @@
     "categoryLabel": "Kategorie",
     "colorOverrideLabel": "Eigene Farbe verwenden",
     "colorLabel": "Farbe",
-    "deleteConfirm": "Jingle wirklich löschen?"
+    "deleteConfirm": "Jingle in den Papierkorb verschieben? (24 Std. wiederherstellbar)"
   },
   "trim": {
     "editButton": "✂️ Zuschneiden…",
@@ -114,7 +114,17 @@
     "importButton": "Daten importieren",
     "exportFailed": "Export fehlgeschlagen: {error}",
     "importFailed": "Import fehlgeschlagen: {error}",
-    "importDone": "Import abgeschlossen: {categories} Kategorie(n), {jingles} Jingle(s)."
+    "importDone": "Import abgeschlossen: {categories} Kategorie(n), {jingles} Jingle(s).",
+    "trashLabel": "Papierkorb",
+    "trashButton": "Gelöschte Jingles anzeigen"
+  },
+  "trash": {
+    "title": "Papierkorb",
+    "hint": "Gelöschte Jingles bleiben 24 Stunden wiederherstellbar und werden danach endgültig entfernt.",
+    "empty": "Der Papierkorb ist leer.",
+    "restore": "Wiederherstellen",
+    "restoredToast": "\"{name}\" wiederhergestellt.",
+    "expiresIn": "Läuft in {hours} Std. ab"
   },
   "ads": {
     "adsensePlaceholder": "Werbung – AdSense",

@@ -60,6 +60,11 @@
   const settingsDialog = document.getElementById('settingsDialog');
   const languageSelect = document.getElementById('languageSelect');
   const adConsentSelect = document.getElementById('adConsentSelect');
+  const openTrashBtn = document.getElementById('openTrashBtn');
+
+  const trashDialog = document.getElementById('trashDialog');
+  const trashList = document.getElementById('trashList');
+  const trashEmptyHint = document.getElementById('trashEmptyHint');
 
   const adSlotAdsense = document.getElementById('adSlotAdsense');
   const adSlotEthical = document.getElementById('adSlotEthical');
@@ -784,6 +789,66 @@
     RJConsent.setStatus(adConsentSelect.value);
   });
 
+  // ---- Trash / undo for deleted jingles (Phase 8) ----
+  function formatHoursRemaining(deletedAt) {
+    const remainingMs = deletedAt + RJDB.TRASH_MAX_AGE_MS - Date.now();
+    const hours = Math.max(1, Math.ceil(remainingMs / (60 * 60 * 1000)));
+    return RJI18n.t('trash.expiresIn', { hours });
+  }
+
+  async function renderTrash() {
+    const trash = await RJDB.getTrash();
+    trashList.innerHTML = '';
+    trashEmptyHint.classList.toggle('hidden', trash.length > 0);
+    trash.forEach((jingle) => {
+      const li = document.createElement('li');
+      li.className = 'trash-item';
+
+      const info = document.createElement('div');
+      info.className = 'trash-item-info';
+      const name = document.createElement('span');
+      name.className = 'trash-item-name';
+      name.textContent = jingle.name;
+      const expiry = document.createElement('span');
+      expiry.className = 'trash-item-expiry';
+      expiry.textContent = formatHoursRemaining(jingle.deletedAt);
+      info.append(name, expiry);
+
+      const restoreBtn = document.createElement('button');
+      restoreBtn.type = 'button';
+      restoreBtn.className = 'btn btn-ghost';
+      restoreBtn.textContent = RJI18n.t('trash.restore');
+      restoreBtn.addEventListener('click', async () => {
+        await RJDB.restoreJingle(jingle.id);
+        await loadState();
+        await renderTrash();
+        showToast(RJI18n.t('trash.restoredToast', { name: jingle.name }));
+        RJSync.pushSoon();
+      });
+
+      li.append(info, restoreBtn);
+      trashList.appendChild(li);
+    });
+  }
+
+  openTrashBtn.addEventListener('click', async () => {
+    closeDialog(settingsDialog);
+    await renderTrash();
+    trashDialog.showModal();
+  });
+
+  // Runs once at boot and then hourly: hard-removes trash entries older than
+  // 24h (locally always; remotely best-effort, see RJSync.purgeExpiredTrash).
+  // A short poll interval isn't needed since nothing in the UI depends on the
+  // purge happening the instant an item expires.
+  async function purgeExpiredTrashAndRefresh() {
+    const purged = await RJSync.purgeExpiredTrash();
+    if (purged.length) {
+      await loadState();
+      if (trashDialog.open) await renderTrash();
+    }
+  }
+
   // ---- Local export/import (Phase 5) ----
   exportDataBtn.addEventListener('click', async () => {
     closeDialog(settingsDialog);
@@ -892,6 +957,10 @@
     }
     applyRoute();
     RJSync.init().catch((err) => console.error('RJSync.init fehlgeschlagen', err));
+    purgeExpiredTrashAndRefresh().catch((err) => console.error('Papierkorb-Bereinigung fehlgeschlagen', err));
+    setInterval(() => {
+      purgeExpiredTrashAndRefresh().catch((err) => console.error('Papierkorb-Bereinigung fehlgeschlagen', err));
+    }, 60 * 60 * 1000);
   }
   boot();
 })();
