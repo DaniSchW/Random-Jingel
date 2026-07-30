@@ -40,6 +40,7 @@
   const jingleColorOverrideEnabled = document.getElementById('jingleColorOverrideEnabled');
   const jingleColorField = document.getElementById('jingleColorField');
   const jingleColorInput = document.getElementById('jingleColor');
+  const jingleTrimBtn = document.getElementById('jingleTrimBtn');
   const deleteJingleBtn = document.getElementById('deleteJingleBtn');
 
   const accountBtn = document.getElementById('accountBtn');
@@ -256,6 +257,14 @@
   }
 
   // ---- Playback ----
+  // Cut points (Phase 6) are metadata only — the stored file is untouched.
+  // trimStart null means "from the start"; trimEnd null means "to the end".
+  function trimRangeFor(jingle) {
+    const start = jingle.trimStart != null ? jingle.trimStart : 0;
+    const duration = jingle.trimEnd != null && jingle.trimEnd > start ? jingle.trimEnd - start : undefined;
+    return { start, duration };
+  }
+
   async function playJingle(jingle, extraButtons = []) {
     const btn = jingleButtonEls.get(jingle.id);
     const buttons = [btn, ...extraButtons].filter(Boolean);
@@ -273,7 +282,10 @@
 
     try {
       RJAudio.ensureContext();
+      const { start, duration } = trimRangeFor(jingle);
       await RJAudio.play(jingle.id, blob, {
+        start,
+        duration,
         onStart: () => buttons.forEach((b) => b.classList.add('playing')),
         onEnd: () => buttons.forEach((b) => b.classList.remove('playing')),
       });
@@ -393,9 +405,12 @@
   });
 
   // ---- Jingle dialog ----
+  let editingJingle = null;
+
   function openJingleDialog(jingle, presetCategoryId) {
     jingleForm.reset();
     populateCategorySelect();
+    editingJingle = jingle || null;
 
     if (jingle) {
       jingleDialogTitle.textContent = RJI18n.t('jingleDialog.editTitle');
@@ -411,6 +426,7 @@
       jingleColorOverrideEnabled.checked = hasOverride;
       jingleColorInput.value = jingle.color || categoryColorOf(jingle.categoryId);
       jingleColorField.classList.toggle('hidden', !hasOverride);
+      jingleTrimBtn.classList.remove('hidden');
       deleteJingleBtn.classList.remove('hidden');
     } else {
       jingleDialogTitle.textContent = RJI18n.t('jingleDialog.newTitle');
@@ -421,11 +437,38 @@
       jingleColorOverrideEnabled.checked = false;
       jingleColorInput.value = categoryColorOf(presetCategoryId ?? jingleCategorySelect.value);
       jingleColorField.classList.add('hidden');
+      jingleTrimBtn.classList.add('hidden');
       deleteJingleBtn.classList.add('hidden');
     }
     jingleDialog.showModal();
     jingleNameInput.focus();
   }
+
+  jingleTrimBtn.addEventListener('click', async () => {
+    if (!editingJingle) return;
+    let blob = editingJingle.blob;
+    if (!blob) {
+      showToast(RJI18n.t('toast.downloadingAudio'));
+      blob = await RJSync.ensureBlob(editingJingle);
+      if (!blob) {
+        showToast(RJI18n.t('toast.audioUnavailable'));
+        return;
+      }
+    }
+    RJTrimUI.open(editingJingle, blob, {
+      onSave: async (trimStart, trimEnd) => {
+        try {
+          await RJDB.updateJingle(editingJingle.id, { trimStart, trimEnd });
+          showToast(RJI18n.t('trim.saved'));
+          await loadState();
+          RJSync.pushSoon();
+        } catch (err) {
+          console.error(err);
+          showToast(RJI18n.t('toast.saveFailed'));
+        }
+      },
+    });
+  });
 
   function populateCategorySelect() {
     jingleCategorySelect.innerHTML = '';

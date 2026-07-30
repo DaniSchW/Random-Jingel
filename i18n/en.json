@@ -70,6 +70,18 @@
     "colorLabel": "Color",
     "deleteConfirm": "Delete this jingle?"
   },
+  "trim": {
+    "editButton": "✂️ Trim…",
+    "title": "Trim jingle",
+    "loading": "Loading waveform…",
+    "startLabel": "Start (sec.)",
+    "endLabel": "End (sec.)",
+    "selectionHint": "Selected: {selected} sec. of {total} sec.",
+    "reset": "Reset",
+    "preview": "▶ Preview",
+    "stopPreview": "⏹ Stop",
+    "saved": "Trim saved."
+  },
   "account": {
     "dialogTitle": "Account & sync",
     "loggedOutIntro": "Sign in with a magic link to sync your categories and jingles across devices. Without signing in, the app keeps working fully offline and locally.",

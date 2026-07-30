@@ -199,9 +199,48 @@
       <input id="jingleColor" type="color" value="#7c3aed">
     </label>
 
+    <button type="button" id="jingleTrimBtn" class="btn btn-ghost hidden" style="margin-bottom: 14px;" data-i18n="trim.editButton">✂️ Zuschneiden…</button>
+
     <div class="dialog-actions">
       <button type="button" id="deleteJingleBtn" class="btn btn-danger hidden" data-i18n="dialogCommon.delete">Löschen</button>
       <span class="spacer"></span>
+      <button type="button" class="btn btn-ghost" data-close-dialog data-i18n="dialogCommon.cancel">Abbrechen</button>
+      <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.save">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Trim editor (Phase 6): waveform + draggable start/end markers. Only
+     ever opened for an existing (already-uploaded) jingle. -->
+<dialog id="trimDialog" class="app-dialog trim-dialog">
+  <form method="dialog">
+    <h2 data-i18n="trim.title">Jingle zuschneiden</h2>
+    <p id="trimJingleName" class="field-hint" style="margin-top: -4px;"></p>
+
+    <p id="trimLoading" class="field-hint" data-i18n="trim.loading">Wellenform wird geladen…</p>
+    <div id="trimWaveformWrap" class="trim-waveform-wrap">
+      <canvas id="trimCanvas" class="trim-canvas"></canvas>
+      <div id="trimSelection" class="trim-selection"></div>
+      <div id="trimHandleStart" class="trim-handle trim-handle-start" tabindex="0" role="slider" aria-label="Start" data-i18n-aria-label="trim.startLabel"></div>
+      <div id="trimHandleEnd" class="trim-handle trim-handle-end" tabindex="0" role="slider" aria-label="Ende" data-i18n-aria-label="trim.endLabel"></div>
+    </div>
+
+    <div class="trim-fields">
+      <label class="field">
+        <span data-i18n="trim.startLabel">Start (Sek.)</span>
+        <input id="trimStartInput" type="number" min="0" step="0.1">
+      </label>
+      <label class="field">
+        <span data-i18n="trim.endLabel">Ende (Sek.)</span>
+        <input id="trimEndInput" type="number" min="0" step="0.1">
+      </label>
+    </div>
+    <p id="trimDurationHint" class="field-hint"></p>
+
+    <div class="dialog-actions">
+      <button type="button" id="trimResetBtn" class="btn btn-ghost" data-i18n="trim.reset">Zurücksetzen</button>
+      <span class="spacer"></span>
+      <button type="button" id="trimPreviewBtn" class="btn btn-ghost" data-i18n="trim.preview">▶ Vorhören</button>
       <button type="button" class="btn btn-ghost" data-close-dialog data-i18n="dialogCommon.cancel">Abbrechen</button>
       <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.save">Speichern</button>
     </div>
@@ -311,6 +350,7 @@
 <script src="js/config.js"></script>
 <script src="js/db.js"></script>
 <script src="js/audio.js"></script>
+<script src="js/trim.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/consent.js"></script>
 <script src="js/sync.js"></script>

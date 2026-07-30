@@ -38,9 +38,19 @@ create table if not exists public.jingles (
   file_name text,
   sort_order integer not null default 0,
   deleted boolean not null default false,
+  -- Cut points (Phase 6), in seconds into the original audio file. Both
+  -- null means "play the whole file" — trimming is metadata only, the
+  -- stored audio itself is never modified.
+  trim_start double precision,
+  trim_end double precision,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Idempotent for installs that ran schema.sql before Phase 6 and already
+-- have this table without these columns.
+alter table public.jingles add column if not exists trim_start double precision;
+alter table public.jingles add column if not exists trim_end double precision;
 
 -- One row per user: their preferred UI language (Phase 3). Same
 -- client-timestamp-trusted updated_at / Last-Write-Wins convention as

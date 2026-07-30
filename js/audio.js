@@ -35,7 +35,13 @@ const RJAudio = (() => {
     bufferCache.delete(jingleId);
   }
 
-  async function play(jingleId, blob, { onStart, onEnd } = {}) {
+  // start/duration (seconds) trim the playback range using
+  // AudioBufferSourceNode.start(when, offset, duration) — the browser stops
+  // the source (and fires onended) at the right time on its own, no manual
+  // timer needed. Both are clamped against the actual decoded buffer length
+  // so stale/out-of-range cut points (e.g. after replacing the audio file)
+  // degrade to "play what's left" instead of throwing.
+  async function play(jingleId, blob, { onStart, onEnd, start = 0, duration } = {}) {
     const audioCtx = ensureContext();
     stop(jingleId);
 
@@ -58,7 +64,11 @@ const RJAudio = (() => {
     };
 
     activeSources.set(jingleId, { source });
-    source.start(0);
+    const safeStart = Math.min(Math.max(start || 0, 0), buffer.duration);
+    const remaining = buffer.duration - safeStart;
+    const safeDuration = duration != null ? Math.min(Math.max(duration, 0), remaining) : undefined;
+    if (safeDuration != null) source.start(0, safeStart, safeDuration);
+    else source.start(0, safeStart);
     if (onStart) onStart();
     return source;
   }
@@ -92,5 +102,6 @@ const RJAudio = (() => {
     stopAll,
     isPlaying,
     invalidate,
+    decodeBuffer: decode,
   };
 })();

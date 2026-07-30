@@ -238,6 +238,8 @@ const RJDB = (() => {
       storagePath: null,
       order: count,
       deleted: false,
+      trimStart: null,
+      trimEnd: null,
       userId: currentUserId,
       createdAt: now,
       updatedAt: now,

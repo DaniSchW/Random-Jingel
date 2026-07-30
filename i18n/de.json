@@ -70,6 +70,18 @@
     "colorLabel": "Farbe",
     "deleteConfirm": "Jingle wirklich löschen?"
   },
+  "trim": {
+    "editButton": "✂️ Zuschneiden…",
+    "title": "Jingle zuschneiden",
+    "loading": "Wellenform wird geladen…",
+    "startLabel": "Start (Sek.)",
+    "endLabel": "Ende (Sek.)",
+    "selectionHint": "Ausgewählt: {selected} Sek. von {total} Sek.",
+    "reset": "Zurücksetzen",
+    "preview": "▶ Vorhören",
+    "stopPreview": "⏹ Stopp",
+    "saved": "Zuschnitt gespeichert."
+  },
   "account": {
     "dialogTitle": "Konto & Synchronisierung",
     "loggedOutIntro": "Melde dich per Magic Link an, um deine Kategorien und Jingles geräteübergreifend zu synchronisieren. Ohne Anmeldung funktioniert die App weiterhin komplett offline und lokal.",
