@@ -1,9 +1,16 @@
-/* Web Audio API playback engine for Random Jingle. */
+/* Web Audio API playback engine for Random Jingle.
+ * Phase 10: only one jingle ever plays at a time. `current` is the single
+ * source of truth for "what's playing right now" — starting a new one
+ * always hard-stops whatever `current` points to first, and `playToken`
+ * guards against a still-decoding jingle audibly overlapping a later one
+ * that finishes decoding (and starts) first, if two plays are triggered in
+ * quick succession. */
 const RJAudio = (() => {
   let ctx = null;
   let masterGain = null;
   const bufferCache = new Map(); // jingleId -> AudioBuffer
-  const activeSources = new Map(); // jingleId -> { source, onStop: [] }
+  let current = null; // { jingleId, source, stopProgressLoop } | null
+  let playToken = 0;
 
   function ensureContext() {
     if (!ctx) {
@@ -35,6 +42,21 @@ const RJAudio = (() => {
     bufferCache.delete(jingleId);
   }
 
+  // Hard-stops whatever is currently playing, if anything. Deliberately
+  // leaves the source's `onended` handler in place (unlike a plain
+  // source.stop() call on its own) — stop() still fires the native `ended`
+  // event, which runs that jingle's own onEnd callback and resets its
+  // button/progress UI immediately, the same path a natural finish uses.
+  function stopCurrent() {
+    if (!current) return;
+    const { source, stopProgressLoop } = current;
+    current = null;
+    if (stopProgressLoop) stopProgressLoop();
+    try {
+      source.stop();
+    } catch (e) { /* already stopped/ended */ }
+  }
+
   // start/duration (seconds) trim the playback range using
   // AudioBufferSourceNode.start(when, offset, duration) — the browser stops
   // the source (and fires onended) at the right time on its own, no manual
@@ -46,7 +68,8 @@ const RJAudio = (() => {
   // only ticks while a frame is actually being painted.
   async function play(jingleId, blob, { onStart, onEnd, onProgress, start = 0, duration } = {}) {
     const audioCtx = ensureContext();
-    stop(jingleId);
+    const token = ++playToken;
+    stopCurrent(); // only one jingle plays at a time — hard-stop whatever's running first
 
     let buffer;
     try {
@@ -55,6 +78,11 @@ const RJAudio = (() => {
       console.error('Konnte Audio nicht dekodieren', err);
       throw err;
     }
+
+    // A newer play() call came in while this one was still decoding — bail
+    // out silently instead of starting audio out of order, which would
+    // otherwise briefly overlap whatever that newer call already started.
+    if (token !== playToken) return null;
 
     const source = audioCtx.createBufferSource();
     source.buffer = buffer;
@@ -76,14 +104,22 @@ const RJAudio = (() => {
 
     source.onended = () => {
       stopProgressLoop();
-      if (activeSources.get(jingleId)?.source === source) {
-        activeSources.delete(jingleId);
+      // If a *different* play() call for this same jingleId has since
+      // become current (e.g. Random landing on the jingle that's already
+      // playing, restarting it), this callback set is stale: the new call's
+      // own onStart already re-applied "playing" state to the same shared
+      // button refs, and firing this old onEnd now would immediately wipe
+      // that back off. Only the case of a genuinely different jingle (or
+      // nothing) taking over should reset this jingle's own UI.
+      const supersededBySameJingle = current && current.jingleId === jingleId && current.source !== source;
+      if (current && current.source === source) current = null;
+      if (!supersededBySameJingle) {
+        if (onProgress) onProgress(safeDuration, safeDuration);
+        if (onEnd) onEnd();
       }
-      if (onProgress) onProgress(safeDuration, safeDuration);
-      if (onEnd) onEnd();
     };
 
-    activeSources.set(jingleId, { source, stopProgressLoop });
+    current = { jingleId, source, stopProgressLoop };
     const startedAt = audioCtx.currentTime;
     source.start(0, safeStart, safeDuration);
     if (onStart) onStart();
@@ -99,26 +135,19 @@ const RJAudio = (() => {
     return source;
   }
 
+  // Only stops if jingleId is the one actually playing — a no-op otherwise
+  // (e.g. calling stop() on a jingle that already finished, or was already
+  // superseded by another one starting).
   function stop(jingleId) {
-    const entry = activeSources.get(jingleId);
-    if (entry) {
-      if (entry.stopProgressLoop) entry.stopProgressLoop();
-      try {
-        entry.source.onended = null;
-        entry.source.stop();
-      } catch (e) { /* already stopped */ }
-      activeSources.delete(jingleId);
-    }
+    if (current && current.jingleId === jingleId) stopCurrent();
   }
 
   function stopAll() {
-    for (const jingleId of Array.from(activeSources.keys())) {
-      stop(jingleId);
-    }
+    stopCurrent();
   }
 
   function isPlaying(jingleId) {
-    return activeSources.has(jingleId);
+    return !!current && current.jingleId === jingleId;
   }
 
   return {
