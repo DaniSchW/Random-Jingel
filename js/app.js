@@ -72,7 +72,6 @@
   const trashEmptyHint = document.getElementById('trashEmptyHint');
 
   const adSlotAdsense = document.getElementById('adSlotAdsense');
-  const adSlotEthical = document.getElementById('adSlotEthical');
   const consentBanner = document.getElementById('consentBanner');
   const consentAcceptBtn = document.getElementById('consentAcceptBtn');
   const consentDeclineBtn = document.getElementById('consentDeclineBtn');
@@ -1038,13 +1037,25 @@
     if (accountDialog.open) refreshAccountDialog();
   });
 
-  // ---- Ad area: which placeholder shows depends on consent, not just
-  // connectivity — never forces network access itself, either way. ----
-  function updateAdArea() {
+  // ---- Ad area: AdSense only ever loads/shows after explicit consent +
+  // while online — never speculatively. adRequested guards against asking
+  // AdSense to fill the same <ins> more than once (it throws on that).
+  let adRequested = false;
+  async function updateAdArea() {
     const online = navigator.onLine;
     const consent = RJConsent.getStatus();
-    adSlotAdsense.classList.toggle('hidden', !(online && consent === 'granted'));
-    adSlotEthical.classList.toggle('hidden', !(online && consent !== 'granted'));
+    const shouldShowAds = online && consent === 'granted';
+    adSlotAdsense.classList.toggle('hidden', !shouldShowAds);
+    if (!shouldShowAds) return;
+    try {
+      await RJAds.load();
+      if (!adRequested) {
+        RJAds.requestAd();
+        adRequested = true;
+      }
+    } catch (err) {
+      console.warn('AdSense konnte nicht geladen werden', err);
+    }
   }
 
   function updateConsentBanner() {

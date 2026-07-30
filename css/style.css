@@ -186,12 +186,11 @@ button {
   padding: 0 16px;
 }
 
-/* Ad area: exactly one of #adSlotAdsense / #adSlotEthical is unhidden at a
-   time (app.js, driven by RJConsent + navigator.onLine) — both share this
-   placeholder look, deliberately plain/dashed so it reads as "not a real ad
-   yet", and reserve realistic banner height to avoid layout shift once a
-   real provider's unit replaces the inner markup. Scrolls with the page —
-   never in the fixed bottom bar or the sticky random-button column. */
+/* Ad area: #adSlotAdsense is only unhidden once consent is granted and the
+   device is online (app.js, driven by RJConsent + navigator.onLine). The
+   dashed border/min-height give the <ins> a reasonable footprint before
+   AdSense fills it, to avoid layout shift. Scrolls with the page — never in
+   the fixed bottom bar or the sticky random-button column. */
 .ad-area {
   margin: 18px 16px 0;
 }
@@ -204,16 +203,12 @@ button {
   border: 1.5px dashed var(--border);
   border-radius: var(--radius);
   background: var(--bg-elevated);
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  overflow: hidden;
 }
 
 .ad-slot.hidden { display: none; }
 
 .ad-slot-adsense { border-color: #d97706; }
-.ad-slot-ethicalads { border-color: #059669; }
 
 /* ---------- Cookie consent banner ---------- */
 .consent-banner {

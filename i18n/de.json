@@ -136,17 +136,15 @@
     "expiresIn": "Läuft in {hours} Std. ab"
   },
   "ads": {
-    "adsensePlaceholder": "Werbung – AdSense",
-    "ethicalPlaceholder": "Werbung – EthicalAds",
     "ariaLabel": "Werbung"
   },
   "consent": {
-    "text": "Wir würden dir gerne Werbung über Google AdSense zeigen — dafür setzen wir Werbe-Cookies. Lehnst du ab, zeigen wir stattdessen Werbung über EthicalAds, das ganz ohne Tracking auskommt.",
+    "text": "Wir würden dir gerne Werbung über Google AdSense zeigen — dafür setzen wir Werbe-Cookies. Lehnst du ab, wird keine Werbung angezeigt.",
     "accept": "Werbe-Cookies akzeptieren",
     "decline": "Ablehnen",
     "settingsLabel": "Werbe-Cookies",
     "settingsGranted": "Akzeptiert (AdSense)",
-    "settingsDenied": "Abgelehnt (EthicalAds)"
+    "settingsDenied": "Abgelehnt (keine Werbung)"
   },
   "importChoice": {
     "title": "Import: Zusammenführen oder überschreiben?",

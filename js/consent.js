@@ -2,9 +2,9 @@
  * A tiny, purely local module: the decision is stored in an actual browser
  * cookie (the thing being consented to), never touches the network, and
  * works fully offline. Three states: null (no decision yet), 'granted',
- * 'denied'. app.js uses this to pick which ad placeholder to render —
- * AdSense only after explicit consent, EthicalAds (no tracking, no consent
- * required) otherwise.
+ * 'denied'. app.js/js/ads.js use this to decide whether to load AdSense and
+ * show the ad slot at all — 'denied' (or no decision yet) means no ads,
+ * full stop, there's no non-consent-requiring fallback provider anymore.
  */
 const RJConsent = (() => {
   const COOKIE_NAME = 'rj_ad_consent';

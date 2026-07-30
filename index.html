@@ -53,17 +53,18 @@
       Noch keine Kategorien vorhanden. Tippe oben rechts auf <strong>+</strong>, um deine erste Kategorie anzulegen.
     </p>
     <div id="adArea" class="ad-area">
-      <!-- Exactly one of these is shown at a time, decided in app.js by
-           RJConsent + navigator.onLine. Both are placeholders only — to go
-           live, replace the inner markup of the active one with that
-           provider's real ad-unit snippet. Position (below the category
-           list, outside the fixed bottom bar and the sticky random-button
-           area) and the offline-hiding behavior stay unchanged either way. -->
+      <!-- Shown only once ad-cookie consent is granted (RJConsent) and the
+           device is online — decided in app.js. The AdSense script itself
+           is injected dynamically by js/ads.js at that point, never loaded
+           upfront. The ad unit (data-ad-slot) still needs to be filled in
+           once it's created in the AdSense dashboard; this is a generic
+           responsive placeholder until then. -->
       <div id="adSlotAdsense" class="ad-slot ad-slot-adsense hidden" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
-        <span class="ad-slot-label" data-i18n="ads.adsensePlaceholder">Werbung – AdSense</span>
-      </div>
-      <div id="adSlotEthical" class="ad-slot ad-slot-ethicalads hidden" role="complementary" aria-label="Werbung" data-i18n-aria-label="ads.ariaLabel">
-        <span class="ad-slot-label" data-i18n="ads.ethicalPlaceholder">Werbung – EthicalAds</span>
+        <ins class="adsbygoogle"
+             style="display:block; width:100%;"
+             data-ad-client="ca-pub-8453553622026562"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
       </div>
     </div>
   </div>
@@ -112,14 +113,13 @@
 </main>
 
 <!-- Ad-cookie consent banner: only shown while RJConsent.getStatus() is
-     null (no decision yet). Accept -> AdSense placeholder; Decline -> stays
-     on EthicalAds (same as the undecided default, but now an explicit,
-     remembered choice). Reachable again later via Settings. -->
+     null (no decision yet). Accept -> AdSense loads and the ad slot shows;
+     Decline -> no ad slot at all (there's no non-consent-requiring fallback
+     provider anymore). Reachable again later via Settings. -->
 <div id="consentBanner" class="consent-banner hidden" role="region" aria-label="Cookie-Einstellungen">
   <p data-i18n="consent.text">
     Wir würden dir gerne Werbung über Google AdSense zeigen — dafür setzen
-    wir Werbe-Cookies. Lehnst du ab, zeigen wir stattdessen Werbung über
-    EthicalAds, das ganz ohne Tracking auskommt.
+    wir Werbe-Cookies. Lehnst du ab, wird keine Werbung angezeigt.
   </p>
   <div class="consent-actions">
     <button id="consentDeclineBtn" type="button" class="btn btn-ghost" data-i18n="consent.decline">Ablehnen</button>
@@ -317,7 +317,7 @@
     <label class="field">
       <span data-i18n="consent.settingsLabel">Werbe-Cookies</span>
       <select id="adConsentSelect">
-        <option value="denied" data-i18n="consent.settingsDenied">Abgelehnt (EthicalAds)</option>
+        <option value="denied" data-i18n="consent.settingsDenied">Abgelehnt (keine Werbung)</option>
         <option value="granted" data-i18n="consent.settingsGranted">Akzeptiert (AdSense)</option>
       </select>
     </label>
@@ -390,6 +390,7 @@
 <script src="js/trim.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/consent.js"></script>
+<script src="js/ads.js"></script>
 <script src="js/sync.js"></script>
 <script src="js/zip.js"></script>
 <script src="js/export.js"></script>
