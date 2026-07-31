@@ -38,7 +38,8 @@
   "footer": {
     "imprint": "Imprint",
     "privacy": "Privacy Policy",
-    "terms": "Terms"
+    "terms": "Terms",
+    "support": "Support"
   },
   "dialogCommon": {
     "cancel": "Cancel",
@@ -126,6 +127,12 @@
     "importDone": "Import complete: {categories} categories, {jingles} jingles.",
     "trashLabel": "Trash",
     "trashButton": "Show deleted jingles"
+  },
+  "support": {
+    "settingsLabel": "Support the app",
+    "hint": "Enjoying Random Jingle? Support its development – totally optional, no strings attached.",
+    "paypal": "Donate via PayPal",
+    "coffee": "Buy Me a Coffee"
   },
   "trash": {
     "title": "Trash",

@@ -66,6 +66,7 @@
   const languageSelect = document.getElementById('languageSelect');
   const adConsentSelect = document.getElementById('adConsentSelect');
   const openTrashBtn = document.getElementById('openTrashBtn');
+  const footerSupportBtn = document.getElementById('footerSupportBtn');
 
   const trashDialog = document.getElementById('trashDialog');
   const trashList = document.getElementById('trashList');
@@ -910,6 +911,10 @@
     adConsentSelect.value = RJConsent.getStatus() === 'granted' ? 'granted' : 'denied';
     settingsDialog.showModal();
   });
+
+  // Footer support link opens the same Settings dialog rather than picking
+  // one of the two donation links itself — both stay equally one click away.
+  footerSupportBtn.addEventListener('click', () => settingsBtn.click());
 
   languageSelect.addEventListener('change', () => {
     RJI18n.setLanguage(languageSelect.value).then(() => RJSync.pushSoon());

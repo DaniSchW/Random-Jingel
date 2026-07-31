@@ -38,7 +38,8 @@
   "footer": {
     "imprint": "Impressum",
     "privacy": "Datenschutz",
-    "terms": "AGB"
+    "terms": "AGB",
+    "support": "Unterstützen"
   },
   "dialogCommon": {
     "cancel": "Abbrechen",
@@ -126,6 +127,12 @@
     "importDone": "Import abgeschlossen: {categories} Kategorie(n), {jingles} Jingle(s).",
     "trashLabel": "Papierkorb",
     "trashButton": "Gelöschte Jingles anzeigen"
+  },
+  "support": {
+    "settingsLabel": "App unterstützen",
+    "hint": "Gefällt dir Random Jingle? Unterstütz die Weiterentwicklung – ganz freiwillig, ohne Gegenleistung.",
+    "paypal": "Spende via PayPal",
+    "coffee": "Buy Me a Coffee"
   },
   "trash": {
     "title": "Papierkorb",

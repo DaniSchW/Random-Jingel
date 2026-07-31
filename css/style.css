@@ -608,6 +608,21 @@ button {
 
 .footer-link:hover { color: var(--text); text-decoration: underline; }
 
+/* .footer-link is also applied to #footerSupportBtn, a <button> (it opens
+   Settings rather than navigating), so reset it to look like the <a> links
+   around it. */
+button.footer-link {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ---------- Dialogs ---------- */
 .app-dialog {
   border: 1px solid var(--border);
@@ -718,6 +733,17 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+/* ---------- Support links (donation, no functional tie-in) ---------- */
+.settings-support-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.support-link {
+  text-decoration: none;
 }
 
 /* ---------- Trash (Phase 8) ---------- */
