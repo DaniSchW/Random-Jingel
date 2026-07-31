@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "title": "Random Jingle – Dein Soundboard für Streams, Podcasts & Events",
+    "description": "Random Jingle ist dein kostenloses Soundboard als App: eigene Jingles hochladen, zuschneiden und per Zufalls-Button live abspielen – online wie offline."
+  },
+  "nav": {
+    "skipToContent": "Zum Inhalt springen",
+    "menuToggle": "Menü öffnen",
+    "features": "Funktionen",
+    "audiences": "Für wen",
+    "howItWorks": "So geht's",
+    "faq": "FAQ",
+    "langDeAriaLabel": "Deutsch",
+    "langEnAriaLabel": "Auf Englisch anzeigen",
+    "cta": "Jetzt kostenlos nutzen"
+  },
+  "hero": {
+    "claim": "Dein Soundboard für den perfekten Moment.",
+    "subClaim": "Sounds hochladen, passgenau zuschneiden und live abspielen – im Stream, Podcast oder auf der Bühne. Kostenlos, offline-fähig, in Sekunden startklar.",
+    "cta": "Jetzt kostenlos nutzen",
+    "mockupLabel": "App-Screenshot: Kategorien-Ansicht"
+  },
+  "benefits": {
+    "heading": "Kernvorteile",
+    "item1Title": "Sofort abspielbereit",
+    "item1Text": "Jingle antippen, fertig. Kein Suchen in Ordnern – ein Klick, und der Sound läuft.",
+    "item2Title": "Überall dabei",
+    "item2Text": "Als App installierbar auf Handy, Tablet und Desktop. Mit Cloud-Sync ist dein Board auf jedem Gerät sofort da.",
+    "item3Title": "Alles selbst gestaltet",
+    "item3Text": "Eigene Audiodateien hochladen, exakt zuschneiden und in Kategorien mit eigenen Farben organisieren."
+  },
+  "features": {
+    "heading": "Funktionsübersicht",
+    "item1Title": "Kategorien & Random-Button",
+    "item1Text": "Sortiere deine Jingles in Kategorien und lass den Zufalls-Button für Überraschungsmomente sorgen.",
+    "item2Title": "Zuschnitt-Funktion",
+    "item2Text": "Schneide Start und Ende jedes Sounds direkt in der Wellenform-Ansicht auf den Punkt genau zu.",
+    "item3Title": "Cloud-Sync",
+    "item3Text": "Melde dich an und synchronisiere dein komplettes Board geräteübergreifend – überall identisch.",
+    "item4Title": "Offline-Modus",
+    "item4Text": "Einmal installiert, läuft Random Jingle auch ganz ohne Internetverbindung – ideal bei schlechtem Empfang.",
+    "item5Title": "Tastenkürzel",
+    "item5Text": "Weise jedem Jingle ein eigenes Tastenkürzel zu und triggere Sounds blitzschnell ganz ohne Maus."
+  },
+  "audiences": {
+    "heading": "Für wen ist das?",
+    "item1Title": "Streamer & Content Creator",
+    "item1Text": "Reagiere in Echtzeit mit Soundeffekten auf Chat-Momente – vom Lacher bis zum Tusch, per Klick oder Hotkey.",
+    "item2Title": "Podcaster",
+    "item2Text": "Setze Stings und Übergänge gezielt zwischen Segmenten ein, ohne Aufnahme oder Software zu wechseln.",
+    "item3Title": "DJs & Event-Technik",
+    "item3Text": "Halte Ansagen, Effekte und Zwischenrufe griffbereit für den nächsten Floor-Moment – sofort abrufbar.",
+    "item4Title": "Radiomacher",
+    "item4Text": "Spiele Jingles, Signation und Einspieler live auf Sendung ab – ganz ohne schwere Sendersoftware."
+  },
+  "howItWorks": {
+    "heading": "So funktioniert's",
+    "step1Title": "Hochladen",
+    "step1Text": "Lade deine Audiodateien (MP3/WAV) direkt im Browser hoch.",
+    "step2Title": "Kategorisieren & Zuschneiden",
+    "step2Text": "Ordne sie in Kategorien ein und schneide sie mit der Wellenform-Ansicht exakt zu.",
+    "step3Title": "Installieren",
+    "step3Text": "Installiere Random Jingle als App auf deinem Gerät – kostenlos, kein App Store nötig.",
+    "step4Title": "Live nutzen",
+    "step4Text": "Starte Stream, Podcast oder Set und spiele deine Jingles per Klick oder Hotkey ab."
+  },
+  "gallery": {
+    "heading": "Screenshot-Galerie",
+    "shot1Label": "Kategorien-Ansicht mit Random-Button",
+    "shot2Label": "Zuschnitt-Editor mit Wellenform",
+    "shot3Label": "Einstellungen & Cloud-Sync"
+  },
+  "faq": {
+    "heading": "Häufige Fragen",
+    "q1": "Kostet das was?",
+    "a1": "Random Jingle ist komplett kostenlos nutzbar. Es gibt keine versteckten Kosten oder Pro-Version.",
+    "q2": "Brauche ich einen Account?",
+    "a2": "Nein. Die App funktioniert ohne Anmeldung vollständig lokal. Ein kostenloser Account lohnt sich nur, wenn du dein Board geräteübergreifend synchronisieren möchtest.",
+    "q3": "Funktioniert es offline?",
+    "a3": "Ja. Einmal installiert läuft Random Jingle auch komplett ohne Internetverbindung.",
+    "q4": "Welche Dateiformate werden unterstützt?",
+    "a4": "Aktuell werden MP3- und WAV-Dateien unterstützt."
+  },
+  "ctaFinal": {
+    "heading": "Bereit für dein eigenes Soundboard?",
+    "cta": "Jetzt kostenlos nutzen"
+  },
+  "footer": {
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "terms": "AGB",
+    "backToApp": "Zurück zur App"
+  }
+}

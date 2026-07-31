@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="meta.title">Random Jingle – Dein Soundboard für Streams, Podcasts &amp; Events</title>
+<meta name="description" data-i18n-content="meta.description" content="Random Jingle ist dein kostenloses Soundboard als PWA: eigene Jingles hochladen, zuschneiden und per Zufalls-Button live abspielen – online wie offline.">
+<meta name="theme-color" content="#121212">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="canonical" href="https://random-jingle.com/">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main" data-i18n="nav.skipToContent">Zum Inhalt springen</a>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="logo" href="#hero">
+      <span class="logo-mark" aria-hidden="true">🎧</span>
+      <span class="logo-text">Random Jingle</span>
+    </a>
+
+    <button id="navToggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="sr-only" data-i18n="nav.menuToggle">Menü öffnen</span>
+    </button>
+
+    <nav id="siteNav" class="site-nav">
+      <a href="#funktionen" data-i18n="nav.features">Funktionen</a>
+      <a href="#zielgruppen" data-i18n="nav.audiences">Für wen</a>
+      <a href="#so-gehts" data-i18n="nav.howItWorks">So geht's</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+
+      <div class="lang-switch" role="group" aria-label="Sprache / Language">
+        <button type="button" class="lang-btn" data-lang="de" data-i18n-aria-label="nav.langDeAriaLabel" aria-label="Deutsch">DE</button>
+        <button type="button" class="lang-btn" data-lang="en" data-i18n-aria-label="nav.langEnAriaLabel" aria-label="English">EN</button>
+      </div>
+
+      <a class="btn btn-primary nav-cta" href="https://random-jingle.app" data-i18n="nav.cta">Jetzt kostenlos nutzen</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 1. Hero -->
+  <section id="hero" class="hero">
+    <div class="section-inner hero-inner">
+      <div class="hero-copy">
+        <h1 data-i18n="hero.claim">Dein Soundboard für den perfekten Moment.</h1>
+        <p class="hero-sub" data-i18n="hero.subClaim">Sounds hochladen, passgenau zuschneiden und live abspielen – im Stream, Podcast oder auf der Bühne. Kostenlos, offline-fähig, in Sekunden startklar.</p>
+        <a class="btn btn-primary btn-lg" href="https://random-jingle.app" data-i18n="hero.cta">Jetzt kostenlos nutzen</a>
+      </div>
+      <div class="hero-visual">
+        <div class="mockup-frame" role="img" aria-label="App-Screenshot Platzhalter">
+          <span class="mockup-placeholder-label" data-i18n="hero.mockupLabel">App-Screenshot: Kategorien-Ansicht</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Drei Kernvorteile -->
+  <section id="vorteile" class="benefits">
+    <div class="section-inner">
+      <h2 class="sr-only" data-i18n="benefits.heading">Kernvorteile</h2>
+      <ul class="benefit-grid">
+        <li class="benefit-card">
+          <span class="benefit-icon" aria-hidden="true">⚡</span>
+          <h3 data-i18n="benefits.item1Title">Sofort abspielbereit</h3>
+          <p data-i18n="benefits.item1Text">Jingle antippen, fertig. Kein Suchen in Ordnern – ein Klick, und der Sound läuft.</p>
+        </li>
+        <li class="benefit-card">
+          <span class="benefit-icon" aria-hidden="true">📱</span>
+          <h3 data-i18n="benefits.item2Title">Überall dabei</h3>
+          <p data-i18n="benefits.item2Text">Als App installierbar auf Handy, Tablet und Desktop. Mit Cloud-Sync ist dein Board auf jedem Gerät sofort da.</p>
+        </li>
+        <li class="benefit-card">
+          <span class="benefit-icon" aria-hidden="true">🎨</span>
+          <h3 data-i18n="benefits.item3Title">Alles selbst gestaltet</h3>
+          <p data-i18n="benefits.item3Text">Eigene Audiodateien hochladen, exakt zuschneiden und in Kategorien mit eigenen Farben organisieren.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. Funktionsübersicht -->
+  <section id="funktionen" class="features">
+    <div class="section-inner">
+      <h2 data-i18n="features.heading">Funktionsübersicht</h2>
+      <ul class="feature-grid">
+        <li class="feature-card">
+          <span class="feature-icon" aria-hidden="true">🎲</span>
+          <h3 data-i18n="features.item1Title">Kategorien &amp; Random-Button</h3>
+          <p data-i18n="features.item1Text">Sortiere deine Jingles in Kategorien und lass den Zufalls-Button für Überraschungsmomente sorgen.</p>
+        </li>
+        <li class="feature-card">
+          <span class="feature-icon" aria-hidden="true">✂️</span>
+          <h3 data-i18n="features.item2Title">Zuschnitt-Funktion</h3>
+          <p data-i18n="features.item2Text">Schneide Start und Ende jedes Sounds direkt in der Wellenform-Ansicht auf den Punkt genau zu.</p>
+        </li>
+        <li class="feature-card">
+          <span class="feature-icon" aria-hidden="true">☁️</span>
+          <h3 data-i18n="features.item3Title">Cloud-Sync</h3>
+          <p data-i18n="features.item3Text">Melde dich an und synchronisiere dein komplettes Board geräteübergreifend – überall identisch.</p>
+        </li>
+        <li class="feature-card">
+          <span class="feature-icon" aria-hidden="true">📶</span>
+          <h3 data-i18n="features.item4Title">Offline-Modus</h3>
+          <p data-i18n="features.item4Text">Einmal installiert, läuft Random Jingle auch ganz ohne Internetverbindung – ideal bei schlechtem Empfang.</p>
+        </li>
+        <li class="feature-card">
+          <span class="feature-icon" aria-hidden="true">⌨️</span>
+          <h3 data-i18n="features.item5Title">Tastenkürzel</h3>
+          <p data-i18n="features.item5Text">Weise jedem Jingle ein eigenes Tastenkürzel zu und triggere Sounds blitzschnell ganz ohne Maus.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. Anwendungsbereiche -->
+  <section id="zielgruppen" class="audiences">
+    <div class="section-inner">
+      <h2 data-i18n="audiences.heading">Für wen ist das?</h2>
+      <ul class="audience-grid">
+        <li class="audience-card">
+          <span class="audience-icon" aria-hidden="true">🎥</span>
+          <h3 data-i18n="audiences.item1Title">Streamer &amp; Content Creator</h3>
+          <p data-i18n="audiences.item1Text">Reagiere in Echtzeit mit Soundeffekten auf Chat-Momente – vom Lacher bis zum Tusch, per Klick oder Hotkey.</p>
+        </li>
+        <li class="audience-card">
+          <span class="audience-icon" aria-hidden="true">🎙️</span>
+          <h3 data-i18n="audiences.item2Title">Podcaster</h3>
+          <p data-i18n="audiences.item2Text">Setze Stings und Übergänge gezielt zwischen Segmenten ein, ohne Aufnahme oder Software zu wechseln.</p>
+        </li>
+        <li class="audience-card">
+          <span class="audience-icon" aria-hidden="true">🎧</span>
+          <h3 data-i18n="audiences.item3Title">DJs &amp; Event-Technik</h3>
+          <p data-i18n="audiences.item3Text">Halte Ansagen, Effekte und Zwischenrufe griffbereit für den nächsten Floor-Moment – sofort abrufbar.</p>
+        </li>
+        <li class="audience-card">
+          <span class="audience-icon" aria-hidden="true">📻</span>
+          <h3 data-i18n="audiences.item4Title">Radiomacher</h3>
+          <p data-i18n="audiences.item4Text">Spiele Jingles, Signation und Einspieler live auf Sendung ab – ganz ohne schwere Sendersoftware.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5. So funktioniert's -->
+  <section id="so-gehts" class="how-it-works">
+    <div class="section-inner">
+      <h2 data-i18n="howItWorks.heading">So funktioniert's</h2>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-number" aria-hidden="true">1</span>
+          <h3 data-i18n="howItWorks.step1Title">Hochladen</h3>
+          <p data-i18n="howItWorks.step1Text">Lade deine Audiodateien (MP3/WAV) direkt im Browser hoch.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">2</span>
+          <h3 data-i18n="howItWorks.step2Title">Kategorisieren &amp; Zuschneiden</h3>
+          <p data-i18n="howItWorks.step2Text">Ordne sie in Kategorien ein und schneide sie mit der Wellenform-Ansicht exakt zu.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">3</span>
+          <h3 data-i18n="howItWorks.step3Title">Installieren</h3>
+          <p data-i18n="howItWorks.step3Text">Installiere Random Jingle als App auf deinem Gerät – kostenlos, kein App Store nötig.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">4</span>
+          <h3 data-i18n="howItWorks.step4Title">Live nutzen</h3>
+          <p data-i18n="howItWorks.step4Text">Starte Stream, Podcast oder Set und spiele deine Jingles per Klick oder Hotkey ab.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 6. Screenshot-Galerie -->
+  <section id="screenshots" class="gallery">
+    <div class="section-inner">
+      <h2 data-i18n="gallery.heading">Screenshot-Galerie</h2>
+      <ul class="gallery-grid">
+        <li class="mockup-frame mockup-frame-sm" role="img" aria-label="Screenshot Platzhalter 1">
+          <span class="mockup-placeholder-label" data-i18n="gallery.shot1Label">Kategorien-Ansicht mit Random-Button</span>
+        </li>
+        <li class="mockup-frame mockup-frame-sm" role="img" aria-label="Screenshot Platzhalter 2">
+          <span class="mockup-placeholder-label" data-i18n="gallery.shot2Label">Zuschnitt-Editor mit Wellenform</span>
+        </li>
+        <li class="mockup-frame mockup-frame-sm" role="img" aria-label="Screenshot Platzhalter 3">
+          <span class="mockup-placeholder-label" data-i18n="gallery.shot3Label">Einstellungen &amp; Cloud-Sync</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. FAQ -->
+  <section id="faq" class="faq">
+    <div class="section-inner">
+      <h2 data-i18n="faq.heading">Häufige Fragen</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary data-i18n="faq.q1">Kostet das was?</summary>
+          <p data-i18n="faq.a1">Random Jingle ist komplett kostenlos nutzbar. Es gibt keine versteckten Kosten oder Pro-Version.</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q2">Brauche ich einen Account?</summary>
+          <p data-i18n="faq.a2">Nein. Die App funktioniert ohne Anmeldung vollständig lokal. Ein kostenloser Account lohnt sich nur, wenn du dein Board geräteübergreifend synchronisieren möchtest.</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q3">Funktioniert es offline?</summary>
+          <p data-i18n="faq.a3">Ja. Einmal installiert läuft Random Jingle auch komplett ohne Internetverbindung.</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq.q4">Welche Dateiformate werden unterstützt?</summary>
+          <p data-i18n="faq.a4">Aktuell werden MP3- und WAV-Dateien unterstützt.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Abschließender CTA -->
+  <section id="cta-final" class="cta-final">
+    <div class="section-inner">
+      <h2 data-i18n="ctaFinal.heading">Bereit für dein eigenes Soundboard?</h2>
+      <a class="btn btn-primary btn-lg" href="https://random-jingle.app" data-i18n="ctaFinal.cta">Jetzt kostenlos nutzen</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="section-inner footer-inner">
+    <div class="footer-links">
+      <a href="impressum.html" data-i18n="footer.imprint">Impressum</a>
+      <a href="datenschutz.html" data-i18n="footer.privacy">Datenschutz</a>
+      <a href="agb.html" data-i18n="footer.terms">AGB</a>
+      <a href="https://random-jingle.app" data-i18n="footer.backToApp">Zurück zur App</a>
+    </div>
+    <div class="lang-switch" role="group" aria-label="Sprache / Language">
+      <button type="button" class="lang-btn" data-lang="de" data-i18n-aria-label="nav.langDeAriaLabel" aria-label="Deutsch">DE</button>
+      <button type="button" class="lang-btn" data-lang="en" data-i18n-aria-label="nav.langEnAriaLabel" aria-label="English">EN</button>
+    </div>
+    <p class="footer-copy">&copy; 2026 Random Jingle</p>
+  </div>
+</footer>
+
+<script src="js/i18n.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
