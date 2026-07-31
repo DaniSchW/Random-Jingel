@@ -1,0 +1,53 @@
+# Random Jingle - static PWA deployment config (Apache / All-Inkl webhosting).
+# Assumes this file's directory IS the domain's document root ("Hauptverzeichnis").
+# If you ever deploy into a subfolder instead, add a matching
+# "RewriteBase /subfolder/" line below.
+#
+# This is the canonical, tracked copy - the dist/ build script copies it in
+# as dist/.htaccess. Edit it here, not in a one-off dist/ build.
+
+RewriteEngine On
+
+# 1) Force HTTPS. Checks both %{HTTPS} (set directly by mod_ssl) and the
+#    X-Forwarded-Proto header some shared-hosting setups use when TLS is
+#    terminated by a proxy in front of Apache. The redirect only fires
+#    when NEITHER indicates an already-secure request, which avoids a
+#    redirect loop on hosts that terminate TLS upstream.
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2) Single-page-app fallback for client-side routing. Random Jingle's only
+#    client-side route today is the admin dashboard at "#/admin" - a URL
+#    fragment the browser never even sends to the server, so this rule is
+#    a safe no-op right now. It's here so a future real (non-#hash) route
+#    still resolves correctly: only requests that don't match an existing
+#    file or directory (impressum.html, manifest.json, icons/, etc. all
+#    still serve directly) fall through to index.html.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
+
+# 3) sw.js must NEVER be served from a cache - neither the browser's own
+#    HTTP cache nor any intermediate cache on the hosting side. A service
+#    worker only updates when the browser re-fetches this exact file and
+#    byte-compares it against the currently installed one; if a host (or
+#    the browser) caches it like any other static .js file, a bumped
+#    CACHE_VERSION inside it can go completely unnoticed and visitors stay
+#    stuck on an old cached app version indefinitely, even after every
+#    other file has been correctly re-uploaded. manifest.json gets the
+#    same treatment for the same reason (browsers also poll it for PWA
+#    metadata changes).
+<IfModule mod_headers.c>
+  <FilesMatch "^(sw\.js|manifest\.json)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Defense in depth: never serve dotfiles (.htaccess itself, or a .env/.git
+# that ends up here by accident) - nothing at runtime needs them; the only
+# secret-shaped value the app uses (the Supabase anon key in js/config.js)
+# is meant to be public, safe to ship in client-side code.
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>

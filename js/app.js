@@ -731,11 +731,19 @@
   // <a href> navigation, no JS needed.
 
   // ---- Service worker registration ----
+  // A browser only re-checks sw.js for changes on its own schedule (per
+  // spec, at most once every 24h) — far too slow for a visitor to notice a
+  // shipped fix. .update() forces an immediate, unconditional re-fetch of
+  // sw.js on every load, so a bumped CACHE_VERSION (and the fix that came
+  // with it) takes effect on this visitor's very next visit instead of
+  // however much later the browser would have gotten around to it.
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch((err) => {
-        console.warn('Service Worker Registrierung fehlgeschlagen', err);
-      });
+      navigator.serviceWorker.register('sw.js')
+        .then((registration) => registration.update())
+        .catch((err) => {
+          console.warn('Service Worker Registrierung fehlgeschlagen', err);
+        });
     });
   }
 
