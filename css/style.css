@@ -821,6 +821,30 @@ button.footer-link {
   pointer-events: none;
 }
 
+/* Full-original playback progress bar: independent from the purple
+   start/end selection above it and painted before it in the DOM, so the
+   selection overlay and the start/end handles always stay visibly on top
+   regardless of playback progress. Width is set directly in trim.js on
+   every animation frame, same non-transitioned approach as the app's own
+   .jingle-btn-progress bar, to stay sample-accurate. */
+.trim-original-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 0%;
+  background: #ef4444;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.trim-original-time {
+  margin-top: -8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.trim-original-time.hidden { display: none; }
+
 .trim-handle {
   position: absolute;
   top: 0;

@@ -246,10 +246,12 @@
     <p id="trimLoading" class="field-hint" data-i18n="trim.loading">Wellenform wird geladen…</p>
     <div id="trimWaveformWrap" class="trim-waveform-wrap">
       <canvas id="trimCanvas" class="trim-canvas"></canvas>
+      <div id="trimOriginalProgress" class="trim-original-progress"></div>
       <div id="trimSelection" class="trim-selection"></div>
       <div id="trimHandleStart" class="trim-handle trim-handle-start" tabindex="0" role="slider" aria-label="Start" data-i18n-aria-label="trim.startLabel"></div>
       <div id="trimHandleEnd" class="trim-handle trim-handle-end" tabindex="0" role="slider" aria-label="Ende" data-i18n-aria-label="trim.endLabel"></div>
     </div>
+    <p id="trimOriginalTime" class="field-hint trim-original-time hidden"></p>
 
     <div class="trim-fields">
       <label class="field">
@@ -266,6 +268,7 @@
     <div class="dialog-actions">
       <button type="button" id="trimResetBtn" class="btn btn-ghost" data-i18n="trim.reset">Zurücksetzen</button>
       <span class="spacer"></span>
+      <button type="button" id="trimPlayOriginalBtn" class="btn btn-ghost" data-i18n="trim.playOriginal">▶ Original abspielen</button>
       <button type="button" id="trimPreviewBtn" class="btn btn-ghost" data-i18n="trim.preview">▶ Vorhören</button>
       <button type="button" class="btn btn-ghost" data-close-dialog data-i18n="dialogCommon.cancel">Abbrechen</button>
       <button type="submit" class="btn btn-primary" data-i18n="dialogCommon.save">Speichern</button>

@@ -8,6 +8,13 @@
  */
 const RJTrimUI = (() => {
   const PREVIEW_ID = '__trim_preview__';
+  // Separate RJAudio play id for "play the full original", distinct from
+  // PREVIEW_ID (which always plays just the current start/end selection).
+  // RJAudio only ever plays one thing at a time regardless of id, so
+  // starting either one automatically hard-stops the other via its own
+  // onEnd callback — each button/progress display only ever resets its
+  // own UI, never reaches into the other's.
+  const PREVIEW_FULL_ID = '__trim_preview_full__';
   const MIN_GAP = 0.05;
 
   const dialog = document.getElementById('trimDialog');
@@ -15,6 +22,8 @@ const RJTrimUI = (() => {
   const nameEl = document.getElementById('trimJingleName');
   const wrap = document.getElementById('trimWaveformWrap');
   const canvas = document.getElementById('trimCanvas');
+  const originalProgressEl = document.getElementById('trimOriginalProgress');
+  const originalTimeEl = document.getElementById('trimOriginalTime');
   const selectionEl = document.getElementById('trimSelection');
   const handleStart = document.getElementById('trimHandleStart');
   const handleEnd = document.getElementById('trimHandleEnd');
@@ -23,6 +32,7 @@ const RJTrimUI = (() => {
   const endInput = document.getElementById('trimEndInput');
   const durationHint = document.getElementById('trimDurationHint');
   const previewBtn = document.getElementById('trimPreviewBtn');
+  const playOriginalBtn = document.getElementById('trimPlayOriginalBtn');
   const resetBtn = document.getElementById('trimResetBtn');
 
   let duration = 0;
@@ -31,6 +41,7 @@ const RJTrimUI = (() => {
   let currentBlob = null;
   let onSaveCb = null;
   let previewing = false;
+  let playingOriginal = false;
 
   function clamp(v, lo, hi) {
     return Math.min(hi, Math.max(lo, v));
@@ -128,6 +139,22 @@ const RJTrimUI = (() => {
   makeDraggable(handleStart, 'start');
   makeDraggable(handleEnd, 'end');
 
+  // Clicking anywhere on the waveform itself (not on a handle, which has
+  // its own drag logic above) moves whichever marker — start or end — is
+  // currently closer to the clicked position. Works the same whether the
+  // full original is playing or not, so a spot heard while listening can
+  // be marked immediately.
+  wrap.addEventListener('click', (e) => {
+    if (e.target === handleStart || e.target === handleEnd) return;
+    const rect = wrap.getBoundingClientRect();
+    const t = xToTime(e.clientX - rect.left);
+    if (Math.abs(t - start) <= Math.abs(t - end)) {
+      setRange(t, end, 'start');
+    } else {
+      setRange(start, t, 'end');
+    }
+  });
+
   startInput.addEventListener('change', () => setRange(Number(startInput.value) || 0, end, 'start'));
   endInput.addEventListener('change', () => setRange(start, Number(endInput.value) || 0, 'end'));
 
@@ -162,18 +189,82 @@ const RJTrimUI = (() => {
     }
   });
 
+  // ---- Full-original playback + its own progress bar/time readout ----
+  // Entirely separate from the start/end-selection preview above: always
+  // plays start=0 for the whole decoded duration, and drives its own DOM
+  // elements (trimOriginalProgress/trimOriginalTime) instead of touching
+  // trimSelection or the handles, which stay exactly where the user left
+  // them regardless of playback.
+  function formatTime(seconds) {
+    const s = Math.max(0, Math.floor(seconds));
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  }
+
+  function setPlayOriginalLabel(isPlaying) {
+    playOriginalBtn.textContent = RJI18n.t(isPlaying ? 'trim.stopPreview' : 'trim.playOriginal');
+  }
+
+  function resetOriginalProgressUI() {
+    originalProgressEl.style.width = '0%';
+    originalTimeEl.classList.add('hidden');
+  }
+
+  function stopOriginalPlayback() {
+    RJAudio.stop(PREVIEW_FULL_ID);
+    playingOriginal = false;
+    setPlayOriginalLabel(false);
+    resetOriginalProgressUI();
+  }
+
+  playOriginalBtn.addEventListener('click', async () => {
+    if (playingOriginal) {
+      stopOriginalPlayback();
+      return;
+    }
+    playingOriginal = true;
+    setPlayOriginalLabel(true);
+    originalTimeEl.classList.remove('hidden');
+    try {
+      RJAudio.ensureContext();
+      await RJAudio.play(PREVIEW_FULL_ID, currentBlob, {
+        start: 0,
+        duration,
+        onProgress: (elapsed, total) => {
+          const pct = total > 0 ? Math.min(100, (elapsed / total) * 100) : 0;
+          originalProgressEl.style.width = `${pct}%`;
+          originalTimeEl.textContent = `${formatTime(elapsed)} / ${formatTime(total)}`;
+        },
+        onEnd: () => {
+          playingOriginal = false;
+          setPlayOriginalLabel(false);
+          resetOriginalProgressUI();
+        },
+      });
+    } catch (err) {
+      console.error('Original-Wiedergabe fehlgeschlagen', err);
+      playingOriginal = false;
+      setPlayOriginalLabel(false);
+      resetOriginalProgressUI();
+    }
+  });
+
+  function stopAllTrimAudio() {
+    stopPreview();
+    stopOriginalPlayback();
+  }
+
   resetBtn.addEventListener('click', () => setRange(0, duration));
 
   form.addEventListener('submit', () => {
-    stopPreview();
+    stopAllTrimAudio();
     const isFullRange = start <= 0.01 && end >= duration - 0.01;
     if (onSaveCb) {
       onSaveCb(isFullRange ? null : Number(start.toFixed(2)), isFullRange ? null : Number(end.toFixed(2)));
     }
   });
 
-  dialog.addEventListener('close', stopPreview);
-  dialog.querySelectorAll('[data-close-dialog]').forEach((btn) => btn.addEventListener('click', stopPreview));
+  dialog.addEventListener('close', stopAllTrimAudio);
+  dialog.querySelectorAll('[data-close-dialog]').forEach((btn) => btn.addEventListener('click', stopAllTrimAudio));
 
   // jingle: { id, name, trimStart, trimEnd }; blob: the decoded audio's Blob.
   async function open(jingle, blob, { onSave }) {
@@ -182,6 +273,9 @@ const RJTrimUI = (() => {
     nameEl.textContent = jingle.name;
     loadingEl.classList.remove('hidden');
     canvas.style.visibility = 'hidden';
+    setPreviewLabel(false);
+    setPlayOriginalLabel(false);
+    resetOriginalProgressUI();
     dialog.showModal();
 
     canvas.width = wrap.clientWidth;
