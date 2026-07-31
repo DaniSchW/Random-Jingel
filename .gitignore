@@ -1,3 +1,6 @@
 .env
 node_modules/
 dist/
+
+# Standalone marketing site — own repo (danischw/random-jingle-web), not tracked here.
+marketing-site/
