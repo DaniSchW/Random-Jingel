@@ -1,5 +1,5 @@
 /* Service Worker for Random Jingle - caches the app shell for offline use. */
-const CACHE_VERSION = 'random-jingle-v20';
+const CACHE_VERSION = 'random-jingle-v21';
 const APP_SHELL = [
   './',
   './index.html',
@@ -51,23 +51,29 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
 
+  // Reads (cache.match) and writes (cache.put) both go through this same,
+  // explicitly-opened CACHE_VERSION cache — unlike the bare caches.match()
+  // this replaces, which searches every cache under the origin regardless
+  // of version and could return a stale/orphaned entry left over from a
+  // cache whose activate-time cleanup never ran.
   event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request)
-        .then((response) => {
-          if (response && response.ok && response.type === 'basic') {
-            const clone = response.clone();
-            caches.open(CACHE_VERSION).then((cache) => cache.put(request, clone));
-          }
-          return response;
-        })
-        .catch(() => {
-          if (request.mode === 'navigate') {
-            return caches.match('./index.html');
-          }
-          return undefined;
-        });
-    })
+    caches.open(CACHE_VERSION).then((cache) =>
+      cache.match(request).then((cached) => {
+        if (cached) return cached;
+        return fetch(request)
+          .then((response) => {
+            if (response && response.ok && response.type === 'basic') {
+              cache.put(request, response.clone());
+            }
+            return response;
+          })
+          .catch(() => {
+            if (request.mode === 'navigate') {
+              return cache.match('./index.html');
+            }
+            return undefined;
+          });
+      })
+    )
   );
 });
