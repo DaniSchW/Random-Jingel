@@ -1,5 +1,5 @@
 /* Service Worker for Random Jingle - caches the app shell for offline use. */
-const CACHE_VERSION = 'random-jingle-v22';
+const CACHE_VERSION = 'random-jingle-v23';
 const APP_SHELL = [
   './',
   './index.html',
@@ -21,8 +21,8 @@ const APP_SHELL = [
   './impressum.html',
   './datenschutz.html',
   './agb.html',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
+  './app-icons/icon-192.png',
+  './app-icons/icon-512.png',
 ];
 // js/config.js is intentionally NOT precached: it may not exist (no
 // Supabase configured) and cache.addAll() is all-or-nothing — one missing

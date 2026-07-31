@@ -22,7 +22,7 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 #    fragment the browser never even sends to the server, so this rule is
 #    a safe no-op right now. It's here so a future real (non-#hash) route
 #    still resolves correctly: only requests that don't match an existing
-#    file or directory (impressum.html, manifest.json, icons/, etc. all
+#    file or directory (impressum.html, manifest.json, app-icons/, etc. all
 #    still serve directly) fall through to index.html.
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
