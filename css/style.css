@@ -692,6 +692,78 @@ button.footer-link {
 
 #jingleColorField.hidden { display: none; }
 
+/* ---------- Royalty-free search (Freesound/Jamendo) inside the "new
+   jingle" dialog, as an alternative to manually uploading a file ---------- */
+.jingle-search-section {
+  margin-bottom: 14px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.jingle-search-section.hidden { display: none; }
+
+.jingle-search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.jingle-search-bar input[type="text"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.jingle-search-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jingle-search-result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-elevated);
+}
+
+.jingle-search-result-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jingle-search-result-duration {
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.jingle-search-result-preview-btn {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+
 /* ---------- Hotkeys (Phase 9) ---------- */
 .hotkey-picker {
   display: flex;

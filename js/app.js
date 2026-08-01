@@ -47,6 +47,11 @@
   const jingleHotkeyAssignBtn = document.getElementById('jingleHotkeyAssignBtn');
   const jingleHotkeyClearBtn = document.getElementById('jingleHotkeyClearBtn');
   const jingleHotkeyInput = document.getElementById('jingleHotkeyInput');
+  const jingleSearchSection = document.getElementById('jingleSearchSection');
+  const jingleSearchInput = document.getElementById('jingleSearchInput');
+  const jingleSearchBtn = document.getElementById('jingleSearchBtn');
+  const jingleSearchStatus = document.getElementById('jingleSearchStatus');
+  const jingleSearchResults = document.getElementById('jingleSearchResults');
 
   const accountBtn = document.getElementById('accountBtn');
   const accountDialog = document.getElementById('accountDialog');
@@ -524,9 +529,115 @@
     }
     jingleHotkeyInput.value = (jingle && jingle.hotkey) || '';
     updateHotkeyDisplay();
+    resetJingleSearchSection(!jingle);
     jingleDialog.showModal();
     jingleNameInput.focus();
   }
+
+  // ---- Royalty-free search (Sound Effects via Freesound) ----
+  // Only shown when creating a brand-new jingle (not editing an existing
+  // one), and only when RJMediaSearch itself considers the section usable
+  // (API key configured in js/config.js AND currently online). Re-checked
+  // every time the dialog opens, since connectivity can change between
+  // visits without a page reload.
+  let searchPreviewAudio = null;
+  let searchPreviewBtnEl = null;
+
+  function stopSearchPreview() {
+    if (searchPreviewAudio) {
+      searchPreviewAudio.pause();
+      searchPreviewAudio = null;
+    }
+    if (searchPreviewBtnEl) {
+      searchPreviewBtnEl.textContent = RJI18n.t('jingleSearch.previewPlay');
+      searchPreviewBtnEl = null;
+    }
+  }
+
+  function renderSearchResults(results) {
+    jingleSearchResults.innerHTML = '';
+    for (const result of results) {
+      const li = document.createElement('li');
+      li.className = 'jingle-search-result';
+
+      const title = document.createElement('span');
+      title.className = 'jingle-search-result-title';
+      title.textContent = result.title;
+      title.title = result.title;
+
+      const duration = document.createElement('span');
+      duration.className = 'jingle-search-result-duration';
+      duration.textContent = formatTime(result.durationSeconds);
+
+      const previewBtn = document.createElement('button');
+      previewBtn.type = 'button';
+      previewBtn.className = 'btn btn-ghost jingle-search-result-preview-btn';
+      previewBtn.textContent = RJI18n.t('jingleSearch.previewPlay');
+      previewBtn.setAttribute('aria-label', RJI18n.t('jingleSearch.previewAriaLabel', { title: result.title }));
+      previewBtn.addEventListener('click', () => {
+        if (searchPreviewBtnEl === previewBtn) {
+          stopSearchPreview();
+          return;
+        }
+        stopSearchPreview();
+        try {
+          const audio = new Audio(result.previewUrl);
+          audio.addEventListener('ended', stopSearchPreview);
+          audio.addEventListener('error', stopSearchPreview);
+          audio.play().catch(() => stopSearchPreview());
+          searchPreviewAudio = audio;
+          searchPreviewBtnEl = previewBtn;
+          previewBtn.textContent = RJI18n.t('jingleSearch.previewStop');
+        } catch (err) {
+          console.warn('Vorhören fehlgeschlagen', err);
+          stopSearchPreview();
+        }
+      });
+
+      li.append(title, duration, previewBtn);
+      jingleSearchResults.appendChild(li);
+    }
+  }
+
+  async function runJingleSearch() {
+    const query = jingleSearchInput.value;
+    stopSearchPreview();
+    jingleSearchResults.innerHTML = '';
+    jingleSearchStatus.textContent = RJI18n.t('jingleSearch.searching');
+    jingleSearchStatus.classList.remove('hidden');
+    const outcome = await RJMediaSearch.searchSoundEffects(query);
+    if (outcome.error) {
+      jingleSearchStatus.textContent = RJI18n.t('jingleSearch.error');
+      jingleSearchStatus.classList.remove('hidden');
+      return;
+    }
+    if (outcome.results.length === 0) {
+      jingleSearchStatus.textContent = RJI18n.t('jingleSearch.noResults');
+      jingleSearchStatus.classList.remove('hidden');
+      return;
+    }
+    jingleSearchStatus.classList.add('hidden');
+    renderSearchResults(outcome.results);
+  }
+
+  jingleSearchBtn.addEventListener('click', runJingleSearch);
+  jingleSearchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      runJingleSearch();
+    }
+  });
+
+  function resetJingleSearchSection(isNewJingle) {
+    stopSearchPreview();
+    jingleSearchInput.value = '';
+    jingleSearchResults.innerHTML = '';
+    jingleSearchStatus.classList.add('hidden');
+    const available = isNewJingle && typeof RJMediaSearch !== 'undefined' && RJMediaSearch.soundEffectsAvailable();
+    jingleSearchSection.classList.toggle('hidden', !available);
+  }
+
+  jingleDialog.addEventListener('close', stopSearchPreview);
 
   function updateHotkeyDisplay() {
     jingleHotkeyDisplay.textContent = formatHotkeyFull(jingleHotkeyInput.value);

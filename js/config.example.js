@@ -11,4 +11,7 @@
 window.RJ_CONFIG = {
   SUPABASE_URL: 'https://your-project-ref.supabase.co',
   SUPABASE_ANON_KEY: 'your-anon-public-key',
+  // Optional: leave empty to hide the Sound-Effects search section entirely.
+  // Get a free key at https://freesound.org/apiv2/apply/
+  FREESOUND_API_KEY: '',
 };

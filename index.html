@@ -192,6 +192,20 @@
     </label>
     <p id="jingleFileHint" class="field-hint hidden"></p>
 
+    <!-- Alternative to a manual upload: search royalty-free sound effects
+         (Freesound) / music (Jamendo). Hidden entirely when offline, when
+         no API key is configured (js/config.js), or while editing an
+         existing jingle (js/app.js toggles this). -->
+    <div id="jingleSearchSection" class="jingle-search-section hidden">
+      <p class="field-hint" style="margin-top: 0;" data-i18n="jingleSearch.intro">Gemafreie Musik &amp; Sounds suchen</p>
+      <div class="jingle-search-bar">
+        <input id="jingleSearchInput" type="text" data-i18n-placeholder="jingleSearch.placeholder" placeholder="Suchbegriff…">
+        <button type="button" id="jingleSearchBtn" class="btn btn-ghost" data-i18n="jingleSearch.searchButton">Suchen</button>
+      </div>
+      <p id="jingleSearchStatus" class="field-hint hidden"></p>
+      <ul id="jingleSearchResults" class="jingle-search-results"></ul>
+    </div>
+
     <label class="field">
       <span data-i18n="jingleDialog.nameLabel">Anzeigename</span>
       <input id="jingleName" type="text" required maxlength="40" placeholder="z. B. Applaus laut" data-i18n-placeholder="jingleDialog.namePlaceholder">
@@ -419,6 +433,7 @@
 <script src="js/db.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/trim.js"></script>
+<script src="js/mediasearch.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/consent.js"></script>
 <script src="js/ads.js"></script>

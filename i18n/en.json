@@ -80,6 +80,17 @@
     "hotkeyConflict": "Already assigned to \"{name}\".",
     "deleteConfirm": "Move this jingle to trash? (recoverable for 24h)"
   },
+  "jingleSearch": {
+    "intro": "Search royalty-free music & sounds",
+    "placeholder": "Search term…",
+    "searchButton": "Search",
+    "searching": "Searching…",
+    "noResults": "No matches.",
+    "error": "Search isn't available right now.",
+    "previewPlay": "▶",
+    "previewStop": "⏹",
+    "previewAriaLabel": "Preview: {title}"
+  },
   "trim": {
     "editButton": "✂️ Trim…",
     "title": "Trim jingle",

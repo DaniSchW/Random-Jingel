@@ -80,6 +80,17 @@
     "hotkeyConflict": "Bereits vergeben an \"{name}\".",
     "deleteConfirm": "Jingle in den Papierkorb verschieben? (24 Std. wiederherstellbar)"
   },
+  "jingleSearch": {
+    "intro": "Gemafreie Musik & Sounds suchen",
+    "placeholder": "Suchbegriff…",
+    "searchButton": "Suchen",
+    "searching": "Suche läuft…",
+    "noResults": "Keine Treffer.",
+    "error": "Suche momentan nicht möglich.",
+    "previewPlay": "▶",
+    "previewStop": "⏹",
+    "previewAriaLabel": "Vorhören: {title}"
+  },
   "trim": {
     "editButton": "✂️ Zuschneiden…",
     "title": "Jingle zuschneiden",
