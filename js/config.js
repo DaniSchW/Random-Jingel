@@ -25,5 +25,5 @@ window.RJ_CONFIG = {
   "SUPABASE_URL": "https://xrghtxlrrdlyxgvjkwko.supabase.co",
   "SUPABASE_ANON_KEY": "sb_publishable_wEwtKrdsxiKmC_hFTQypHg_WntLR_2y",
   "FREESOUND_API_KEY": "kjFgYPaUtNOMakFWpq5FOtO04xtShhSApAUB91FC",
-  "JAMENDO_CLIENT_ID": ""
+  "JAMENDO_CLIENT_ID": "1ce2becb"
 };
