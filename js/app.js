@@ -36,6 +36,7 @@
   const jingleIdInput = document.getElementById('jingleId');
   const jingleFileInput = document.getElementById('jingleFile');
   const jingleFileHint = document.getElementById('jingleFileHint');
+  const jingleSourceNoteHint = document.getElementById('jingleSourceNoteHint');
   const jingleNameInput = document.getElementById('jingleName');
   const jingleCategorySelect = document.getElementById('jingleCategory');
   const jingleColorOverrideEnabled = document.getElementById('jingleColorOverrideEnabled');
@@ -509,6 +510,12 @@
         ? RJI18n.t('jingleDialog.fileHintKeepNamed', { fileName: jingle.fileName })
         : RJI18n.t('jingleDialog.fileHintKeepGeneric');
       jingleFileHint.classList.remove('hidden');
+      if (jingle.sourceNote) {
+        jingleSourceNoteHint.textContent = jingle.sourceNote;
+        jingleSourceNoteHint.classList.remove('hidden');
+      } else {
+        jingleSourceNoteHint.classList.add('hidden');
+      }
       jingleNameInput.value = jingle.name;
       jingleCategorySelect.value = String(jingle.categoryId);
       const hasOverride = Boolean(jingle.color);
@@ -522,6 +529,8 @@
       jingleIdInput.value = '';
       jingleFileInput.required = true;
       jingleFileHint.classList.add('hidden');
+      jingleSourceNoteHint.classList.add('hidden');
+      pendingImportMeta = null;
       if (presetCategoryId != null) jingleCategorySelect.value = String(presetCategoryId);
       jingleColorOverrideEnabled.checked = false;
       jingleColorInput.value = categoryColorOf(presetCategoryId ?? jingleCategorySelect.value);
@@ -553,6 +562,61 @@
     if (searchPreviewBtnEl) {
       searchPreviewBtnEl.textContent = RJI18n.t('jingleSearch.previewPlay');
       searchPreviewBtnEl = null;
+    }
+  }
+
+  // Set by selectSearchResult() right before it opens the trim editor;
+  // picked up and merged into the new jingle's fields by jingleForm's
+  // submit handler, then cleared. Only ever relevant for a brand-new
+  // jingle (the search section never shows while editing one).
+  let pendingImportMeta = null;
+
+  function buildSourceNote(result) {
+    const licenseLabel = RJMediaSearch.shortLicenseLabel(result.license);
+    return licenseLabel
+      ? RJI18n.t('jingleSearch.sourceNoteWithLicense', { source: result.sourceLabel, license: licenseLabel })
+      : RJI18n.t('jingleSearch.sourceNoteNoLicense', { source: result.sourceLabel });
+  }
+
+  // Downloads the result's actual audio, then opens the existing trim
+  // editor (js/trim.js) against that not-yet-saved audio -- same waveform/
+  // start-end-marker UI a normal upload gets, just before the jingle
+  // exists rather than after. A random id (not a real jingle id yet) keeps
+  // RJAudio's per-jingle buffer cache from confusing this import with any
+  // other still-unsaved one from the same session.
+  async function selectSearchResult(result, selectBtn) {
+    stopSearchPreview();
+    selectBtn.disabled = true;
+    jingleSearchStatus.textContent = RJI18n.t('jingleSearch.importing');
+    jingleSearchStatus.classList.remove('hidden');
+    try {
+      const res = await fetch(result.previewUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      const mimeType = blob.type || 'audio/mpeg';
+      const fileName = `${result.title || 'import'}.${mimeType.includes('wav') ? 'wav' : 'mp3'}`;
+      const file = new File([blob], fileName, { type: mimeType });
+      const sourceNote = buildSourceNote(result);
+      const tempId = crypto.randomUUID();
+
+      jingleSearchStatus.classList.add('hidden');
+
+      RJTrimUI.open({ id: tempId, name: result.title, trimStart: null, trimEnd: null }, file, {
+        onSave: (trimStart, trimEnd) => {
+          pendingImportMeta = { trimStart, trimEnd, sourceNote };
+          jingleNameInput.value = result.title;
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          jingleFileInput.files = dt.files;
+          jingleFileHint.classList.add('hidden');
+        },
+      });
+    } catch (err) {
+      console.warn('Import fehlgeschlagen', err);
+      jingleSearchStatus.textContent = RJI18n.t('jingleSearch.importFailed');
+      jingleSearchStatus.classList.remove('hidden');
+    } finally {
+      selectBtn.disabled = false;
     }
   }
 
@@ -596,7 +660,13 @@
         }
       });
 
-      li.append(title, duration, previewBtn);
+      const selectBtn = document.createElement('button');
+      selectBtn.type = 'button';
+      selectBtn.className = 'btn btn-primary jingle-search-result-select-btn';
+      selectBtn.textContent = RJI18n.t('jingleSearch.selectButton');
+      selectBtn.addEventListener('click', () => selectSearchResult(result, selectBtn));
+
+      li.append(title, duration, previewBtn, selectBtn);
       jingleSearchResults.appendChild(li);
     }
   }
@@ -804,6 +874,13 @@
         changes.mimeType = file.type;
         changes.fileName = file.name;
       }
+      // Trim range + source hint picked up from the royalty-free search
+      // (see selectSearchResult()) -- only ever set for a brand-new jingle.
+      if (pendingImportMeta) {
+        changes.trimStart = pendingImportMeta.trimStart;
+        changes.trimEnd = pendingImportMeta.trimEnd;
+        changes.sourceNote = pendingImportMeta.sourceNote;
+      }
 
       if (id) {
         await RJDB.updateJingle(id, changes);
@@ -813,6 +890,7 @@
         await RJDB.addJingle(changes);
         showToast(RJI18n.t('toast.jingleCreated'));
       }
+      pendingImportMeta = null;
       closeDialog(jingleDialog);
       await loadState();
       RJSync.pushSoon();

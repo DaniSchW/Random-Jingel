@@ -785,10 +785,16 @@ button.footer-link {
   font-variant-numeric: tabular-nums;
 }
 
-.jingle-search-result-preview-btn {
+.jingle-search-result-preview-btn,
+.jingle-search-result-select-btn {
   flex: 0 0 auto;
   padding: 4px 10px;
   font-size: 0.8rem;
+}
+
+.jingle-search-result-select-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 /* ---------- Hotkeys (Phase 9) ---------- */

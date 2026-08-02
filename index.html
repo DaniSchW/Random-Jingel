@@ -191,6 +191,10 @@
       <input id="jingleFile" type="file" accept="audio/mpeg,audio/wav,audio/mp3,audio/*">
     </label>
     <p id="jingleFileHint" class="field-hint hidden"></p>
+    <!-- Permanent transparency note for jingles imported via the search
+         below (js/app.js fills this in from jingle.sourceNote). Never
+         shown for a manually uploaded jingle. -->
+    <p id="jingleSourceNoteHint" class="field-hint hidden"></p>
 
     <!-- Alternative to a manual upload: search royalty-free sound effects
          (Freesound) / music (Jamendo). Hidden entirely when offline, when

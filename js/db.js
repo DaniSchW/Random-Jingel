@@ -222,7 +222,7 @@ const RJDB = (() => {
     return reqToPromise(t.objectStore(STORE_JINGLES).get(id));
   }
 
-  async function addJingle({ name, categoryId, color, blob, mimeType, fileName, hotkey }) {
+  async function addJingle({ name, categoryId, color, blob, mimeType, fileName, hotkey, trimStart, trimEnd, sourceNote }) {
     const t = await tx(STORE_JINGLES, 'readwrite');
     const store = t.objectStore(STORE_JINGLES);
     const count = await reqToPromise(store.count());
@@ -238,9 +238,15 @@ const RJDB = (() => {
       storagePath: null,
       order: count,
       deleted: false,
-      trimStart: null,
-      trimEnd: null,
+      // trimStart/trimEnd/sourceNote can already be known at creation time
+      // for a jingle imported from the royalty-free search (Freesound/
+      // Jamendo) — the trim editor runs before the jingle is even saved
+      // there, unlike the normal upload flow where trimming only happens
+      // as a later edit.
+      trimStart: trimStart ?? null,
+      trimEnd: trimEnd ?? null,
       hotkey: hotkey || null,
+      sourceNote: sourceNote || null,
       userId: currentUserId,
       createdAt: now,
       updatedAt: now,

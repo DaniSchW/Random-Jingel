@@ -52,9 +52,18 @@ create table if not exists public.jingles (
   -- stale local state could otherwise briefly disagree with another about
   -- who owns a given hotkey after a sync); no DB constraint here.
   hotkey text,
+  -- Permanent, small transparency note for jingles imported from the
+  -- royalty-free search (Freesound/Jamendo), e.g. "Gemafreie Musik/Sounds
+  -- von Freesound (CC0)". Null for manually uploaded jingles. Purely
+  -- informational -- never used for access control or filtering.
+  source_note text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Idempotent for installs that ran schema.sql before the royalty-free
+-- search feature.
+alter table public.jingles add column if not exists source_note text;
 
 -- Idempotent for installs that ran schema.sql before Phase 9.
 alter table public.jingles add column if not exists hotkey text;

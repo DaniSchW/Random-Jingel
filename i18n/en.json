@@ -91,7 +91,12 @@
     "error": "Search isn't available right now.",
     "previewPlay": "▶",
     "previewStop": "⏹",
-    "previewAriaLabel": "Preview: {title}"
+    "previewAriaLabel": "Preview: {title}",
+    "selectButton": "Select",
+    "importing": "Loading…",
+    "importFailed": "Import failed. Please try again.",
+    "sourceNoteWithLicense": "Royalty-free music/sounds from {source} ({license})",
+    "sourceNoteNoLicense": "Royalty-free music/sounds from {source}"
   },
   "trim": {
     "editButton": "✂️ Trim…",

@@ -91,7 +91,12 @@
     "error": "Suche momentan nicht möglich.",
     "previewPlay": "▶",
     "previewStop": "⏹",
-    "previewAriaLabel": "Vorhören: {title}"
+    "previewAriaLabel": "Vorhören: {title}",
+    "selectButton": "Auswählen",
+    "importing": "Wird geladen…",
+    "importFailed": "Import fehlgeschlagen. Bitte erneut versuchen.",
+    "sourceNoteWithLicense": "Gemafreie Musik/Sounds von {source} ({license})",
+    "sourceNoteNoLicense": "Gemafreie Musik/Sounds von {source}"
   },
   "trim": {
     "editButton": "✂️ Zuschneiden…",

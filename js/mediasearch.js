@@ -144,10 +144,23 @@ const RJMediaSearch = (() => {
     }
   }
 
+  // Turns a Creative Commons license URL into a short label for the
+  // permanent per-jingle source hint, e.g.:
+  //   https://creativecommons.org/publicdomain/zero/1.0/        -> "CC0"
+  //   https://creativecommons.org/licenses/by-nc-nd/3.0/         -> "CC BY-NC-ND"
+  // Returns '' for anything unrecognized rather than guessing.
+  function shortLicenseLabel(licenseUrl) {
+    if (typeof licenseUrl !== 'string') return '';
+    if (licenseUrl.includes('publicdomain/zero')) return 'CC0';
+    const m = licenseUrl.match(/licenses\/([a-z-]+)\//i);
+    return m ? `CC ${m[1].toUpperCase()}` : '';
+  }
+
   return {
     soundEffectsAvailable,
     searchSoundEffects,
     musicAvailable,
     searchMusic,
+    shortLicenseLabel,
   };
 })();
