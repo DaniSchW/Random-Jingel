@@ -573,6 +573,17 @@
 
   function buildSourceNote(result) {
     const licenseLabel = RJMediaSearch.shortLicenseLabel(result.license);
+    // Jamendo tracks that make it through the NC filter almost always still
+    // need attribution (some form of "BY") -- the rare CC0 Jamendo track
+    // doesn't, so it deliberately falls through to the generic note below
+    // instead of claiming "attribution required" when none is needed.
+    if (result.sourceLabel === 'Jamendo' && result.artist && licenseLabel !== 'CC0') {
+      return RJI18n.t('jingleSearch.sourceNoteJamendoWithArtist', {
+        title: result.trackTitle || result.title,
+        artist: result.artist,
+        license: licenseLabel || '?',
+      });
+    }
     return licenseLabel
       ? RJI18n.t('jingleSearch.sourceNoteWithLicense', { source: result.sourceLabel, license: licenseLabel })
       : RJI18n.t('jingleSearch.sourceNoteNoLicense', { source: result.sourceLabel });

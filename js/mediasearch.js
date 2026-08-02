@@ -14,9 +14,14 @@
  *  - Freesound results are filtered to CC0 only (public domain, no
  *    attribution needed) -- see isCC0() below.
  *  - Jamendo tracks are Creative Commons but the exact variant (BY, BY-SA,
- *    BY-NC, ...) differs per track and is NOT filtered; the actual
- *    license URL Jamendo reports is passed through unfiltered so it can be
- *    stored as the jingle's permanent source hint later.
+ *    BY-NC, ...) differs per track. Random Jingle is ad-monetized (see
+ *    js/ads.js) and therefore a commercial use, so results are filtered
+ *    to exclude anything with a NonCommercial (NC) clause -- see
+ *    isCommerciallyUsable() below. The remaining license variant (almost
+ *    always some form of BY, i.e. attribution required) is passed through
+ *    so it can be stored as the jingle's permanent source hint, alongside
+ *    the artist name and original track title for traceability even if
+ *    the jingle itself gets renamed later.
  */
 const RJMediaSearch = (() => {
   const FREESOUND_SEARCH_URL = 'https://freesound.org/apiv2/search/text/';
@@ -101,11 +106,32 @@ const RJMediaSearch = (() => {
     }
   }
 
+  // Random Jingle carries ads (js/ads.js), so using a NonCommercial-licensed
+  // track would violate its license -- this must never let one through.
+  // CC0 (public domain) is always fine. Anything whose license we can't
+  // positively identify as NC-free is excluded rather than assumed safe
+  // (fail closed, not fail open), since license_ccurl being missing/
+  // malformed is not evidence the track is actually free to use.
+  function isCommerciallyUsable(licenseUrl) {
+    if (typeof licenseUrl !== 'string') return false;
+    if (licenseUrl.includes('publicdomain/zero')) return true;
+    const m = licenseUrl.match(/licenses\/([a-z-]+)\//i);
+    if (!m) return false;
+    return !m[1].toLowerCase().split('-').includes('nc');
+  }
+
   function normalizeJamendoResult(raw) {
     if (!raw.audio) return null;
+    const artist = raw.artist_name || '';
+    const trackTitle = raw.name || '';
     return {
       id: `jamendo-${raw.id}`,
-      title: raw.artist_name ? `${raw.name} — ${raw.artist_name}` : (raw.name || ''),
+      title: artist ? `${trackTitle} — ${artist}` : trackTitle,
+      // Kept separately from `title` (which a user may edit away as the
+      // jingle's display name after import) so attribution stays
+      // traceable via the permanent source note regardless.
+      trackTitle,
+      artist,
       durationSeconds: typeof raw.duration === 'number' ? raw.duration : 0,
       previewUrl: raw.audio,
       sourceLabel: 'Jamendo',
@@ -136,7 +162,10 @@ const RJMediaSearch = (() => {
         return { error: true, reason: 'http', status: res.status };
       }
       const data = await res.json();
-      const results = (data.results || []).map(normalizeJamendoResult).filter(Boolean);
+      const results = (data.results || [])
+        .filter((raw) => isCommerciallyUsable(raw.license_ccurl))
+        .map(normalizeJamendoResult)
+        .filter(Boolean);
       return { results };
     } catch (err) {
       console.warn('Jamendo-Suche fehlgeschlagen', err);

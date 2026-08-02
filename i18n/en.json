@@ -96,7 +96,8 @@
     "importing": "Loading…",
     "importFailed": "Import failed. Please try again.",
     "sourceNoteWithLicense": "Royalty-free music/sounds from {source} ({license})",
-    "sourceNoteNoLicense": "Royalty-free music/sounds from {source}"
+    "sourceNoteNoLicense": "Royalty-free music/sounds from {source}",
+    "sourceNoteJamendoWithArtist": "\"{title}\" by {artist} — Jamendo ({license}, attribution required)"
   },
   "trim": {
     "editButton": "✂️ Trim…",

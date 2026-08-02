@@ -96,7 +96,8 @@
     "importing": "Wird geladen…",
     "importFailed": "Import fehlgeschlagen. Bitte erneut versuchen.",
     "sourceNoteWithLicense": "Gemafreie Musik/Sounds von {source} ({license})",
-    "sourceNoteNoLicense": "Gemafreie Musik/Sounds von {source}"
+    "sourceNoteNoLicense": "Gemafreie Musik/Sounds von {source}",
+    "sourceNoteJamendoWithArtist": "„{title}“ von {artist} – Jamendo ({license}, Namensnennung erforderlich)"
   },
   "trim": {
     "editButton": "✂️ Zuschneiden…",
