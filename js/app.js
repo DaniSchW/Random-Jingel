@@ -48,6 +48,8 @@
   const jingleHotkeyClearBtn = document.getElementById('jingleHotkeyClearBtn');
   const jingleHotkeyInput = document.getElementById('jingleHotkeyInput');
   const jingleSearchSection = document.getElementById('jingleSearchSection');
+  const jingleSearchTabSfx = document.getElementById('jingleSearchTabSfx');
+  const jingleSearchTabMusic = document.getElementById('jingleSearchTabMusic');
   const jingleSearchInput = document.getElementById('jingleSearchInput');
   const jingleSearchBtn = document.getElementById('jingleSearchBtn');
   const jingleSearchStatus = document.getElementById('jingleSearchStatus');
@@ -599,13 +601,18 @@
     }
   }
 
+  // 'sfx' or 'music' -- which of the two sources the search bar currently
+  // queries. Sound Effects is the default/most relevant tab for jingles.
+  let activeSearchTab = 'sfx';
+
   async function runJingleSearch() {
     const query = jingleSearchInput.value;
+    const searchFn = activeSearchTab === 'music' ? RJMediaSearch.searchMusic : RJMediaSearch.searchSoundEffects;
     stopSearchPreview();
     jingleSearchResults.innerHTML = '';
     jingleSearchStatus.textContent = RJI18n.t('jingleSearch.searching');
     jingleSearchStatus.classList.remove('hidden');
-    const outcome = await RJMediaSearch.searchSoundEffects(query);
+    const outcome = await searchFn(query);
     if (outcome.error) {
       jingleSearchStatus.textContent = RJI18n.t('jingleSearch.error');
       jingleSearchStatus.classList.remove('hidden');
@@ -628,13 +635,34 @@
     }
   });
 
+  function setActiveSearchTab(tab) {
+    activeSearchTab = tab;
+    jingleSearchTabSfx.classList.toggle('active', tab === 'sfx');
+    jingleSearchTabMusic.classList.toggle('active', tab === 'music');
+    stopSearchPreview();
+    jingleSearchInput.value = '';
+    jingleSearchResults.innerHTML = '';
+    jingleSearchStatus.classList.add('hidden');
+  }
+
+  jingleSearchTabSfx.addEventListener('click', () => setActiveSearchTab('sfx'));
+  jingleSearchTabMusic.addEventListener('click', () => setActiveSearchTab('music'));
+
   function resetJingleSearchSection(isNewJingle) {
     stopSearchPreview();
     jingleSearchInput.value = '';
     jingleSearchResults.innerHTML = '';
     jingleSearchStatus.classList.add('hidden');
-    const available = isNewJingle && typeof RJMediaSearch !== 'undefined' && RJMediaSearch.soundEffectsAvailable();
-    jingleSearchSection.classList.toggle('hidden', !available);
+
+    const sfxAvailable = isNewJingle && typeof RJMediaSearch !== 'undefined' && RJMediaSearch.soundEffectsAvailable();
+    const musicAvailable = isNewJingle && typeof RJMediaSearch !== 'undefined' && RJMediaSearch.musicAvailable();
+    jingleSearchSection.classList.toggle('hidden', !sfxAvailable && !musicAvailable);
+    // Only offer a tab for a source that's actually configured -- e.g. if
+    // just FREESOUND_API_KEY is set, the Music tab never even appears
+    // rather than showing a permanently-broken option.
+    jingleSearchTabSfx.classList.toggle('hidden', !sfxAvailable);
+    jingleSearchTabMusic.classList.toggle('hidden', !musicAvailable);
+    setActiveSearchTab(sfxAvailable ? 'sfx' : 'music');
   }
 
   jingleDialog.addEventListener('close', stopSearchPreview);

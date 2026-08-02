@@ -82,6 +82,8 @@
   },
   "jingleSearch": {
     "intro": "Search royalty-free music & sounds",
+    "tabSoundEffects": "Sound Effects",
+    "tabMusic": "Music",
     "placeholder": "Search term…",
     "searchButton": "Search",
     "searching": "Searching…",

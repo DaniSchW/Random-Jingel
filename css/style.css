@@ -704,6 +704,33 @@ button.footer-link {
 
 .jingle-search-section.hidden { display: none; }
 
+.jingle-search-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.jingle-search-tab {
+  flex: 1 1 0;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.jingle-search-tab:hover { background: var(--bg-elevated-2); }
+
+.jingle-search-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.jingle-search-tab.hidden { display: none; }
+
 .jingle-search-bar {
   display: flex;
   gap: 8px;

@@ -1,25 +1,46 @@
-/* Search for royalty-free sound effects (Freesound) as an alternative to
- * manually uploading a file when creating a jingle. Read-only: only ever
- * searches and fetches preview audio, never uploads/rates/logs in.
+/* Search for royalty-free sound effects (Freesound) and music (Jamendo) as
+ * an alternative to manually uploading a file when creating a jingle.
+ * Read-only: only ever searches and fetches preview/stream audio, never
+ * uploads/rates/logs in.
  *
  * Every entry point here is self-contained and never throws past its own
- * call site -- a missing API key, being offline, or Freesound being
+ * call site -- a missing API key, being offline, or the remote API being
  * unreachable all degrade to "section hidden" or "empty results with a
  * console.warn", exactly like js/ads.js's resilience pattern. This must
  * never be able to take the rest of the jingle-creation flow down with it.
+ *
+ * The two sources have genuinely different licensing shapes, surfaced via
+ * each result's `license` field rather than papered over:
+ *  - Freesound results are filtered to CC0 only (public domain, no
+ *    attribution needed) -- see isCC0() below.
+ *  - Jamendo tracks are Creative Commons but the exact variant (BY, BY-SA,
+ *    BY-NC, ...) differs per track and is NOT filtered; the actual
+ *    license URL Jamendo reports is passed through unfiltered so it can be
+ *    stored as the jingle's permanent source hint later.
  */
 const RJMediaSearch = (() => {
   const FREESOUND_SEARCH_URL = 'https://freesound.org/apiv2/search/text/';
   const FREESOUND_FIELDS = 'id,name,duration,previews,license,username,url';
   const PAGE_SIZE = 15;
 
+  const JAMENDO_SEARCH_URL = 'https://api.jamendo.com/v3.0/tracks/';
+
   function freesoundApiKey() {
     const cfg = window.RJ_CONFIG;
     return (cfg && cfg.FREESOUND_API_KEY) || '';
   }
 
+  function jamendoClientId() {
+    const cfg = window.RJ_CONFIG;
+    return (cfg && cfg.JAMENDO_CLIENT_ID) || '';
+  }
+
   function soundEffectsAvailable() {
     return !!freesoundApiKey() && navigator.onLine;
+  }
+
+  function musicAvailable() {
+    return !!jamendoClientId() && navigator.onLine;
   }
 
   // Defense in depth on top of the server-side `filter=license:"Creative
@@ -80,8 +101,53 @@ const RJMediaSearch = (() => {
     }
   }
 
+  function normalizeJamendoResult(raw) {
+    if (!raw.audio) return null;
+    return {
+      id: `jamendo-${raw.id}`,
+      title: raw.artist_name ? `${raw.name} — ${raw.artist_name}` : (raw.name || ''),
+      durationSeconds: typeof raw.duration === 'number' ? raw.duration : 0,
+      previewUrl: raw.audio,
+      sourceLabel: 'Jamendo',
+      sourceUrl: raw.shareurl || raw.shorturl || null,
+      license: raw.license_ccurl || null,
+    };
+  }
+
+  // Same {results:[...]} / {error:true, reason} contract as
+  // searchSoundEffects() above.
+  async function searchMusic(query) {
+    const clientId = jamendoClientId();
+    if (!clientId) return { error: true, reason: 'unconfigured' };
+    if (!navigator.onLine) return { error: true, reason: 'offline' };
+    if (!query || !query.trim()) return { results: [] };
+
+    const url = new URL(JAMENDO_SEARCH_URL);
+    url.searchParams.set('client_id', clientId);
+    url.searchParams.set('format', 'json');
+    url.searchParams.set('search', query.trim());
+    url.searchParams.set('limit', String(PAGE_SIZE));
+    url.searchParams.set('include', 'musicinfo');
+
+    try {
+      const res = await fetch(url.toString());
+      if (!res.ok) {
+        console.warn(`Jamendo-Suche fehlgeschlagen (HTTP ${res.status})`);
+        return { error: true, reason: 'http', status: res.status };
+      }
+      const data = await res.json();
+      const results = (data.results || []).map(normalizeJamendoResult).filter(Boolean);
+      return { results };
+    } catch (err) {
+      console.warn('Jamendo-Suche fehlgeschlagen', err);
+      return { error: true, reason: 'network' };
+    }
+  }
+
   return {
     soundEffectsAvailable,
     searchSoundEffects,
+    musicAvailable,
+    searchMusic,
   };
 })();

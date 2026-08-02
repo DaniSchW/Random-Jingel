@@ -82,6 +82,8 @@
   },
   "jingleSearch": {
     "intro": "Gemafreie Musik & Sounds suchen",
+    "tabSoundEffects": "Sound Effects",
+    "tabMusic": "Music",
     "placeholder": "Suchbegriff…",
     "searchButton": "Suchen",
     "searching": "Suche läuft…",
