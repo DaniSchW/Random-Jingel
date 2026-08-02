@@ -2,6 +2,7 @@
   "name": "Random Jingle",
   "short_name": "Random Jingle",
   "description": "Lokales Soundboard: eigene Jingles hochladen, in Kategorien organisieren und zufällig abspielen.",
+  "id": "/",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -9,6 +10,9 @@
   "background_color": "#121212",
   "theme_color": "#121212",
   "lang": "de",
+  "categories": ["music", "utilities", "entertainment"],
+  "prefer_related_applications": false,
+  "related_applications": [],
   "icons": [
     {
       "src": "app-icons/icon-192.png",
@@ -21,6 +25,22 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/wide-1.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Random Jingle – Kategorien und Jingles im Überblick"
+    },
+    {
+      "src": "screenshots/narrow-1.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Random Jingle – mobile Ansicht"
     }
   ]
 }
