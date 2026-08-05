@@ -171,6 +171,17 @@
       <input id="categoryColor" type="color" value="#7c3aed">
     </label>
 
+    <label class="field">
+      <span data-i18n="categoryDialog.playbackModeLabel">Wiedergabe</span>
+      <select id="categoryPlaybackMode">
+        <option value="random" data-i18n="categoryDialog.playbackModeRandom">Zufällig</option>
+        <option value="sequential" data-i18n="categoryDialog.playbackModeSequential">Reihenfolge</option>
+      </select>
+    </label>
+    <p class="field-hint" data-i18n="categoryDialog.playbackModeHint">
+      Im Reihenfolge-Modus spielt der Kategorie-Button jeweils den nächsten Jingle in der per Drag &amp; Drop festgelegten Reihenfolge ab.
+    </p>
+
     <div class="dialog-actions">
       <button type="button" id="deleteCategoryBtn" class="btn btn-danger hidden" data-i18n="dialogCommon.delete">Löschen</button>
       <span class="spacer"></span>

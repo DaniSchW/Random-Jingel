@@ -22,7 +22,8 @@
     "editTitle": "Kategorie bearbeiten",
     "jingleCountOne": "{count} Jingle",
     "jingleCountOther": "{count} Jingles",
-    "noJinglesToast": "Keine Jingles in \"{name}\"."
+    "noJinglesToast": "Keine Jingles in \"{name}\".",
+    "sequenceProgress": "Jingle {current} von {total}"
   },
   "jingle": {
     "editTitle": "Jingle bearbeiten",
@@ -30,7 +31,8 @@
     "dragHandleTitle": "Ziehen zum Neuanordnen"
   },
   "random": {
-    "label": "Random"
+    "label": "Random",
+    "nextLabel": "Nächster"
   },
   "bottomBar": {
     "volumeAriaLabel": "Master-Lautstärke",
@@ -56,6 +58,10 @@
     "nameLabel": "Name",
     "namePlaceholder": "z. B. Applaus",
     "colorLabel": "Farbe",
+    "playbackModeLabel": "Wiedergabe",
+    "playbackModeRandom": "Zufällig",
+    "playbackModeSequential": "Reihenfolge",
+    "playbackModeHint": "Im Reihenfolge-Modus spielt der Kategorie-Button jeweils den nächsten Jingle in der per Drag & Drop festgelegten Reihenfolge ab.",
     "deleteConfirmWithJingles": "Kategorie und {count} zugehörige Jingle(s) wirklich löschen?",
     "deleteConfirm": "Kategorie wirklich löschen?"
   },

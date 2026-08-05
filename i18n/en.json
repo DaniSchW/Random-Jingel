@@ -22,7 +22,8 @@
     "editTitle": "Edit category",
     "jingleCountOne": "{count} jingle",
     "jingleCountOther": "{count} jingles",
-    "noJinglesToast": "No jingles in \"{name}\"."
+    "noJinglesToast": "No jingles in \"{name}\".",
+    "sequenceProgress": "Jingle {current} of {total}"
   },
   "jingle": {
     "editTitle": "Edit jingle",
@@ -30,7 +31,8 @@
     "dragHandleTitle": "Drag to reorder"
   },
   "random": {
-    "label": "Random"
+    "label": "Random",
+    "nextLabel": "Next"
   },
   "bottomBar": {
     "volumeAriaLabel": "Master volume",
@@ -56,6 +58,10 @@
     "nameLabel": "Name",
     "namePlaceholder": "e.g. Applause",
     "colorLabel": "Color",
+    "playbackModeLabel": "Playback",
+    "playbackModeRandom": "Random",
+    "playbackModeSequential": "Sequential",
+    "playbackModeHint": "In sequential mode, the category button plays the next jingle in the drag-and-drop order each time.",
     "deleteConfirmWithJingles": "Delete this category and its {count} jingle(s)?",
     "deleteConfirm": "Delete this category?"
   },

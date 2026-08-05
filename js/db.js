@@ -151,7 +151,7 @@ const RJDB = (() => {
     return all.filter((c) => !c.deleted).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   }
 
-  async function addCategory({ name, color }) {
+  async function addCategory({ name, color, playbackMode }) {
     const t = await tx(STORE_CATEGORIES, 'readwrite');
     const store = t.objectStore(STORE_CATEGORIES);
     const count = await reqToPromise(store.count());
@@ -162,6 +162,12 @@ const RJDB = (() => {
       color,
       order: count,
       deleted: false,
+      // Playback mode (Phase 11): "random" (existing behavior) or
+      // "sequential" (category button advances through jingles in their
+      // drag-and-drop order instead). sequentialIndex is the position of
+      // the jingle that plays *next* -- wraps back to 0 after the last one.
+      playbackMode: playbackMode === 'sequential' ? 'sequential' : 'random',
+      sequentialIndex: 0,
       userId: currentUserId,
       createdAt: now,
       updatedAt: now,
@@ -179,6 +185,26 @@ const RJDB = (() => {
     const updated = { ...existing, ...changes, id, updatedAt: Date.now(), dirty: true };
     await reqToPromise(store.put(updated));
     return updated;
+  }
+
+  // Sequential playback mode (Phase 11): reads+clamps the category's
+  // stored sequentialIndex against the *current* jingle count (defensive
+  // against jingles having been added/removed/trashed since the index was
+  // last saved), persists the next index (wrapping back to 0 after the
+  // last jingle), and returns the index that should play *now* -- so a
+  // caller can go straight from "button clicked" to "here's which jingle"
+  // without a separate read-then-write round trip that could race with
+  // itself on a rapid double-click.
+  async function advanceSequentialIndex(categoryId, jingleCount) {
+    const t = await tx(STORE_CATEGORIES, 'readwrite');
+    const store = t.objectStore(STORE_CATEGORIES);
+    const existing = await reqToPromise(store.get(categoryId));
+    if (!existing) throw new Error('Kategorie nicht gefunden');
+    if (jingleCount <= 0) return 0;
+    const current = ((existing.sequentialIndex ?? 0) % jingleCount + jingleCount) % jingleCount;
+    const next = (current + 1) % jingleCount;
+    await reqToPromise(store.put({ ...existing, sequentialIndex: next, updatedAt: Date.now(), dirty: true }));
+    return current;
   }
 
   // Soft delete: the row becomes a tombstone (deleted:true) instead of being
@@ -500,6 +526,7 @@ const RJDB = (() => {
     getAllCategories,
     addCategory,
     updateCategory,
+    advanceSequentialIndex,
     deleteCategory,
     getAllJingles,
     getJinglesByCategory,

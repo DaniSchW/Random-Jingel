@@ -380,6 +380,17 @@ button {
   padding-right: 4px;
 }
 
+/* Sequential playback mode (Phase 11): "Jingle 3 von 7", subtle, only
+   shown while the category is actually in sequential mode. */
+.category-sequence-progress {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.category-sequence-progress.hidden { display: none; }
+
 .category-body {
   display: flex;
   align-items: stretch;

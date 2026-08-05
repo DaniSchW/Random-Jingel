@@ -62,6 +62,8 @@ const RJSync = (() => {
       color: cat.color,
       sort_order: cat.order ?? 0,
       deleted: !!cat.deleted,
+      playback_mode: cat.playbackMode || 'random',
+      sequential_index: cat.sequentialIndex ?? 0,
       created_at: new Date(cat.createdAt).toISOString(),
       updated_at: new Date(cat.updatedAt).toISOString(),
     };
@@ -75,6 +77,8 @@ const RJSync = (() => {
       color: row.color,
       order: row.sort_order,
       deleted: !!row.deleted,
+      playbackMode: row.playback_mode || 'random',
+      sequentialIndex: row.sequential_index ?? 0,
       createdAt: Date.parse(row.created_at),
       updatedAt: Date.parse(row.updated_at),
     };

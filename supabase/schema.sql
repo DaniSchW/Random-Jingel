@@ -23,9 +23,22 @@ create table if not exists public.categories (
   color text not null,
   sort_order integer not null default 0,
   deleted boolean not null default false,
+  -- Playback mode (Phase 11): "random" (existing behavior) or
+  -- "sequential" (the category button advances through jingles in their
+  -- drag-and-drop order instead of picking one at random).
+  playback_mode text not null default 'random' check (playback_mode in ('random', 'sequential')),
+  -- Index of the jingle that plays *next* in sequential mode; wraps back
+  -- to 0 after the last jingle. Meaningless while playback_mode is
+  -- "random", kept around rather than reset so switching back to
+  -- "sequential" later resumes where it left off.
+  sequential_index integer not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Idempotent for installs that ran schema.sql before Phase 11.
+alter table public.categories add column if not exists playback_mode text not null default 'random';
+alter table public.categories add column if not exists sequential_index integer not null default 0;
 
 create table if not exists public.jingles (
   id uuid primary key,

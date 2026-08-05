@@ -12,6 +12,7 @@
 
   const jingleButtonEls = new Map(); // jingleId -> { btn, timeSpan, progressEl }
   const randomButtonEls = new Map(); // categoryId -> button element
+  const sequenceProgressEls = new Map(); // categoryId -> "Jingle x von y" span (sequential mode only)
 
   // ---- DOM refs ----
   const categoryListEl = document.getElementById('categoryList');
@@ -28,6 +29,7 @@
   const categoryIdInput = document.getElementById('categoryId');
   const categoryNameInput = document.getElementById('categoryName');
   const categoryColorInput = document.getElementById('categoryColor');
+  const categoryPlaybackModeSelect = document.getElementById('categoryPlaybackMode');
   const deleteCategoryBtn = document.getElementById('deleteCategoryBtn');
 
   const jingleDialog = document.getElementById('jingleDialog');
@@ -189,6 +191,7 @@
     categoryListEl.innerHTML = '';
     jingleButtonEls.clear();
     randomButtonEls.clear();
+    sequenceProgressEls.clear();
 
     if (state.categories.length === 0) {
       emptyStateEl.classList.remove('hidden');
@@ -226,7 +229,14 @@
     count.className = 'category-count';
     count.textContent = RJI18n.tCount('category.jingleCount', jingles.length);
 
-    heading.append(dot, nameBtn, count);
+    const isSequential = cat.playbackMode === 'sequential';
+    const sequenceProgress = document.createElement('span');
+    sequenceProgress.className = 'category-sequence-progress';
+    if (!isSequential) sequenceProgress.classList.add('hidden');
+    sequenceProgressEls.set(cat.id, sequenceProgress);
+    updateSequenceProgressDisplay(cat.id, cat.sequentialIndex ?? 0, jingles.length);
+
+    heading.append(dot, nameBtn, count, sequenceProgress);
 
     const body = document.createElement('div');
     body.className = 'category-body';
@@ -234,9 +244,14 @@
     const randomBtn = document.createElement('button');
     randomBtn.type = 'button';
     randomBtn.className = 'random-btn';
-    randomBtn.innerHTML = `<span class="random-icon" aria-hidden="true">🔀</span><span>${escapeHtml(RJI18n.t('random.label'))}</span>`;
+    if (isSequential) {
+      randomBtn.innerHTML = `<span class="random-icon" aria-hidden="true">⏭️</span><span>${escapeHtml(RJI18n.t('random.nextLabel'))}</span>`;
+      randomBtn.addEventListener('click', () => playSequential(cat));
+    } else {
+      randomBtn.innerHTML = `<span class="random-icon" aria-hidden="true">🔀</span><span>${escapeHtml(RJI18n.t('random.label'))}</span>`;
+      randomBtn.addEventListener('click', () => playRandom(cat));
+    }
     applyColorVars(randomBtn, cat.color);
-    randomBtn.addEventListener('click', () => playRandom(cat));
     randomButtonEls.set(cat.id, randomBtn);
 
     const scroll = document.createElement('div');
@@ -478,6 +493,40 @@
     playJingle(jingle, [randomBtn]);
   }
 
+  // "Jingle {current} von {total}" — current is 1-based. Shown/updated
+  // whenever a category is in sequential mode; hidden entirely otherwise.
+  function updateSequenceProgressDisplay(categoryId, zeroBasedIndex, total) {
+    const el = sequenceProgressEls.get(categoryId);
+    if (!el) return;
+    if (total <= 0) {
+      el.classList.add('hidden');
+      return;
+    }
+    el.textContent = RJI18n.t('category.sequenceProgress', { current: zeroBasedIndex + 1, total });
+  }
+
+  // Sequential playback (Phase 11): plays the jingle at the category's
+  // stored sequentialIndex (following Part 1's drag-and-drop `order`),
+  // then advances that index for next time, wrapping back to the start
+  // after the last jingle. RJDB.advanceSequentialIndex() does the read/
+  // clamp/increment/persist in one go and hands back the index that
+  // should play *now*, so this can't race itself on a fast double-click.
+  async function playSequential(cat) {
+    const jingles = state.jinglesByCategory.get(cat.id) || [];
+    if (jingles.length === 0) {
+      showToast(RJI18n.t('category.noJinglesToast', { name: cat.name }));
+      return;
+    }
+    const index = await RJDB.advanceSequentialIndex(cat.id, jingles.length);
+    cat.sequentialIndex = (index + 1) % jingles.length;
+    updateSequenceProgressDisplay(cat.id, index, jingles.length);
+    RJSync.pushSoon();
+
+    const jingle = jingles[index];
+    const randomBtn = randomButtonEls.get(cat.id);
+    playJingle(jingle, [randomBtn]);
+  }
+
   function stopAll() {
     RJAudio.stopAll();
     for (const refs of jingleButtonEls.values()) {
@@ -524,11 +573,13 @@
       categoryIdInput.value = String(cat.id);
       categoryNameInput.value = cat.name;
       categoryColorInput.value = cat.color;
+      categoryPlaybackModeSelect.value = cat.playbackMode === 'sequential' ? 'sequential' : 'random';
       deleteCategoryBtn.classList.remove('hidden');
     } else {
       categoryDialogTitle.textContent = RJI18n.t('categoryDialog.newTitle');
       categoryIdInput.value = '';
       categoryColorInput.value = randomNiceColor();
+      categoryPlaybackModeSelect.value = 'random';
       deleteCategoryBtn.classList.add('hidden');
     }
     categoryDialog.showModal();
@@ -544,15 +595,16 @@
     e.preventDefault();
     const name = categoryNameInput.value.trim();
     const color = categoryColorInput.value;
+    const playbackMode = categoryPlaybackModeSelect.value === 'sequential' ? 'sequential' : 'random';
     if (!name) return;
 
     const id = categoryIdInput.value || null;
     try {
       if (id) {
-        await RJDB.updateCategory(id, { name, color });
+        await RJDB.updateCategory(id, { name, color, playbackMode });
         showToast(RJI18n.t('toast.categoryUpdated'));
       } else {
-        await RJDB.addCategory({ name, color });
+        await RJDB.addCategory({ name, color, playbackMode });
         showToast(RJI18n.t('toast.categoryCreated'));
       }
       closeDialog(categoryDialog);
