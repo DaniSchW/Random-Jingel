@@ -448,7 +448,7 @@ button {
   min-width: 120px;
   max-width: 200px;
   min-height: 64px;
-  padding: 10px 34px 10px 14px;
+  padding: 10px 34px 20px 14px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -504,6 +504,49 @@ button {
   background: #ef4444;
   z-index: 0;
   pointer-events: none;
+}
+
+/* ---------- Drag-and-drop reordering within a category (Phase 11) ----------
+   Pointer-events based (not native HTML5 DnD, which touch browsers don't
+   fire reliably) — same pattern as the trim editor's marker dragging. */
+.jingle-drag-handle {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-size: 0.8rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;
+}
+
+.jingle-drag-handle:hover { background: rgba(0,0,0,0.55); }
+.jingle-drag-handle:active { cursor: grabbing; }
+
+/* The dragged tile itself acts as its own "placeholder" at the target
+   position — it physically moves to track where it would land, dimmed,
+   while a separate floating ghost (below) follows the pointer/finger. */
+.jingle-item.jingle-item-dragging .jingle-btn {
+  opacity: 0.4;
+}
+
+.jingle-drag-ghost {
+  position: fixed;
+  margin: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.9;
+  transform: scale(1.04);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.5);
 }
 
 .jingle-edit-btn {

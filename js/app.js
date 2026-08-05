@@ -246,6 +246,7 @@
     for (const jingle of jingles) {
       scroll.appendChild(renderJingleItem(jingle));
     }
+    attachDragReorder(scroll, cat.id);
 
     const addQuickBtn = document.createElement('button');
     addQuickBtn.type = 'button';
@@ -263,6 +264,7 @@
   function renderJingleItem(jingle) {
     const item = document.createElement('div');
     item.className = 'jingle-item';
+    item.dataset.jingleId = String(jingle.id);
 
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -299,9 +301,92 @@
       openJingleDialog(jingle);
     });
 
-    item.append(btn, editBtn);
+    const dragHandle = document.createElement('button');
+    dragHandle.type = 'button';
+    dragHandle.className = 'jingle-drag-handle';
+    dragHandle.title = RJI18n.t('jingle.dragHandleTitle');
+    dragHandle.setAttribute('aria-label', RJI18n.t('jingle.dragHandleTitle'));
+    dragHandle.textContent = '⠿';
+
+    item.append(btn, editBtn, dragHandle);
     jingleButtonEls.set(jingle.id, { btn, timeSpan, progressEl });
     return item;
+  }
+
+  // ---- Drag-and-drop reordering within a category (Phase 11) ----
+  // Pointer Events (not native HTML5 drag-and-drop, which mobile Safari/
+  // Chrome don't fire reliably for touch) so the same code path handles
+  // mouse and touch, mirroring js/trim.js's marker-dragging pattern.
+  // The dragged tile itself is repositioned live to track the drop target
+  // (dimmed via .jingle-item-dragging) while a floating ghost clone tracks
+  // the actual pointer/finger, so there's always a clear "what's being
+  // held" cue even where a finger occludes the tile underneath it.
+  function attachDragReorder(scrollEl, categoryId) {
+    let drag = null;
+
+    scrollEl.addEventListener('pointerdown', (e) => {
+      const handle = e.target.closest('.jingle-drag-handle');
+      if (!handle) return;
+      const item = handle.closest('.jingle-item');
+      if (!item) return;
+      e.preventDefault();
+
+      const rect = item.getBoundingClientRect();
+      const ghost = item.querySelector('.jingle-btn').cloneNode(true);
+      ghost.classList.add('jingle-drag-ghost');
+      ghost.style.width = `${rect.width}px`;
+      ghost.style.left = `${rect.left}px`;
+      ghost.style.top = `${rect.top}px`;
+      document.body.appendChild(ghost);
+
+      item.classList.add('jingle-item-dragging');
+
+      drag = {
+        item,
+        ghost,
+        offsetX: e.clientX - rect.left,
+        offsetY: e.clientY - rect.top,
+      };
+      handle.setPointerCapture(e.pointerId);
+    });
+
+    scrollEl.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      drag.ghost.style.left = `${e.clientX - drag.offsetX}px`;
+      drag.ghost.style.top = `${e.clientY - drag.offsetY}px`;
+
+      const siblings = Array.from(scrollEl.querySelectorAll('.jingle-item')).filter((el) => el !== drag.item);
+      for (const sib of siblings) {
+        const r = sib.getBoundingClientRect();
+        if (e.clientX < r.left + r.width / 2) {
+          if (sib.previousElementSibling !== drag.item) scrollEl.insertBefore(drag.item, sib);
+          return;
+        }
+      }
+      // Past every sibling's midpoint -> last slot, right before the
+      // always-present "+" add-jingle button at the end of the row.
+      const addBtn = scrollEl.querySelector('.add-jingle-quick');
+      if (drag.item.nextElementSibling !== addBtn) scrollEl.insertBefore(drag.item, addBtn);
+    });
+
+    async function endDrag() {
+      if (!drag) return;
+      const { item, ghost } = drag;
+      item.classList.remove('jingle-item-dragging');
+      ghost.remove();
+      drag = null;
+
+      const orderedIds = Array.from(scrollEl.querySelectorAll('.jingle-item'))
+        .map((el) => el.dataset.jingleId)
+        .filter(Boolean);
+      await RJDB.reorderJingles(orderedIds);
+      const byId = new Map((state.jinglesByCategory.get(categoryId) || []).map((j) => [j.id, j]));
+      state.jinglesByCategory.set(categoryId, orderedIds.map((id) => byId.get(id)).filter(Boolean));
+      RJSync.pushSoon();
+    }
+
+    scrollEl.addEventListener('pointerup', endDrag);
+    scrollEl.addEventListener('pointercancel', endDrag);
   }
 
   function categoryColorOf(categoryId) {

@@ -26,7 +26,8 @@
   },
   "jingle": {
     "editTitle": "Jingle bearbeiten",
-    "addToCategoryTitle": "Jingle zu dieser Kategorie hinzufügen"
+    "addToCategoryTitle": "Jingle zu dieser Kategorie hinzufügen",
+    "dragHandleTitle": "Ziehen zum Neuanordnen"
   },
   "random": {
     "label": "Random"

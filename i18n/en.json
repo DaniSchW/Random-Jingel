@@ -26,7 +26,8 @@
   },
   "jingle": {
     "editTitle": "Edit jingle",
-    "addToCategoryTitle": "Add a jingle to this category"
+    "addToCategoryTitle": "Add a jingle to this category",
+    "dragHandleTitle": "Drag to reorder"
   },
   "random": {
     "label": "Random"

@@ -268,6 +268,23 @@ const RJDB = (() => {
     return updated;
   }
 
+  // Drag-and-drop reordering within a category (Phase 11): orderedIds is
+  // the full list of that category's jingle ids in their new order.
+  // Re-stamps `order` 0..n-1 to match and marks each dirty so the new
+  // order syncs to Supabase the same way any other edit does — no new
+  // column needed, `order`/`sort_order` already existed and already
+  // round-trips through js/sync.js.
+  async function reorderJingles(orderedIds) {
+    const t = await tx(STORE_JINGLES, 'readwrite');
+    const store = t.objectStore(STORE_JINGLES);
+    const now = Date.now();
+    await Promise.all(orderedIds.map(async (id, index) => {
+      const existing = await reqToPromise(store.get(id));
+      if (!existing || existing.order === index) return;
+      await reqToPromise(store.put({ ...existing, order: index, updatedAt: now, dirty: true }));
+    }));
+  }
+
   // Soft delete into the trash (Phase 8): the blob is deliberately kept (not
   // nulled) so a restore within the 24h window needs no re-download. Only
   // purgeExpiredTrash() below does the final, unrecoverable removal.
@@ -489,6 +506,7 @@ const RJDB = (() => {
     getJingle,
     addJingle,
     updateJingle,
+    reorderJingles,
     deleteJingle,
     restoreJingle,
     getTrash,
