@@ -1,5 +1,5 @@
 /* Service Worker for Random Jingle - caches the app shell for offline use. */
-const CACHE_VERSION = 'random-jingle-v31';
+const CACHE_VERSION = 'random-jingle-v33';
 const APP_SHELL = [
   './',
   './index.html',
@@ -19,9 +19,18 @@ const APP_SHELL = [
   './js/app.js',
   './i18n/de.json',
   './i18n/en.json',
+  './i18n/nl.json',
+  './i18n/fr.json',
+  './i18n/da.json',
+  './i18n/pl.json',
+  './i18n/cs.json',
+  './i18n/it.json',
   './impressum.html',
+  './impressum.en.html',
   './datenschutz.html',
+  './datenschutz.en.html',
   './agb.html',
+  './agb.en.html',
   './app-icons/icon-192.png',
   './app-icons/icon-512.png',
 ];

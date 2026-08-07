@@ -1,0 +1,225 @@
+{
+  "app": {
+    "title": "Random Jingle",
+    "description": "Random Jingle – une PWA de soundboard locale avec synchronisation cloud optionnelle."
+  },
+  "header": {
+    "accountAriaLabel": "Compte & synchronisation",
+    "accountTitleLoggedOut": "Se connecter pour la synchronisation cloud",
+    "accountTitleLoggedIn": "Connecté en tant que {email} — Compte & synchronisation",
+    "settingsTitle": "Paramètres",
+    "settingsAriaLabel": "Paramètres",
+    "addMenuTitle": "Ajouter",
+    "addMenuAriaLabel": "Ajouter",
+    "addCategory": "Nouvelle catégorie",
+    "addJingle": "Nouveau jingle"
+  },
+  "empty": {
+    "noCategories": "Aucune catégorie pour l'instant. Touchez <strong>+</strong> en haut à droite pour créer la première.",
+    "noJingles": "Aucun jingle pour l'instant. Utilisez + à droite pour en ajouter un."
+  },
+  "category": {
+    "editTitle": "Modifier la catégorie",
+    "jingleCountOne": "{count} jingle",
+    "jingleCountOther": "{count} jingles",
+    "noJinglesToast": "Aucun jingle dans « {name} ».",
+    "sequenceProgress": "Jingle {current} sur {total}"
+  },
+  "jingle": {
+    "editTitle": "Modifier le jingle",
+    "addToCategoryTitle": "Ajouter un jingle à cette catégorie",
+    "dragHandleTitle": "Faites glisser pour réorganiser"
+  },
+  "random": {
+    "label": "Random",
+    "nextLabel": "Suivant"
+  },
+  "bottomBar": {
+    "volumeAriaLabel": "Volume principal",
+    "stopAll": "Stop All"
+  },
+  "footer": {
+    "imprint": "Mentions légales",
+    "privacy": "Confidentialité",
+    "terms": "CGU",
+    "support": "Soutenir"
+  },
+  "dialogCommon": {
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "close": "Fermer",
+    "done": "Terminé",
+    "ok": "OK",
+    "delete": "Supprimer"
+  },
+  "categoryDialog": {
+    "newTitle": "Nouvelle catégorie",
+    "editTitle": "Modifier la catégorie",
+    "nameLabel": "Nom",
+    "namePlaceholder": "p. ex. Applaudissements",
+    "colorLabel": "Couleur",
+    "playbackModeLabel": "Lecture",
+    "playbackModeRandom": "Aléatoire",
+    "playbackModeSequential": "Séquentielle",
+    "playbackModeHint": "En mode séquentiel, le bouton de la catégorie joue à chaque fois le jingle suivant dans l'ordre défini par glisser-déposer.",
+    "deleteConfirmWithJingles": "Supprimer cette catégorie et ses {count} jingle(s) ?",
+    "deleteConfirm": "Supprimer cette catégorie ?"
+  },
+  "jingleDialog": {
+    "newTitle": "Nouveau jingle",
+    "editTitle": "Modifier le jingle",
+    "fileLabel": "Fichier audio (MP3/WAV)",
+    "fileHintKeepNamed": "Fichier actuel : {fileName} (laissez vide pour le conserver)",
+    "fileHintKeepGeneric": "Laissez vide pour conserver le fichier actuel.",
+    "nameLabel": "Nom affiché",
+    "namePlaceholder": "p. ex. Applaudissements forts",
+    "categoryLabel": "Catégorie",
+    "colorOverrideLabel": "Utiliser une couleur personnalisée",
+    "colorLabel": "Couleur",
+    "hotkeyLabel": "Raccourci clavier",
+    "hotkeyNone": "Aucun raccourci",
+    "hotkeyAssign": "Attribuer…",
+    "hotkeyClear": "Effacer",
+    "hotkeyListening": "Appuyez sur une touche… (Échap pour annuler)",
+    "hotkeyHint": "Chiffre 1–9, éventuellement avec Ctrl pour plus de raccourcis. Fonctionne partout dans l'application tant qu'aucun champ de texte n'est actif.",
+    "hotkeyCtrlPrefix": "Ctrl+",
+    "hotkeyInvalid": "Seuls les chiffres 1–9 (éventuellement avec Ctrl) peuvent être utilisés comme raccourci.",
+    "hotkeyConflict": "Déjà attribué à « {name} ».",
+    "deleteConfirm": "Déplacer ce jingle vers la corbeille ? (récupérable pendant 24 h)"
+  },
+  "jingleSearch": {
+    "intro": "Rechercher de la musique & des sons libres de droits",
+    "tabSoundEffects": "Sound Effects",
+    "tabMusic": "Music",
+    "placeholder": "Terme de recherche…",
+    "searchButton": "Rechercher",
+    "searching": "Recherche en cours…",
+    "noResults": "Aucun résultat.",
+    "error": "La recherche n'est pas disponible pour le moment.",
+    "previewPlay": "▶",
+    "previewStop": "⏹",
+    "previewAriaLabel": "Écoute : {title}",
+    "selectButton": "Sélectionner",
+    "importing": "Chargement…",
+    "importFailed": "Échec de l'importation. Veuillez réessayer.",
+    "sourceNoteWithLicense": "Musique/sons libres de droits fournis par {source} ({license})",
+    "sourceNoteNoLicense": "Musique/sons libres de droits fournis par {source}",
+    "sourceNoteJamendoWithArtist": "« {title} » par {artist} — Jamendo ({license}, attribution obligatoire)"
+  },
+  "trim": {
+    "editButton": "✂️ Découper…",
+    "title": "Découper le jingle",
+    "loading": "Chargement de la forme d'onde…",
+    "startLabel": "Début (sec.)",
+    "endLabel": "Fin (sec.)",
+    "selectionHint": "Sélection : {selected} s sur {total} s",
+    "reset": "Réinitialiser",
+    "preview": "▶ Écouter",
+    "stopPreview": "⏹ Arrêter",
+    "playOriginal": "▶ Lire l'original",
+    "saved": "Découpe enregistrée."
+  },
+  "account": {
+    "dialogTitle": "Compte & synchronisation",
+    "loggedOutIntro": "Connectez-vous avec un lien magique pour synchroniser vos catégories et jingles entre appareils. Sans connexion, l'application continue de fonctionner entièrement hors ligne et localement.",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "sendMagicLink": "Envoyer le lien magique",
+    "loggedInAs": "Connecté en tant que",
+    "signOut": "Se déconnecter",
+    "syncNow": "Synchroniser maintenant",
+    "sendingLink": "Envoi du lien…",
+    "linkSent": "Lien magique envoyé à {email}. Vérifiez votre boîte de réception et ouvrez-le.",
+    "sendFailed": "Échec de l'envoi : {error}",
+    "signedOutToast": "Déconnecté. Le tableau continue de fonctionner localement.",
+    "syncStatus": {
+      "syncing": "Synchronisation…",
+      "failed": "Échec de la synchronisation : {error}",
+      "offline": "Hors ligne — la synchronisation reprendra dès le retour en ligne.",
+      "lastSync": "Dernière synchronisation : {time}",
+      "never": "Pas encore synchronisé."
+    }
+  },
+  "settings": {
+    "dialogTitle": "Paramètres",
+    "languageLabel": "Langue",
+    "languageGerman": "Deutsch",
+    "languageEnglish": "English",
+    "languageDutch": "Nederlands",
+    "languageFrench": "Français",
+    "languageDanish": "Dansk",
+    "languagePolish": "Polski",
+    "languageCzech": "Čeština",
+    "languageItalian": "Italiano",
+    "languageHint": "Enregistré localement et, une fois connecté, synchronisé entre vos appareils.",
+    "dataLabel": "Données",
+    "exportButton": "Exporter toutes les données",
+    "importButton": "Importer des données",
+    "exportFailed": "Échec de l'exportation : {error}",
+    "importFailed": "Échec de l'importation : {error}",
+    "importDone": "Importation terminée : {categories} catégories, {jingles} jingles.",
+    "trashLabel": "Corbeille",
+    "trashButton": "Afficher les jingles supprimés"
+  },
+  "support": {
+    "settingsLabel": "Soutenir l'application",
+    "hint": "Vous aimez Random Jingle ? Soutenez son développement – totalement facultatif, sans contrepartie.",
+    "paypal": "Faire un don via PayPal",
+    "coffee": "Buy Me a Coffee"
+  },
+  "trash": {
+    "title": "Corbeille",
+    "hint": "Les jingles supprimés restent récupérables pendant 24 heures, puis sont définitivement supprimés.",
+    "empty": "La corbeille est vide.",
+    "restore": "Restaurer",
+    "restoredToast": "« {name} » restauré.",
+    "expiresIn": "Expire dans {hours} h"
+  },
+  "ads": {
+    "ariaLabel": "Publicité"
+  },
+  "consent": {
+    "bannerAriaLabel": "Paramètres des cookies",
+    "text": "Nous aimerions vous montrer des publicités via Google AdSense — cela nécessite des cookies publicitaires. Si vous refusez, aucune publicité ne sera affichée.",
+    "accept": "Accepter les cookies publicitaires",
+    "decline": "Refuser",
+    "settingsLabel": "Cookies publicitaires",
+    "settingsGranted": "Accepté (AdSense)",
+    "settingsDenied": "Refusé (pas de publicité)"
+  },
+  "importChoice": {
+    "title": "Importation : fusionner ou remplacer ?",
+    "text": "Des données existent déjà. Les données importées doivent-elles être fusionnées avec les données existantes, ou l'importation doit-elle remplacer toutes les données existantes ?",
+    "merge": "Fusionner",
+    "overwrite": "Remplacer"
+  },
+  "admin": {
+    "navTitle": "Tableau de bord admin",
+    "navAriaLabel": "Tableau de bord admin",
+    "dashboardTitle": "Tableau de bord admin",
+    "back": "Retour",
+    "loading": "Chargement…",
+    "accessDenied": "Aucun accès. Cette section est réservée aux administrateurs.",
+    "loadFailed": "Impossible de charger les données d'administration.",
+    "statTotal": "Utilisateurs au total",
+    "stat7": "Nouveaux (7 jours)",
+    "stat30": "Nouveaux (30 jours)",
+    "colEmail": "E-mail",
+    "colRegistered": "Inscrit le",
+    "colJingles": "Jingles"
+  },
+  "toast": {
+    "categoryUpdated": "Catégorie mise à jour.",
+    "categoryCreated": "Catégorie créée.",
+    "categoryDeleted": "Catégorie supprimée.",
+    "jingleUpdated": "Jingle mis à jour.",
+    "jingleCreated": "Jingle créé.",
+    "jingleDeleted": "Jingle supprimé.",
+    "saveFailed": "Échec de l'enregistrement.",
+    "fileRequired": "Veuillez choisir un fichier audio.",
+    "playbackFailed": "Échec de la lecture.",
+    "downloadingAudio": "Téléchargement de l'audio…",
+    "audioUnavailable": "L'audio n'est pas encore disponible. Réessayez plus tard.",
+    "loadFailed": "Impossible de charger vos données."
+  }
+}

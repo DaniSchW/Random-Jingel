@@ -120,7 +120,7 @@
      null (no decision yet). Accept -> AdSense loads and the ad slot shows;
      Decline -> no ad slot at all (there's no non-consent-requiring fallback
      provider anymore). Reachable again later via Settings. -->
-<div id="consentBanner" class="consent-banner hidden" role="region" aria-label="Cookie-Einstellungen">
+<div id="consentBanner" class="consent-banner hidden" role="region" aria-label="Cookie-Einstellungen" data-i18n-aria-label="consent.bannerAriaLabel">
   <p data-i18n="consent.text">
     Wir würden dir gerne Werbung über Google AdSense zeigen — dafür setzen
     wir Werbe-Cookies. Lehnst du ab, wird keine Werbung angezeigt.
@@ -147,9 +147,9 @@
 </div>
 
 <footer class="app-footer">
-  <a href="impressum.html" class="footer-link" data-i18n="footer.imprint">Impressum</a>
-  <a href="datenschutz.html" class="footer-link" data-i18n="footer.privacy">Datenschutz</a>
-  <a href="agb.html" class="footer-link" data-i18n="footer.terms">AGB</a>
+  <a href="impressum.html" id="footerImprintLink" class="footer-link" data-i18n="footer.imprint">Impressum</a>
+  <a href="datenschutz.html" id="footerPrivacyLink" class="footer-link" data-i18n="footer.privacy">Datenschutz</a>
+  <a href="agb.html" id="footerTermsLink" class="footer-link" data-i18n="footer.terms">AGB</a>
   <button type="button" id="footerSupportBtn" class="footer-link footer-support-link">
     <span aria-hidden="true">💛</span> <span data-i18n="footer.support">Unterstützen</span>
   </button>
@@ -357,6 +357,12 @@
       <select id="languageSelect">
         <option value="de" data-i18n="settings.languageGerman">Deutsch</option>
         <option value="en" data-i18n="settings.languageEnglish">English</option>
+        <option value="nl" data-i18n="settings.languageDutch">Nederlands</option>
+        <option value="fr" data-i18n="settings.languageFrench">Français</option>
+        <option value="da" data-i18n="settings.languageDanish">Dansk</option>
+        <option value="pl" data-i18n="settings.languagePolish">Polski</option>
+        <option value="cs" data-i18n="settings.languageCzech">Čeština</option>
+        <option value="it" data-i18n="settings.languageItalian">Italiano</option>
       </select>
     </label>
     <p class="field-hint" data-i18n="settings.languageHint">

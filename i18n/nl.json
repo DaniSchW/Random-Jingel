@@ -1,0 +1,225 @@
+{
+  "app": {
+    "title": "Random Jingle",
+    "description": "Random Jingle – een lokale soundboard-PWA met optionele cloudsynchronisatie."
+  },
+  "header": {
+    "accountAriaLabel": "Account & synchronisatie",
+    "accountTitleLoggedOut": "Aanmelden voor cloudsynchronisatie",
+    "accountTitleLoggedIn": "Aangemeld als {email} — Account & synchronisatie",
+    "settingsTitle": "Instellingen",
+    "settingsAriaLabel": "Instellingen",
+    "addMenuTitle": "Nieuw toevoegen",
+    "addMenuAriaLabel": "Nieuw toevoegen",
+    "addCategory": "Nieuwe categorie",
+    "addJingle": "Nieuwe jingle"
+  },
+  "empty": {
+    "noCategories": "Nog geen categorieën. Tik rechtsboven op <strong>+</strong> om je eerste categorie aan te maken.",
+    "noJingles": "Nog geen jingles. Gebruik + rechts om er een toe te voegen."
+  },
+  "category": {
+    "editTitle": "Categorie bewerken",
+    "jingleCountOne": "{count} jingle",
+    "jingleCountOther": "{count} jingles",
+    "noJinglesToast": "Geen jingles in \"{name}\".",
+    "sequenceProgress": "Jingle {current} van {total}"
+  },
+  "jingle": {
+    "editTitle": "Jingle bewerken",
+    "addToCategoryTitle": "Jingle aan deze categorie toevoegen",
+    "dragHandleTitle": "Sleep om te herordenen"
+  },
+  "random": {
+    "label": "Random",
+    "nextLabel": "Volgende"
+  },
+  "bottomBar": {
+    "volumeAriaLabel": "Hoofdvolume",
+    "stopAll": "Stop All"
+  },
+  "footer": {
+    "imprint": "Colofon",
+    "privacy": "Privacybeleid",
+    "terms": "Voorwaarden",
+    "support": "Ondersteunen"
+  },
+  "dialogCommon": {
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "close": "Sluiten",
+    "done": "Klaar",
+    "ok": "OK",
+    "delete": "Verwijderen"
+  },
+  "categoryDialog": {
+    "newTitle": "Nieuwe categorie",
+    "editTitle": "Categorie bewerken",
+    "nameLabel": "Naam",
+    "namePlaceholder": "bijv. Applaus",
+    "colorLabel": "Kleur",
+    "playbackModeLabel": "Afspelen",
+    "playbackModeRandom": "Willekeurig",
+    "playbackModeSequential": "Op volgorde",
+    "playbackModeHint": "In de modus 'Op volgorde' speelt de categorieknop steeds de volgende jingle af in de volgorde die je met slepen en neerzetten hebt ingesteld.",
+    "deleteConfirmWithJingles": "Deze categorie en de bijbehorende {count} jingle(s) verwijderen?",
+    "deleteConfirm": "Deze categorie verwijderen?"
+  },
+  "jingleDialog": {
+    "newTitle": "Nieuwe jingle",
+    "editTitle": "Jingle bewerken",
+    "fileLabel": "Audiobestand (MP3/WAV)",
+    "fileHintKeepNamed": "Huidig bestand: {fileName} (laat leeg om te behouden)",
+    "fileHintKeepGeneric": "Laat leeg om het huidige bestand te behouden.",
+    "nameLabel": "Weergavenaam",
+    "namePlaceholder": "bijv. Applaus luid",
+    "categoryLabel": "Categorie",
+    "colorOverrideLabel": "Eigen kleur gebruiken",
+    "colorLabel": "Kleur",
+    "hotkeyLabel": "Sneltoets",
+    "hotkeyNone": "Geen sneltoets",
+    "hotkeyAssign": "Toewijzen…",
+    "hotkeyClear": "Wissen",
+    "hotkeyListening": "Druk op een toets… (Esc om te annuleren)",
+    "hotkeyHint": "Cijfer 1–9, eventueel met Ctrl voor meer sneltoetsen. Werkt overal in de app zolang er geen tekstveld actief is.",
+    "hotkeyCtrlPrefix": "Ctrl+",
+    "hotkeyInvalid": "Alleen cijfers 1–9 (eventueel met Ctrl) kunnen als sneltoets worden gebruikt.",
+    "hotkeyConflict": "Al toegewezen aan \"{name}\".",
+    "deleteConfirm": "Deze jingle naar de prullenbak verplaatsen? (24 uur herstelbaar)"
+  },
+  "jingleSearch": {
+    "intro": "Royaltyvrije muziek & geluiden zoeken",
+    "tabSoundEffects": "Sound Effects",
+    "tabMusic": "Music",
+    "placeholder": "Zoekterm…",
+    "searchButton": "Zoeken",
+    "searching": "Bezig met zoeken…",
+    "noResults": "Geen resultaten.",
+    "error": "Zoeken is nu niet beschikbaar.",
+    "previewPlay": "▶",
+    "previewStop": "⏹",
+    "previewAriaLabel": "Voorluisteren: {title}",
+    "selectButton": "Selecteren",
+    "importing": "Bezig met laden…",
+    "importFailed": "Importeren mislukt. Probeer het opnieuw.",
+    "sourceNoteWithLicense": "Royaltyvrije muziek/geluiden van {source} ({license})",
+    "sourceNoteNoLicense": "Royaltyvrije muziek/geluiden van {source}",
+    "sourceNoteJamendoWithArtist": "\"{title}\" door {artist} — Jamendo ({license}, naamsvermelding verplicht)"
+  },
+  "trim": {
+    "editButton": "✂️ Bijsnijden…",
+    "title": "Jingle bijsnijden",
+    "loading": "Golfvorm wordt geladen…",
+    "startLabel": "Start (sec.)",
+    "endLabel": "Einde (sec.)",
+    "selectionHint": "Geselecteerd: {selected} sec. van {total} sec.",
+    "reset": "Terugzetten",
+    "preview": "▶ Voorluisteren",
+    "stopPreview": "⏹ Stop",
+    "playOriginal": "▶ Origineel afspelen",
+    "saved": "Bijsnede opgeslagen."
+  },
+  "account": {
+    "dialogTitle": "Account & synchronisatie",
+    "loggedOutIntro": "Meld je aan met een magic link om je categorieën en jingles op al je apparaten te synchroniseren. Zonder aanmelden blijft de app volledig offline en lokaal werken.",
+    "emailLabel": "E-mailadres",
+    "emailPlaceholder": "jij@voorbeeld.nl",
+    "sendMagicLink": "Magic link versturen",
+    "loggedInAs": "Aangemeld als",
+    "signOut": "Afmelden",
+    "syncNow": "Nu synchroniseren",
+    "sendingLink": "Link wordt verstuurd…",
+    "linkSent": "Magic link verstuurd naar {email}. Controleer je inbox en open de link.",
+    "sendFailed": "Versturen mislukt: {error}",
+    "signedOutToast": "Afgemeld. Het bord blijft lokaal bruikbaar.",
+    "syncStatus": {
+      "syncing": "Synchroniseren…",
+      "failed": "Synchronisatie mislukt: {error}",
+      "offline": "Offline — wordt gesynchroniseerd zodra je weer online bent.",
+      "lastSync": "Laatst gesynchroniseerd: {time}",
+      "never": "Nog niet gesynchroniseerd."
+    }
+  },
+  "settings": {
+    "dialogTitle": "Instellingen",
+    "languageLabel": "Taal",
+    "languageGerman": "Deutsch",
+    "languageEnglish": "English",
+    "languageDutch": "Nederlands",
+    "languageFrench": "Français",
+    "languageDanish": "Dansk",
+    "languagePolish": "Polski",
+    "languageCzech": "Čeština",
+    "languageItalian": "Italiano",
+    "languageHint": "Wordt lokaal opgeslagen en, zodra je bent aangemeld, gesynchroniseerd op al je apparaten.",
+    "dataLabel": "Gegevens",
+    "exportButton": "Alle gegevens exporteren",
+    "importButton": "Gegevens importeren",
+    "exportFailed": "Exporteren mislukt: {error}",
+    "importFailed": "Importeren mislukt: {error}",
+    "importDone": "Import voltooid: {categories} categorieën, {jingles} jingles.",
+    "trashLabel": "Prullenbak",
+    "trashButton": "Verwijderde jingles tonen"
+  },
+  "support": {
+    "settingsLabel": "App ondersteunen",
+    "hint": "Vind je Random Jingle leuk? Ondersteun de verdere ontwikkeling – volledig vrijblijvend, zonder verplichtingen.",
+    "paypal": "Doneren via PayPal",
+    "coffee": "Buy Me a Coffee"
+  },
+  "trash": {
+    "title": "Prullenbak",
+    "hint": "Verwijderde jingles blijven 24 uur herstelbaar en worden daarna definitief verwijderd.",
+    "empty": "De prullenbak is leeg.",
+    "restore": "Herstellen",
+    "restoredToast": "\"{name}\" hersteld.",
+    "expiresIn": "Verloopt over {hours} u"
+  },
+  "ads": {
+    "ariaLabel": "Advertentie"
+  },
+  "consent": {
+    "bannerAriaLabel": "Cookie-instellingen",
+    "text": "We willen je graag advertenties via Google AdSense laten zien — daarvoor zijn advertentiecookies nodig. Als je weigert, wordt er geen advertentie getoond.",
+    "accept": "Advertentiecookies accepteren",
+    "decline": "Weigeren",
+    "settingsLabel": "Advertentiecookies",
+    "settingsGranted": "Geaccepteerd (AdSense)",
+    "settingsDenied": "Geweigerd (geen advertenties)"
+  },
+  "importChoice": {
+    "title": "Importeren: samenvoegen of overschrijven?",
+    "text": "Er zijn al gegevens aanwezig. Moeten de geïmporteerde gegevens worden samengevoegd met de bestaande gegevens, of moet de import alle bestaande gegevens vervangen?",
+    "merge": "Samenvoegen",
+    "overwrite": "Overschrijven"
+  },
+  "admin": {
+    "navTitle": "Adminpaneel",
+    "navAriaLabel": "Adminpaneel",
+    "dashboardTitle": "Adminpaneel",
+    "back": "Terug",
+    "loading": "Bezig met laden…",
+    "accessDenied": "Geen toegang. Dit gedeelte is alleen voor beheerders.",
+    "loadFailed": "Admingegevens konden niet worden geladen.",
+    "statTotal": "Totaal aantal gebruikers",
+    "stat7": "Nieuw (7 dagen)",
+    "stat30": "Nieuw (30 dagen)",
+    "colEmail": "E-mail",
+    "colRegistered": "Geregistreerd op",
+    "colJingles": "Jingles"
+  },
+  "toast": {
+    "categoryUpdated": "Categorie bijgewerkt.",
+    "categoryCreated": "Categorie aangemaakt.",
+    "categoryDeleted": "Categorie verwijderd.",
+    "jingleUpdated": "Jingle bijgewerkt.",
+    "jingleCreated": "Jingle aangemaakt.",
+    "jingleDeleted": "Jingle verwijderd.",
+    "saveFailed": "Opslaan mislukt.",
+    "fileRequired": "Kies een audiobestand.",
+    "playbackFailed": "Afspelen mislukt.",
+    "downloadingAudio": "Audio wordt gedownload…",
+    "audioUnavailable": "Audio is nog niet beschikbaar. Probeer het later opnieuw.",
+    "loadFailed": "Je gegevens konden niet worden geladen."
+  }
+}

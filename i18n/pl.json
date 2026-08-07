@@ -1,0 +1,225 @@
+{
+  "app": {
+    "title": "Random Jingle",
+    "description": "Random Jingle – lokalna aplikacja PWA typu soundboard z opcjonalną synchronizacją w chmurze."
+  },
+  "header": {
+    "accountAriaLabel": "Konto i synchronizacja",
+    "accountTitleLoggedOut": "Zaloguj się, aby synchronizować w chmurze",
+    "accountTitleLoggedIn": "Zalogowano jako {email} — Konto i synchronizacja",
+    "settingsTitle": "Ustawienia",
+    "settingsAriaLabel": "Ustawienia",
+    "addMenuTitle": "Dodaj nowe",
+    "addMenuAriaLabel": "Dodaj nowe",
+    "addCategory": "Nowa kategoria",
+    "addJingle": "Nowy jingiel"
+  },
+  "empty": {
+    "noCategories": "Brak kategorii. Dotknij <strong>+</strong> w prawym górnym rogu, aby utworzyć pierwszą.",
+    "noJingles": "Brak jingli. Użyj + po prawej, aby dodać jeden."
+  },
+  "category": {
+    "editTitle": "Edytuj kategorię",
+    "jingleCountOne": "{count} jingiel",
+    "jingleCountOther": "{count} jingli",
+    "noJinglesToast": "Brak jingli w \"{name}\".",
+    "sequenceProgress": "Jingiel {current} z {total}"
+  },
+  "jingle": {
+    "editTitle": "Edytuj jingiel",
+    "addToCategoryTitle": "Dodaj jingiel do tej kategorii",
+    "dragHandleTitle": "Przeciągnij, aby zmienić kolejność"
+  },
+  "random": {
+    "label": "Random",
+    "nextLabel": "Następny"
+  },
+  "bottomBar": {
+    "volumeAriaLabel": "Głośność główna",
+    "stopAll": "Stop All"
+  },
+  "footer": {
+    "imprint": "Nota prawna",
+    "privacy": "Prywatność",
+    "terms": "Regulamin",
+    "support": "Wesprzyj"
+  },
+  "dialogCommon": {
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "close": "Zamknij",
+    "done": "Gotowe",
+    "ok": "OK",
+    "delete": "Usuń"
+  },
+  "categoryDialog": {
+    "newTitle": "Nowa kategoria",
+    "editTitle": "Edytuj kategorię",
+    "nameLabel": "Nazwa",
+    "namePlaceholder": "np. Brawa",
+    "colorLabel": "Kolor",
+    "playbackModeLabel": "Odtwarzanie",
+    "playbackModeRandom": "Losowo",
+    "playbackModeSequential": "Po kolei",
+    "playbackModeHint": "W trybie \"po kolei\" przycisk kategorii odtwarza za każdym razem kolejny jingiel w kolejności ustalonej metodą przeciągnij i upuść.",
+    "deleteConfirmWithJingles": "Usunąć tę kategorię i jej {count} jingiel/jingle/jingli?",
+    "deleteConfirm": "Usunąć tę kategorię?"
+  },
+  "jingleDialog": {
+    "newTitle": "Nowy jingiel",
+    "editTitle": "Edytuj jingiel",
+    "fileLabel": "Plik audio (MP3/WAV)",
+    "fileHintKeepNamed": "Bieżący plik: {fileName} (pozostaw puste, aby go zachować)",
+    "fileHintKeepGeneric": "Pozostaw puste, aby zachować bieżący plik.",
+    "nameLabel": "Nazwa wyświetlana",
+    "namePlaceholder": "np. Brawa głośne",
+    "categoryLabel": "Kategoria",
+    "colorOverrideLabel": "Użyj własnego koloru",
+    "colorLabel": "Kolor",
+    "hotkeyLabel": "Skrót klawiszowy",
+    "hotkeyNone": "Brak skrótu",
+    "hotkeyAssign": "Przypisz…",
+    "hotkeyClear": "Usuń",
+    "hotkeyListening": "Naciśnij klawisz… (Esc, aby anulować)",
+    "hotkeyHint": "Cyfra 1–9, opcjonalnie z Ctrl dla większej liczby skrótów. Działa w dowolnym miejscu aplikacji, o ile żadne pole tekstowe nie jest aktywne.",
+    "hotkeyCtrlPrefix": "Ctrl+",
+    "hotkeyInvalid": "Jako skrót można użyć tylko cyfr 1–9 (opcjonalnie z Ctrl).",
+    "hotkeyConflict": "Już przypisano do \"{name}\".",
+    "deleteConfirm": "Przenieść ten jingiel do kosza? (możliwość przywrócenia przez 24 godz.)"
+  },
+  "jingleSearch": {
+    "intro": "Szukaj muzyki i dźwięków wolnych od tantiem",
+    "tabSoundEffects": "Sound Effects",
+    "tabMusic": "Music",
+    "placeholder": "Szukane hasło…",
+    "searchButton": "Szukaj",
+    "searching": "Wyszukiwanie…",
+    "noResults": "Brak wyników.",
+    "error": "Wyszukiwanie jest obecnie niedostępne.",
+    "previewPlay": "▶",
+    "previewStop": "⏹",
+    "previewAriaLabel": "Odsłuch: {title}",
+    "selectButton": "Wybierz",
+    "importing": "Wczytywanie…",
+    "importFailed": "Import nie powiódł się. Spróbuj ponownie.",
+    "sourceNoteWithLicense": "Muzyka/dźwięki wolne od tantiem od {source} ({license})",
+    "sourceNoteNoLicense": "Muzyka/dźwięki wolne od tantiem od {source}",
+    "sourceNoteJamendoWithArtist": "„{title}” wykonawcy {artist} — Jamendo ({license}, wymagane podanie autora)"
+  },
+  "trim": {
+    "editButton": "✂️ Przytnij…",
+    "title": "Przytnij jingiel",
+    "loading": "Wczytywanie przebiegu fali…",
+    "startLabel": "Początek (sek.)",
+    "endLabel": "Koniec (sek.)",
+    "selectionHint": "Zaznaczono: {selected} sek. z {total} sek.",
+    "reset": "Resetuj",
+    "preview": "▶ Odsłuch",
+    "stopPreview": "⏹ Stop",
+    "playOriginal": "▶ Odtwórz oryginał",
+    "saved": "Przycięcie zapisane."
+  },
+  "account": {
+    "dialogTitle": "Konto i synchronizacja",
+    "loggedOutIntro": "Zaloguj się za pomocą magicznego linku, aby synchronizować kategorie i jingle między urządzeniami. Bez logowania aplikacja nadal działa w pełni offline i lokalnie.",
+    "emailLabel": "Adres e-mail",
+    "emailPlaceholder": "ty@przyklad.pl",
+    "sendMagicLink": "Wyślij magiczny link",
+    "loggedInAs": "Zalogowano jako",
+    "signOut": "Wyloguj się",
+    "syncNow": "Synchronizuj teraz",
+    "sendingLink": "Wysyłanie linku…",
+    "linkSent": "Magiczny link wysłany na {email}. Sprawdź skrzynkę odbiorczą i otwórz go.",
+    "sendFailed": "Nie udało się wysłać: {error}",
+    "signedOutToast": "Wylogowano. Tablica nadal działa lokalnie.",
+    "syncStatus": {
+      "syncing": "Synchronizowanie…",
+      "failed": "Synchronizacja nie powiodła się: {error}",
+      "offline": "Offline — synchronizacja nastąpi po ponownym połączeniu.",
+      "lastSync": "Ostatnia synchronizacja: {time}",
+      "never": "Jeszcze nie zsynchronizowano."
+    }
+  },
+  "settings": {
+    "dialogTitle": "Ustawienia",
+    "languageLabel": "Język",
+    "languageGerman": "Deutsch",
+    "languageEnglish": "English",
+    "languageDutch": "Nederlands",
+    "languageFrench": "Français",
+    "languageDanish": "Dansk",
+    "languagePolish": "Polski",
+    "languageCzech": "Čeština",
+    "languageItalian": "Italiano",
+    "languageHint": "Zapisywane lokalnie, a po zalogowaniu synchronizowane między Twoimi urządzeniami.",
+    "dataLabel": "Dane",
+    "exportButton": "Eksportuj wszystkie dane",
+    "importButton": "Importuj dane",
+    "exportFailed": "Eksport nie powiódł się: {error}",
+    "importFailed": "Import nie powiódł się: {error}",
+    "importDone": "Import zakończony: {categories} kategorii, {jingles} jingli.",
+    "trashLabel": "Kosz",
+    "trashButton": "Pokaż usunięte jingle"
+  },
+  "support": {
+    "settingsLabel": "Wesprzyj aplikację",
+    "hint": "Podoba Ci się Random Jingle? Wesprzyj jej dalszy rozwój – całkowicie dobrowolnie, bez żadnych zobowiązań.",
+    "paypal": "Wpłać przez PayPal",
+    "coffee": "Buy Me a Coffee"
+  },
+  "trash": {
+    "title": "Kosz",
+    "hint": "Usunięte jingle można przywrócić przez 24 godziny, po czym zostają trwale usunięte.",
+    "empty": "Kosz jest pusty.",
+    "restore": "Przywróć",
+    "restoredToast": "\"{name}\" przywrócono.",
+    "expiresIn": "Wygasa za {hours} godz."
+  },
+  "ads": {
+    "ariaLabel": "Reklama"
+  },
+  "consent": {
+    "bannerAriaLabel": "Ustawienia plików cookie",
+    "text": "Chcielibyśmy wyświetlać Ci reklamy za pośrednictwem Google AdSense — wymaga to plików cookie reklamowych. Jeśli odmówisz, żadne reklamy nie będą wyświetlane.",
+    "accept": "Akceptuj pliki cookie reklamowe",
+    "decline": "Odmów",
+    "settingsLabel": "Pliki cookie reklamowe",
+    "settingsGranted": "Zaakceptowano (AdSense)",
+    "settingsDenied": "Odrzucono (brak reklam)"
+  },
+  "importChoice": {
+    "title": "Import: scalić czy zastąpić?",
+    "text": "Dane już tu istnieją. Czy zaimportowane dane mają zostać scalone z istniejącymi, czy import ma zastąpić wszystkie istniejące dane?",
+    "merge": "Scal",
+    "overwrite": "Zastąp"
+  },
+  "admin": {
+    "navTitle": "Panel administratora",
+    "navAriaLabel": "Panel administratora",
+    "dashboardTitle": "Panel administratora",
+    "back": "Wstecz",
+    "loading": "Wczytywanie…",
+    "accessDenied": "Brak dostępu. Ten obszar jest tylko dla administratorów.",
+    "loadFailed": "Nie udało się wczytać danych administracyjnych.",
+    "statTotal": "Użytkownicy łącznie",
+    "stat7": "Nowi (7 dni)",
+    "stat30": "Nowi (30 dni)",
+    "colEmail": "E-mail",
+    "colRegistered": "Zarejestrowano",
+    "colJingles": "Jingle"
+  },
+  "toast": {
+    "categoryUpdated": "Kategoria zaktualizowana.",
+    "categoryCreated": "Kategoria utworzona.",
+    "categoryDeleted": "Kategoria usunięta.",
+    "jingleUpdated": "Jingiel zaktualizowany.",
+    "jingleCreated": "Jingiel utworzony.",
+    "jingleDeleted": "Jingiel usunięty.",
+    "saveFailed": "Nie udało się zapisać.",
+    "fileRequired": "Wybierz plik audio.",
+    "playbackFailed": "Odtwarzanie nie powiodło się.",
+    "downloadingAudio": "Pobieranie dźwięku…",
+    "audioUnavailable": "Dźwięk nie jest jeszcze dostępny. Spróbuj ponownie później.",
+    "loadFailed": "Nie udało się wczytać Twoich danych."
+  }
+}

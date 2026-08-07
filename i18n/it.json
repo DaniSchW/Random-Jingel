@@ -1,0 +1,225 @@
+{
+  "app": {
+    "title": "Random Jingle",
+    "description": "Random Jingle – una PWA soundboard locale con sincronizzazione cloud opzionale."
+  },
+  "header": {
+    "accountAriaLabel": "Account e sincronizzazione",
+    "accountTitleLoggedOut": "Accedi per la sincronizzazione cloud",
+    "accountTitleLoggedIn": "Accesso effettuato come {email} — Account e sincronizzazione",
+    "settingsTitle": "Impostazioni",
+    "settingsAriaLabel": "Impostazioni",
+    "addMenuTitle": "Aggiungi nuovo",
+    "addMenuAriaLabel": "Aggiungi nuovo",
+    "addCategory": "Nuova categoria",
+    "addJingle": "Nuovo jingle"
+  },
+  "empty": {
+    "noCategories": "Ancora nessuna categoria. Tocca <strong>+</strong> in alto a destra per creare la prima.",
+    "noJingles": "Ancora nessun jingle. Usa + a destra per aggiungerne uno."
+  },
+  "category": {
+    "editTitle": "Modifica categoria",
+    "jingleCountOne": "{count} jingle",
+    "jingleCountOther": "{count} jingle",
+    "noJinglesToast": "Nessun jingle in \"{name}\".",
+    "sequenceProgress": "Jingle {current} di {total}"
+  },
+  "jingle": {
+    "editTitle": "Modifica jingle",
+    "addToCategoryTitle": "Aggiungi un jingle a questa categoria",
+    "dragHandleTitle": "Trascina per riordinare"
+  },
+  "random": {
+    "label": "Random",
+    "nextLabel": "Successivo"
+  },
+  "bottomBar": {
+    "volumeAriaLabel": "Volume principale",
+    "stopAll": "Stop All"
+  },
+  "footer": {
+    "imprint": "Note legali",
+    "privacy": "Privacy",
+    "terms": "Termini",
+    "support": "Sostieni"
+  },
+  "dialogCommon": {
+    "cancel": "Annulla",
+    "save": "Salva",
+    "close": "Chiudi",
+    "done": "Fatto",
+    "ok": "OK",
+    "delete": "Elimina"
+  },
+  "categoryDialog": {
+    "newTitle": "Nuova categoria",
+    "editTitle": "Modifica categoria",
+    "nameLabel": "Nome",
+    "namePlaceholder": "es. Applausi",
+    "colorLabel": "Colore",
+    "playbackModeLabel": "Riproduzione",
+    "playbackModeRandom": "Casuale",
+    "playbackModeSequential": "In sequenza",
+    "playbackModeHint": "In modalità sequenziale, il pulsante della categoria riproduce ogni volta il jingle successivo nell'ordine impostato tramite trascinamento.",
+    "deleteConfirmWithJingles": "Eliminare questa categoria e i suoi {count} jingle?",
+    "deleteConfirm": "Eliminare questa categoria?"
+  },
+  "jingleDialog": {
+    "newTitle": "Nuovo jingle",
+    "editTitle": "Modifica jingle",
+    "fileLabel": "File audio (MP3/WAV)",
+    "fileHintKeepNamed": "File attuale: {fileName} (lascia vuoto per mantenerlo)",
+    "fileHintKeepGeneric": "Lascia vuoto per mantenere il file attuale.",
+    "nameLabel": "Nome visualizzato",
+    "namePlaceholder": "es. Applausi forti",
+    "categoryLabel": "Categoria",
+    "colorOverrideLabel": "Usa un colore personalizzato",
+    "colorLabel": "Colore",
+    "hotkeyLabel": "Scorciatoia da tastiera",
+    "hotkeyNone": "Nessuna scorciatoia",
+    "hotkeyAssign": "Assegna…",
+    "hotkeyClear": "Rimuovi",
+    "hotkeyListening": "Premi un tasto… (Esc per annullare)",
+    "hotkeyHint": "Cifra 1–9, opzionalmente con Ctrl per più scorciatoie. Funziona ovunque nell'app finché nessun campo di testo è attivo.",
+    "hotkeyCtrlPrefix": "Ctrl+",
+    "hotkeyInvalid": "Come scorciatoia si possono usare solo le cifre 1–9 (opzionalmente con Ctrl).",
+    "hotkeyConflict": "Già assegnata a \"{name}\".",
+    "deleteConfirm": "Spostare questo jingle nel cestino? (recuperabile per 24 ore)"
+  },
+  "jingleSearch": {
+    "intro": "Cerca musica e suoni royalty-free",
+    "tabSoundEffects": "Sound Effects",
+    "tabMusic": "Music",
+    "placeholder": "Termine di ricerca…",
+    "searchButton": "Cerca",
+    "searching": "Ricerca in corso…",
+    "noResults": "Nessun risultato.",
+    "error": "La ricerca non è disponibile al momento.",
+    "previewPlay": "▶",
+    "previewStop": "⏹",
+    "previewAriaLabel": "Anteprima: {title}",
+    "selectButton": "Seleziona",
+    "importing": "Caricamento…",
+    "importFailed": "Importazione non riuscita. Riprova.",
+    "sourceNoteWithLicense": "Musica/suoni royalty-free da {source} ({license})",
+    "sourceNoteNoLicense": "Musica/suoni royalty-free da {source}",
+    "sourceNoteJamendoWithArtist": "\"{title}\" di {artist} — Jamendo ({license}, attribuzione obbligatoria)"
+  },
+  "trim": {
+    "editButton": "✂️ Taglia…",
+    "title": "Taglia jingle",
+    "loading": "Caricamento della forma d'onda…",
+    "startLabel": "Inizio (sec.)",
+    "endLabel": "Fine (sec.)",
+    "selectionHint": "Selezionato: {selected} sec. su {total} sec.",
+    "reset": "Ripristina",
+    "preview": "▶ Anteprima",
+    "stopPreview": "⏹ Stop",
+    "playOriginal": "▶ Riproduci originale",
+    "saved": "Taglio salvato."
+  },
+  "account": {
+    "dialogTitle": "Account e sincronizzazione",
+    "loggedOutIntro": "Accedi con un link magico per sincronizzare le tue categorie e i tuoi jingle su più dispositivi. Senza accesso, l'app continua a funzionare completamente offline e in locale.",
+    "emailLabel": "Indirizzo e-mail",
+    "emailPlaceholder": "tu@esempio.com",
+    "sendMagicLink": "Invia link magico",
+    "loggedInAs": "Accesso effettuato come",
+    "signOut": "Disconnetti",
+    "syncNow": "Sincronizza ora",
+    "sendingLink": "Invio del link…",
+    "linkSent": "Link magico inviato a {email}. Controlla la posta in arrivo e aprilo.",
+    "sendFailed": "Invio non riuscito: {error}",
+    "signedOutToast": "Disconnesso. La bacheca continua a funzionare in locale.",
+    "syncStatus": {
+      "syncing": "Sincronizzazione…",
+      "failed": "Sincronizzazione non riuscita: {error}",
+      "offline": "Offline — la sincronizzazione avverrà quando tornerai online.",
+      "lastSync": "Ultima sincronizzazione: {time}",
+      "never": "Non ancora sincronizzato."
+    }
+  },
+  "settings": {
+    "dialogTitle": "Impostazioni",
+    "languageLabel": "Lingua",
+    "languageGerman": "Deutsch",
+    "languageEnglish": "English",
+    "languageDutch": "Nederlands",
+    "languageFrench": "Français",
+    "languageDanish": "Dansk",
+    "languagePolish": "Polski",
+    "languageCzech": "Čeština",
+    "languageItalian": "Italiano",
+    "languageHint": "Salvato in locale e, una volta effettuato l'accesso, sincronizzato tra i tuoi dispositivi.",
+    "dataLabel": "Dati",
+    "exportButton": "Esporta tutti i dati",
+    "importButton": "Importa dati",
+    "exportFailed": "Esportazione non riuscita: {error}",
+    "importFailed": "Importazione non riuscita: {error}",
+    "importDone": "Importazione completata: {categories} categorie, {jingles} jingle.",
+    "trashLabel": "Cestino",
+    "trashButton": "Mostra jingle eliminati"
+  },
+  "support": {
+    "settingsLabel": "Sostieni l'app",
+    "hint": "Ti piace Random Jingle? Sostieni il suo sviluppo – totalmente facoltativo, senza alcun obbligo.",
+    "paypal": "Dona con PayPal",
+    "coffee": "Buy Me a Coffee"
+  },
+  "trash": {
+    "title": "Cestino",
+    "hint": "I jingle eliminati restano recuperabili per 24 ore, dopodiché vengono rimossi definitivamente.",
+    "empty": "Il cestino è vuoto.",
+    "restore": "Ripristina",
+    "restoredToast": "\"{name}\" ripristinato.",
+    "expiresIn": "Scade tra {hours} h"
+  },
+  "ads": {
+    "ariaLabel": "Pubblicità"
+  },
+  "consent": {
+    "bannerAriaLabel": "Impostazioni cookie",
+    "text": "Vorremmo mostrarti annunci tramite Google AdSense — per farlo servono cookie pubblicitari. Se rifiuti, non verrà mostrata alcuna pubblicità.",
+    "accept": "Accetta i cookie pubblicitari",
+    "decline": "Rifiuta",
+    "settingsLabel": "Cookie pubblicitari",
+    "settingsGranted": "Accettato (AdSense)",
+    "settingsDenied": "Rifiutato (nessuna pubblicità)"
+  },
+  "importChoice": {
+    "title": "Importazione: unire o sovrascrivere?",
+    "text": "Sono già presenti dei dati. I dati importati devono essere uniti a quelli esistenti, oppure l'importazione deve sostituire tutti i dati esistenti?",
+    "merge": "Unisci",
+    "overwrite": "Sovrascrivi"
+  },
+  "admin": {
+    "navTitle": "Pannello di amministrazione",
+    "navAriaLabel": "Pannello di amministrazione",
+    "dashboardTitle": "Pannello di amministrazione",
+    "back": "Indietro",
+    "loading": "Caricamento…",
+    "accessDenied": "Accesso negato. Questa area è riservata agli amministratori.",
+    "loadFailed": "Impossibile caricare i dati di amministrazione.",
+    "statTotal": "Utenti totali",
+    "stat7": "Nuovi (7 giorni)",
+    "stat30": "Nuovi (30 giorni)",
+    "colEmail": "E-mail",
+    "colRegistered": "Registrato il",
+    "colJingles": "Jingle"
+  },
+  "toast": {
+    "categoryUpdated": "Categoria aggiornata.",
+    "categoryCreated": "Categoria creata.",
+    "categoryDeleted": "Categoria eliminata.",
+    "jingleUpdated": "Jingle aggiornato.",
+    "jingleCreated": "Jingle creato.",
+    "jingleDeleted": "Jingle eliminato.",
+    "saveFailed": "Salvataggio non riuscito.",
+    "fileRequired": "Seleziona un file audio.",
+    "playbackFailed": "Riproduzione non riuscita.",
+    "downloadingAudio": "Download dell'audio…",
+    "audioUnavailable": "L'audio non è ancora disponibile. Riprova più tardi.",
+    "loadFailed": "Impossibile caricare i tuoi dati."
+  }
+}

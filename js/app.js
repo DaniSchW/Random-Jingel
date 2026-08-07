@@ -87,6 +87,19 @@
   const consentAcceptBtn = document.getElementById('consentAcceptBtn');
   const consentDeclineBtn = document.getElementById('consentDeclineBtn');
 
+  // The legal pages only exist in German and English (see impressum.html /
+  // impressum.en.html etc.) — every other supported language falls back to
+  // the English version rather than showing an empty/broken page.
+  const footerImprintLink = document.getElementById('footerImprintLink');
+  const footerPrivacyLink = document.getElementById('footerPrivacyLink');
+  const footerTermsLink = document.getElementById('footerTermsLink');
+  function updateLegalLinks() {
+    const suffix = RJI18n.getLanguage() === 'de' ? '' : '.en';
+    footerImprintLink.href = `impressum${suffix}.html`;
+    footerPrivacyLink.href = `datenschutz${suffix}.html`;
+    footerTermsLink.href = `agb${suffix}.html`;
+  }
+
   const appViewEl = document.getElementById('appView');
   const adminBtn = document.getElementById('adminBtn');
   const adminView = document.getElementById('adminView');
@@ -1119,7 +1132,7 @@
     if (status.lastError) return RJI18n.t('account.syncStatus.failed', { error: status.lastError });
     if (!status.online) return RJI18n.t('account.syncStatus.offline');
     if (status.lastSyncAt) {
-      const locale = RJI18n.getLanguage() === 'en' ? 'en-US' : 'de-DE';
+      const locale = RJI18n.getLocale();
       return RJI18n.t('account.syncStatus.lastSync', { time: new Date(status.lastSyncAt).toLocaleTimeString(locale) });
     }
     return RJI18n.t('account.syncStatus.never');
@@ -1202,8 +1215,7 @@
   }
 
   function formatAdminDate(iso) {
-    const locale = RJI18n.getLanguage() === 'en' ? 'en-US' : 'de-DE';
-    return new Date(iso).toLocaleDateString(locale);
+    return new Date(iso).toLocaleDateString(RJI18n.getLocale());
   }
 
   function renderAdminStats(rows) {
@@ -1413,6 +1425,7 @@
     // empty-jingle-list hint) and refresh whatever's currently open.
     render();
     if (accountDialog.open) refreshAccountDialog();
+    updateLegalLinks();
   });
 
   // ---- Ad area: AdSense only ever loads/shows after explicit consent +
@@ -1461,6 +1474,7 @@
     } catch (err) {
       console.error('RJI18n.init fehlgeschlagen', err);
     }
+    updateLegalLinks();
     try {
       await loadState();
     } catch (err) {

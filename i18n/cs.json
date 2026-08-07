@@ -1,0 +1,225 @@
+{
+  "app": {
+    "title": "Random Jingle",
+    "description": "Random Jingle – lokální soundboardová PWA s volitelnou synchronizací v cloudu."
+  },
+  "header": {
+    "accountAriaLabel": "Účet a synchronizace",
+    "accountTitleLoggedOut": "Přihlásit se pro synchronizaci v cloudu",
+    "accountTitleLoggedIn": "Přihlášen jako {email} — Účet a synchronizace",
+    "settingsTitle": "Nastavení",
+    "settingsAriaLabel": "Nastavení",
+    "addMenuTitle": "Přidat nové",
+    "addMenuAriaLabel": "Přidat nové",
+    "addCategory": "Nová kategorie",
+    "addJingle": "Nový jingle"
+  },
+  "empty": {
+    "noCategories": "Zatím žádné kategorie. Klepnutím na <strong>+</strong> vpravo nahoře vytvořte první.",
+    "noJingles": "Zatím žádné jingly. Přidejte jeden pomocí + vpravo."
+  },
+  "category": {
+    "editTitle": "Upravit kategorii",
+    "jingleCountOne": "{count} jingle",
+    "jingleCountOther": "{count} jingly",
+    "noJinglesToast": "V \"{name}\" nejsou žádné jingly.",
+    "sequenceProgress": "Jingle {current} z {total}"
+  },
+  "jingle": {
+    "editTitle": "Upravit jingle",
+    "addToCategoryTitle": "Přidat jingle do této kategorie",
+    "dragHandleTitle": "Přetažením změníte pořadí"
+  },
+  "random": {
+    "label": "Random",
+    "nextLabel": "Další"
+  },
+  "bottomBar": {
+    "volumeAriaLabel": "Hlavní hlasitost",
+    "stopAll": "Stop All"
+  },
+  "footer": {
+    "imprint": "Tiráž",
+    "privacy": "Ochrana soukromí",
+    "terms": "Podmínky",
+    "support": "Podpořit"
+  },
+  "dialogCommon": {
+    "cancel": "Zrušit",
+    "save": "Uložit",
+    "close": "Zavřít",
+    "done": "Hotovo",
+    "ok": "OK",
+    "delete": "Smazat"
+  },
+  "categoryDialog": {
+    "newTitle": "Nová kategorie",
+    "editTitle": "Upravit kategorii",
+    "nameLabel": "Název",
+    "namePlaceholder": "např. Potlesk",
+    "colorLabel": "Barva",
+    "playbackModeLabel": "Přehrávání",
+    "playbackModeRandom": "Náhodně",
+    "playbackModeSequential": "Postupně",
+    "playbackModeHint": "V režimu \"postupně\" přehraje tlačítko kategorie pokaždé další jingle v pořadí nastaveném přetažením.",
+    "deleteConfirmWithJingles": "Smazat tuto kategorii a {count} jingle v ní?",
+    "deleteConfirm": "Smazat tuto kategorii?"
+  },
+  "jingleDialog": {
+    "newTitle": "Nový jingle",
+    "editTitle": "Upravit jingle",
+    "fileLabel": "Zvukový soubor (MP3/WAV)",
+    "fileHintKeepNamed": "Aktuální soubor: {fileName} (ponechte prázdné pro zachování)",
+    "fileHintKeepGeneric": "Ponechte prázdné pro zachování aktuálního souboru.",
+    "nameLabel": "Zobrazovaný název",
+    "namePlaceholder": "např. Potlesk hlasitý",
+    "categoryLabel": "Kategorie",
+    "colorOverrideLabel": "Použít vlastní barvu",
+    "colorLabel": "Barva",
+    "hotkeyLabel": "Klávesová zkratka",
+    "hotkeyNone": "Žádná zkratka",
+    "hotkeyAssign": "Přiřadit…",
+    "hotkeyClear": "Odstranit",
+    "hotkeyListening": "Stiskněte klávesu… (Esc pro zrušení)",
+    "hotkeyHint": "Číslice 1–9, volitelně s Ctrl pro více zkratek. Funguje kdekoli v aplikaci, pokud není aktivní textové pole.",
+    "hotkeyCtrlPrefix": "Ctrl+",
+    "hotkeyInvalid": "Jako zkratku lze použít pouze číslice 1–9 (volitelně s Ctrl).",
+    "hotkeyConflict": "Již přiřazeno k \"{name}\".",
+    "deleteConfirm": "Přesunout tento jingle do koše? (obnovitelné po dobu 24 hodin)"
+  },
+  "jingleSearch": {
+    "intro": "Hledat hudbu a zvuky bez licenčních poplatků",
+    "tabSoundEffects": "Sound Effects",
+    "tabMusic": "Music",
+    "placeholder": "Hledaný výraz…",
+    "searchButton": "Hledat",
+    "searching": "Vyhledávání…",
+    "noResults": "Žádné výsledky.",
+    "error": "Vyhledávání momentálně není k dispozici.",
+    "previewPlay": "▶",
+    "previewStop": "⏹",
+    "previewAriaLabel": "Přehrát ukázku: {title}",
+    "selectButton": "Vybrat",
+    "importing": "Načítání…",
+    "importFailed": "Import se nezdařil. Zkuste to prosím znovu.",
+    "sourceNoteWithLicense": "Hudba/zvuky bez licenčních poplatků od {source} ({license})",
+    "sourceNoteNoLicense": "Hudba/zvuky bez licenčních poplatků od {source}",
+    "sourceNoteJamendoWithArtist": "„{title}“ od {artist} — Jamendo ({license}, vyžadováno uvedení autora)"
+  },
+  "trim": {
+    "editButton": "✂️ Oříznout…",
+    "title": "Oříznout jingle",
+    "loading": "Načítání zvukové vlny…",
+    "startLabel": "Začátek (s)",
+    "endLabel": "Konec (s)",
+    "selectionHint": "Vybráno: {selected} s z {total} s",
+    "reset": "Obnovit",
+    "preview": "▶ Přehrát ukázku",
+    "stopPreview": "⏹ Zastavit",
+    "playOriginal": "▶ Přehrát originál",
+    "saved": "Oříznutí uloženo."
+  },
+  "account": {
+    "dialogTitle": "Účet a synchronizace",
+    "loggedOutIntro": "Přihlaste se pomocí magického odkazu, abyste mohli synchronizovat kategorie a jingly mezi zařízeními. Bez přihlášení aplikace i nadále funguje zcela offline a lokálně.",
+    "emailLabel": "E-mailová adresa",
+    "emailPlaceholder": "vy@priklad.cz",
+    "sendMagicLink": "Odeslat magický odkaz",
+    "loggedInAs": "Přihlášen jako",
+    "signOut": "Odhlásit se",
+    "syncNow": "Synchronizovat nyní",
+    "sendingLink": "Odesílání odkazu…",
+    "linkSent": "Magický odkaz byl odeslán na {email}. Zkontrolujte doručenou poštu a otevřete jej.",
+    "sendFailed": "Odeslání se nezdařilo: {error}",
+    "signedOutToast": "Odhlášeno. Nástěnka funguje nadále lokálně.",
+    "syncStatus": {
+      "syncing": "Synchronizace…",
+      "failed": "Synchronizace se nezdařila: {error}",
+      "offline": "Offline — synchronizace proběhne, jakmile budete znovu online.",
+      "lastSync": "Poslední synchronizace: {time}",
+      "never": "Zatím nesynchronizováno."
+    }
+  },
+  "settings": {
+    "dialogTitle": "Nastavení",
+    "languageLabel": "Jazyk",
+    "languageGerman": "Deutsch",
+    "languageEnglish": "English",
+    "languageDutch": "Nederlands",
+    "languageFrench": "Français",
+    "languageDanish": "Dansk",
+    "languagePolish": "Polski",
+    "languageCzech": "Čeština",
+    "languageItalian": "Italiano",
+    "languageHint": "Ukládá se lokálně a po přihlášení se synchronizuje mezi vašimi zařízeními.",
+    "dataLabel": "Data",
+    "exportButton": "Exportovat všechna data",
+    "importButton": "Importovat data",
+    "exportFailed": "Export se nezdařil: {error}",
+    "importFailed": "Import se nezdařil: {error}",
+    "importDone": "Import dokončen: {categories} kategorií, {jingles} jinglů.",
+    "trashLabel": "Koš",
+    "trashButton": "Zobrazit smazané jingly"
+  },
+  "support": {
+    "settingsLabel": "Podpořit aplikaci",
+    "hint": "Líbí se vám Random Jingle? Podpořte její další vývoj – zcela dobrovolně, bez jakéhokoli závazku.",
+    "paypal": "Přispět přes PayPal",
+    "coffee": "Buy Me a Coffee"
+  },
+  "trash": {
+    "title": "Koš",
+    "hint": "Smazané jingly zůstávají obnovitelné po dobu 24 hodin, poté jsou trvale odstraněny.",
+    "empty": "Koš je prázdný.",
+    "restore": "Obnovit",
+    "restoredToast": "\"{name}\" obnoveno.",
+    "expiresIn": "Vyprší za {hours} h"
+  },
+  "ads": {
+    "ariaLabel": "Reklama"
+  },
+  "consent": {
+    "bannerAriaLabel": "Nastavení cookies",
+    "text": "Rádi bychom vám zobrazovali reklamy prostřednictvím Google AdSense — k tomu jsou potřeba reklamní cookies. Pokud odmítnete, žádná reklama se nezobrazí.",
+    "accept": "Přijmout reklamní cookies",
+    "decline": "Odmítnout",
+    "settingsLabel": "Reklamní cookies",
+    "settingsGranted": "Přijato (AdSense)",
+    "settingsDenied": "Odmítnuto (žádná reklama)"
+  },
+  "importChoice": {
+    "title": "Import: sloučit, nebo přepsat?",
+    "text": "Zde již existují data. Mají být importovaná data sloučena se stávajícími, nebo má import nahradit všechna stávající data?",
+    "merge": "Sloučit",
+    "overwrite": "Přepsat"
+  },
+  "admin": {
+    "navTitle": "Administrace",
+    "navAriaLabel": "Administrace",
+    "dashboardTitle": "Administrace",
+    "back": "Zpět",
+    "loading": "Načítání…",
+    "accessDenied": "Přístup odepřen. Tato oblast je pouze pro administrátory.",
+    "loadFailed": "Data administrace se nepodařilo načíst.",
+    "statTotal": "Uživatelů celkem",
+    "stat7": "Noví (7 dní)",
+    "stat30": "Noví (30 dní)",
+    "colEmail": "E-mail",
+    "colRegistered": "Registrován dne",
+    "colJingles": "Jingly"
+  },
+  "toast": {
+    "categoryUpdated": "Kategorie aktualizována.",
+    "categoryCreated": "Kategorie vytvořena.",
+    "categoryDeleted": "Kategorie smazána.",
+    "jingleUpdated": "Jingle aktualizován.",
+    "jingleCreated": "Jingle vytvořen.",
+    "jingleDeleted": "Jingle smazán.",
+    "saveFailed": "Uložení se nezdařilo.",
+    "fileRequired": "Vyberte prosím zvukový soubor.",
+    "playbackFailed": "Přehrávání se nezdařilo.",
+    "downloadingAudio": "Stahování zvuku…",
+    "audioUnavailable": "Zvuk zatím není k dispozici. Zkuste to prosím později.",
+    "loadFailed": "Vaše data se nepodařilo načíst."
+  }
+}

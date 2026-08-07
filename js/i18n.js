@@ -6,8 +6,21 @@
  * RJSync the same way categories/jingles are — last write wins.
  */
 const RJI18n = (() => {
-  const SUPPORTED = ['de', 'en'];
+  const SUPPORTED = ['de', 'en', 'nl', 'fr', 'da', 'pl', 'cs', 'it'];
   const FALLBACK = 'de';
+  // BCP-47 locale for Date/Number formatting (toLocaleDateString etc.) per
+  // supported language — separate from SUPPORTED because it's a display
+  // detail, not a translation availability flag.
+  const LOCALE_MAP = {
+    de: 'de-DE',
+    en: 'en-US',
+    nl: 'nl-NL',
+    fr: 'fr-FR',
+    da: 'da-DK',
+    pl: 'pl-PL',
+    cs: 'cs-CZ',
+    it: 'it-IT',
+  };
 
   let current = FALLBACK;
   let dictionaries = {};
@@ -106,13 +119,17 @@ const RJI18n = (() => {
     return current;
   }
 
+  function getLocale() {
+    return LOCALE_MAP[current] || LOCALE_MAP[FALLBACK];
+  }
+
   function getSupportedLanguages() {
     return SUPPORTED.slice();
   }
 
   async function init() {
-    const [de, en] = await Promise.all([loadDictionary('de'), loadDictionary('en')]);
-    dictionaries = { de, en };
+    const loaded = await Promise.all(SUPPORTED.map((lang) => loadDictionary(lang)));
+    dictionaries = Object.fromEntries(SUPPORTED.map((lang, i) => [lang, loaded[i]]));
 
     const stored = await RJDB.getMeta('language');
     if (stored && SUPPORTED.includes(stored.code)) {
@@ -134,6 +151,7 @@ const RJI18n = (() => {
     tCount,
     setLanguage,
     getLanguage,
+    getLocale,
     getSupportedLanguages,
     applyStaticTranslations,
     onChange,

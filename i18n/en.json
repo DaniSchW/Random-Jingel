@@ -145,6 +145,12 @@
     "languageLabel": "Language",
     "languageGerman": "Deutsch",
     "languageEnglish": "English",
+    "languageDutch": "Nederlands",
+    "languageFrench": "Français",
+    "languageDanish": "Dansk",
+    "languagePolish": "Polski",
+    "languageCzech": "Čeština",
+    "languageItalian": "Italiano",
     "languageHint": "Saved locally and, once signed in, synced across your devices.",
     "dataLabel": "Data",
     "exportButton": "Export all data",
@@ -173,6 +179,7 @@
     "ariaLabel": "Advertisement"
   },
   "consent": {
+    "bannerAriaLabel": "Cookie settings",
     "text": "We'd like to show you ads via Google AdSense — that needs advertising cookies. If you decline, no ads will be shown.",
     "accept": "Accept ad cookies",
     "decline": "Decline",

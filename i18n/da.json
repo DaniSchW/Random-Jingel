@@ -1,0 +1,225 @@
+{
+  "app": {
+    "title": "Random Jingle",
+    "description": "Random Jingle – en lokal soundboard-PWA med valgfri cloud-synkronisering."
+  },
+  "header": {
+    "accountAriaLabel": "Konto & synkronisering",
+    "accountTitleLoggedOut": "Log ind for cloud-synkronisering",
+    "accountTitleLoggedIn": "Logget ind som {email} — Konto & synkronisering",
+    "settingsTitle": "Indstillinger",
+    "settingsAriaLabel": "Indstillinger",
+    "addMenuTitle": "Opret ny",
+    "addMenuAriaLabel": "Opret ny",
+    "addCategory": "Ny kategori",
+    "addJingle": "Ny jingle"
+  },
+  "empty": {
+    "noCategories": "Endnu ingen kategorier. Tryk på <strong>+</strong> øverst til højre for at oprette din første.",
+    "noJingles": "Endnu ingen jingles. Brug + til højre for at tilføje en."
+  },
+  "category": {
+    "editTitle": "Rediger kategori",
+    "jingleCountOne": "{count} jingle",
+    "jingleCountOther": "{count} jingles",
+    "noJinglesToast": "Ingen jingles i \"{name}\".",
+    "sequenceProgress": "Jingle {current} af {total}"
+  },
+  "jingle": {
+    "editTitle": "Rediger jingle",
+    "addToCategoryTitle": "Tilføj en jingle til denne kategori",
+    "dragHandleTitle": "Træk for at omarrangere"
+  },
+  "random": {
+    "label": "Random",
+    "nextLabel": "Næste"
+  },
+  "bottomBar": {
+    "volumeAriaLabel": "Hovedlydstyrke",
+    "stopAll": "Stop All"
+  },
+  "footer": {
+    "imprint": "Om udgiveren",
+    "privacy": "Privatliv",
+    "terms": "Vilkår",
+    "support": "Støt"
+  },
+  "dialogCommon": {
+    "cancel": "Annuller",
+    "save": "Gem",
+    "close": "Luk",
+    "done": "Færdig",
+    "ok": "OK",
+    "delete": "Slet"
+  },
+  "categoryDialog": {
+    "newTitle": "Ny kategori",
+    "editTitle": "Rediger kategori",
+    "nameLabel": "Navn",
+    "namePlaceholder": "f.eks. Klapsalve",
+    "colorLabel": "Farve",
+    "playbackModeLabel": "Afspilning",
+    "playbackModeRandom": "Tilfældig",
+    "playbackModeSequential": "Rækkefølge",
+    "playbackModeHint": "I rækkefølge-tilstand afspiller kategoriknappen hver gang den næste jingle i den rækkefølge, du har sat med træk-og-slip.",
+    "deleteConfirmWithJingles": "Slet denne kategori og dens {count} jingle(s)?",
+    "deleteConfirm": "Slet denne kategori?"
+  },
+  "jingleDialog": {
+    "newTitle": "Ny jingle",
+    "editTitle": "Rediger jingle",
+    "fileLabel": "Lydfil (MP3/WAV)",
+    "fileHintKeepNamed": "Nuværende fil: {fileName} (lad stå tomt for at beholde den)",
+    "fileHintKeepGeneric": "Lad stå tomt for at beholde den nuværende fil.",
+    "nameLabel": "Visningsnavn",
+    "namePlaceholder": "f.eks. Klapsalve høj",
+    "categoryLabel": "Kategori",
+    "colorOverrideLabel": "Brug en brugerdefineret farve",
+    "colorLabel": "Farve",
+    "hotkeyLabel": "Tastaturgenvej",
+    "hotkeyNone": "Ingen genvej",
+    "hotkeyAssign": "Tildel…",
+    "hotkeyClear": "Ryd",
+    "hotkeyListening": "Tryk på en tast… (Esc for at annullere)",
+    "hotkeyHint": "Ciffer 1–9, eventuelt med Ctrl for flere genveje. Virker overalt i appen, så længe der ikke er fokus på et tekstfelt.",
+    "hotkeyCtrlPrefix": "Ctrl+",
+    "hotkeyInvalid": "Kun cifrene 1–9 (eventuelt med Ctrl) kan bruges som genvej.",
+    "hotkeyConflict": "Allerede tildelt til \"{name}\".",
+    "deleteConfirm": "Flyt denne jingle til papirkurven? (kan gendannes i 24 timer)"
+  },
+  "jingleSearch": {
+    "intro": "Søg efter royalty-fri musik & lyde",
+    "tabSoundEffects": "Sound Effects",
+    "tabMusic": "Music",
+    "placeholder": "Søgeord…",
+    "searchButton": "Søg",
+    "searching": "Søger…",
+    "noResults": "Ingen resultater.",
+    "error": "Søgning er ikke tilgængelig lige nu.",
+    "previewPlay": "▶",
+    "previewStop": "⏹",
+    "previewAriaLabel": "Forhør: {title}",
+    "selectButton": "Vælg",
+    "importing": "Indlæser…",
+    "importFailed": "Import mislykkedes. Prøv igen.",
+    "sourceNoteWithLicense": "Royalty-fri musik/lyde fra {source} ({license})",
+    "sourceNoteNoLicense": "Royalty-fri musik/lyde fra {source}",
+    "sourceNoteJamendoWithArtist": "\"{title}\" af {artist} — Jamendo ({license}, kildeangivelse påkrævet)"
+  },
+  "trim": {
+    "editButton": "✂️ Beskær…",
+    "title": "Beskær jingle",
+    "loading": "Indlæser lydbølge…",
+    "startLabel": "Start (sek.)",
+    "endLabel": "Slut (sek.)",
+    "selectionHint": "Valgt: {selected} sek. af {total} sek.",
+    "reset": "Nulstil",
+    "preview": "▶ Forhør",
+    "stopPreview": "⏹ Stop",
+    "playOriginal": "▶ Afspil original",
+    "saved": "Beskæring gemt."
+  },
+  "account": {
+    "dialogTitle": "Konto & synkronisering",
+    "loggedOutIntro": "Log ind med et magisk link for at synkronisere dine kategorier og jingles på tværs af enheder. Uden login fungerer appen fortsat helt offline og lokalt.",
+    "emailLabel": "E-mailadresse",
+    "emailPlaceholder": "dig@eksempel.dk",
+    "sendMagicLink": "Send magisk link",
+    "loggedInAs": "Logget ind som",
+    "signOut": "Log ud",
+    "syncNow": "Synkroniser nu",
+    "sendingLink": "Sender link…",
+    "linkSent": "Magisk link sendt til {email}. Tjek din indbakke, og åbn det.",
+    "sendFailed": "Kunne ikke sende: {error}",
+    "signedOutToast": "Logget ud. Tavlen fungerer fortsat lokalt.",
+    "syncStatus": {
+      "syncing": "Synkroniserer…",
+      "failed": "Synkronisering mislykkedes: {error}",
+      "offline": "Offline — synkroniseres, når du er online igen.",
+      "lastSync": "Sidst synkroniseret: {time}",
+      "never": "Endnu ikke synkroniseret."
+    }
+  },
+  "settings": {
+    "dialogTitle": "Indstillinger",
+    "languageLabel": "Sprog",
+    "languageGerman": "Deutsch",
+    "languageEnglish": "English",
+    "languageDutch": "Nederlands",
+    "languageFrench": "Français",
+    "languageDanish": "Dansk",
+    "languagePolish": "Polski",
+    "languageCzech": "Čeština",
+    "languageItalian": "Italiano",
+    "languageHint": "Gemmes lokalt og, når du er logget ind, synkroniseres på tværs af dine enheder.",
+    "dataLabel": "Data",
+    "exportButton": "Eksportér alle data",
+    "importButton": "Importér data",
+    "exportFailed": "Eksport mislykkedes: {error}",
+    "importFailed": "Import mislykkedes: {error}",
+    "importDone": "Import fuldført: {categories} kategori(er), {jingles} jingle(s).",
+    "trashLabel": "Papirkurv",
+    "trashButton": "Vis slettede jingles"
+  },
+  "support": {
+    "settingsLabel": "Støt appen",
+    "hint": "Kan du lide Random Jingle? Støt den videre udvikling – helt valgfrit, uden modydelse.",
+    "paypal": "Donér via PayPal",
+    "coffee": "Buy Me a Coffee"
+  },
+  "trash": {
+    "title": "Papirkurv",
+    "hint": "Slettede jingles kan gendannes i 24 timer, hvorefter de fjernes permanent.",
+    "empty": "Papirkurven er tom.",
+    "restore": "Gendan",
+    "restoredToast": "\"{name}\" gendannet.",
+    "expiresIn": "Udløber om {hours} t"
+  },
+  "ads": {
+    "ariaLabel": "Annonce"
+  },
+  "consent": {
+    "bannerAriaLabel": "Cookieindstillinger",
+    "text": "Vi vil gerne vise dig annoncer via Google AdSense — det kræver annoncecookies. Hvis du afviser, vises der ingen annoncer.",
+    "accept": "Accepter annoncecookies",
+    "decline": "Afvis",
+    "settingsLabel": "Annoncecookies",
+    "settingsGranted": "Accepteret (AdSense)",
+    "settingsDenied": "Afvist (ingen annoncer)"
+  },
+  "importChoice": {
+    "title": "Import: flet eller overskriv?",
+    "text": "Der findes allerede data her. Skal de importerede data flettes med de eksisterende, eller skal importen erstatte alle eksisterende data?",
+    "merge": "Flet",
+    "overwrite": "Overskriv"
+  },
+  "admin": {
+    "navTitle": "Admin-dashboard",
+    "navAriaLabel": "Admin-dashboard",
+    "dashboardTitle": "Admin-dashboard",
+    "back": "Tilbage",
+    "loading": "Indlæser…",
+    "accessDenied": "Ingen adgang. Dette område er kun for administratorer.",
+    "loadFailed": "Admin-data kunne ikke indlæses.",
+    "statTotal": "Brugere i alt",
+    "stat7": "Nye (7 dage)",
+    "stat30": "Nye (30 dage)",
+    "colEmail": "E-mail",
+    "colRegistered": "Registreret den",
+    "colJingles": "Jingles"
+  },
+  "toast": {
+    "categoryUpdated": "Kategori opdateret.",
+    "categoryCreated": "Kategori oprettet.",
+    "categoryDeleted": "Kategori slettet.",
+    "jingleUpdated": "Jingle opdateret.",
+    "jingleCreated": "Jingle oprettet.",
+    "jingleDeleted": "Jingle slettet.",
+    "saveFailed": "Kunne ikke gemme.",
+    "fileRequired": "Vælg venligst en lydfil.",
+    "playbackFailed": "Afspilning mislykkedes.",
+    "downloadingAudio": "Downloader lyd…",
+    "audioUnavailable": "Lyden er endnu ikke tilgængelig. Prøv igen senere.",
+    "loadFailed": "Dine data kunne ikke indlæses."
+  }
+}
