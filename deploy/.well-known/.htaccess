@@ -1,0 +1,14 @@
+# Explicitly re-grant access for this directory, overriding the parent
+# .htaccess's dotfile block regardless of how Apache/the hosting provider
+# resolves that rule. Everything under .well-known/ (assetlinks.json for
+# Android App Links / Digital Asset Links, apple-app-site-association,
+# ACME challenge tokens, etc.) is metadata that MUST be publicly
+# reachable without authentication - that's the whole point of the
+# well-known URI convention (RFC 8615).
+<IfModule mod_authz_core.c>
+  Require all granted
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Allow from all
+</IfModule>

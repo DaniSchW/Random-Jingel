@@ -48,6 +48,17 @@ RewriteRule ^ index.html [L]
 # that ends up here by accident) - nothing at runtime needs them; the only
 # secret-shaped value the app uses (the Supabase anon key in js/config.js)
 # is meant to be public, safe to ship in client-side code.
-<FilesMatch "^\.">
+#
+# FilesMatch only ever matches the requested file's basename, not its
+# directory - so a request for /.well-known/assetlinks.json (basename
+# "assetlinks.json") was never actually caught by this rule; the
+# negative lookahead below is belt-and-suspenders in case ".well-known"
+# itself is ever requested as a bare path segment. The real guarantee
+# that .well-known/ stays public is the dedicated .htaccess inside that
+# folder (see .well-known/.htaccess) - it explicitly re-grants access for
+# that directory regardless of what this file does, which matters because
+# Android App Links (assetlinks.json) and similar verification files MUST
+# stay publicly reachable with no exceptions.
+<FilesMatch "^\.(?!well-known$)">
   Require all denied
 </FilesMatch>
