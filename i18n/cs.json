@@ -208,6 +208,42 @@
     "colRegistered": "Registrován dne",
     "colJingles": "Jingly"
   },
+  "help": {
+    "toggleTitle": "Návod a nápověda",
+    "gettingStarted": {
+      "title": "První kroky",
+      "body": "Nejdříve vytvořte novou kategorii pomocí nabídky + vpravo nahoře, např. „Potlesk“ nebo „Efekty“. Poté nabídku + otevřete znovu a zvolte „Nový jingle“, abyste nahráli zvukový soubor a přiřadili jej k této kategorii. Na hlavní obrazovce stačí ťuknout na tlačítko Random u kategorie a přehraje se náhodně jeden z jejích jinglů – později to lze v nastavení kategorie podle potřeby přepnout na pevné pořadí přehrávání."
+    },
+    "trimming": {
+      "title": "Oříznutí jinglu",
+      "body": "Při úpravě jinglu otevřete přes „✂️ Oříznout…“ editor oříznutí se zobrazením zvukové vlny. Přetáhněte oba ukazatele začátku a konce na požadované místo, nebo ťukněte přímo na zvukovou vlnu a nejbližší ukazatel se přesune tam. Tlačítko „▶ Přehrát ukázku“ přehraje jen oříznutý úsek, „▶ Přehrát originál“ celý původní soubor a „Uložit“ použije oříznutí pro přehrávání na nástěnce."
+    },
+    "sync": {
+      "title": "Nastavení synchronizace v cloudu",
+      "body": "Ťukněte na ikonu obláčku vpravo nahoře a přihlaste se svou e-mailovou adresou pomocí magického odkazu – zcela bez hesla. Jakmile tento odkaz otevřete ve své schránce, všechny vaše kategorie, jingly a oříznutí se automaticky propojí s vaším účtem a budou k dispozici na jakémkoli dalším zařízení, jakmile se tam také přihlásíte. Bez přihlášení aplikace i nadále funguje zcela offline a lokálně na tomto zařízení."
+    },
+    "music": {
+      "title": "Hledání hudby bez licenčních poplatků",
+      "body": "Při vytváření nového jinglu můžete na kartách „Sound Effects“ (Freesound, výhradně obsah CC0) a „Music“ (Jamendo, bez licencí NC) přímo hledat hudbu a zvuky bez licenčních poplatků, místo nahrávání vlastního souboru. Výsledky si předem poslechněte pomocí ▶ a tlačítkem „Vybrat“ převezměte ten správný – zdroj a licence se automaticky trvale uloží u jinglu. Díky tomu vždy víte, odkud zvuk pochází a na co je třeba dát pozor při jeho použití."
+    },
+    "hotkeys": {
+      "title": "Klávesové zkratky",
+      "body": "V dialogu úprav jinglu mu v poli „Klávesová zkratka“ přiřaďte číslici 1 až 9, volitelně ve spojení s Ctrl pro více dostupných kombinací. Zkratka poté funguje kdekoli v aplikaci a okamžitě přehraje příslušný jingle, pokud právě není aktivní žádné textové pole. Pokud je zkratka již obsazená, aplikace vás na to upozorní při pokusu o její přiřazení."
+    },
+    "faq": {
+      "title": "Časté dotazy",
+      "q1": "Funguje aplikace i offline?",
+      "a1": "Ano. Všechny kategorie, jingly a nastavení se ukládají lokálně na vašem zařízení, takže aplikace funguje i zcela bez připojení k internetu. Připojení vyžaduje pouze synchronizace v cloudu a vyhledávání hudby bez licenčních poplatků.",
+      "q2": "Jak zálohuji svá data nebo je přenesu na nové zařízení?",
+      "a2": "V nastavení použijte „Exportovat všechna data“ ke stažení souboru ZIP se všemi kategoriemi a jingly. Na jiném zařízení tento soubor znovu načtete pomocí „Importovat data“ – buď sloučený se stávajícími daty, nebo jako úplnou náhradu.",
+      "q3": "Co se děje s mými daty – je aplikace šetrná k soukromí?",
+      "a3": "Bez uživatelského účtu neopustí vaše zařízení ani jediný bajt. Pokud se přihlásíte kvůli synchronizaci v cloudu, na serverech v EU se ukládá pouze obsah, který jste sami vytvořili – podrobnosti najdete v zásadách ochrany osobních údajů v patičce.",
+      "q4": "Je používání aplikace zpoplatněno?",
+      "a4": "Ne, Random Jingle je zcela zdarma a financuje se z volitelné reklamy, se kterou musíte aktivně souhlasit. Pokud chcete vývoj dále podpořit, v patičce najdete dobrovolný odkaz na příspěvek.",
+      "q5": "Jak trvale smažu jingly nebo celý svůj účet?",
+      "a5": "Smazané jingly nejprve na 24 hodin skončí v koši (Nastavení → Koš) a poté se automaticky trvale odstraní; během této doby je můžete kdykoli obnovit. Pro smazání celého účtu včetně všech dat v cloudu nás kontaktujte na e-mailové adrese uvedené v tiráži."
+    }
+  },
   "toast": {
     "categoryUpdated": "Kategorie aktualizována.",
     "categoryCreated": "Kategorie vytvořena.",

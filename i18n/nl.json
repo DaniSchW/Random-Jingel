@@ -208,6 +208,42 @@
     "colRegistered": "Geregistreerd op",
     "colJingles": "Jingles"
   },
+  "help": {
+    "toggleTitle": "Handleiding & hulp",
+    "gettingStarted": {
+      "title": "Aan de slag",
+      "body": "Maak eerst via het +-menu rechtsboven een nieuwe categorie aan, bijv. \"Applaus\" of \"Effecten\". Open daarna opnieuw het +-menu en kies \"Nieuwe jingle\", om een audiobestand te uploaden en aan die categorie toe te wijzen. Op het hoofdscherm tik je gewoon op de Random-knop van een categorie om willekeurig een van de jingles af te spelen – dat kun je later in de categorie-instellingen desgewenst omzetten naar een vaste afspeelvolgorde."
+    },
+    "trimming": {
+      "title": "Jingle bijsnijden",
+      "body": "Open tijdens het bewerken van een jingle via \"✂️ Bijsnijden…\" de bijsnij-editor met de golfvormweergave. Sleep de twee markeringen bij begin en einde naar de gewenste positie, of tik direct op de golfvorm om de dichtstbijzijnde markering daarheen te verplaatsen. Met \"▶ Voorluisteren\" controleer je alleen het bijgesneden fragment, met \"▶ Origineel afspelen\" het volledige oorspronkelijke bestand – \"Opslaan\" past de bijsnede toe voor afspelen op het soundboard."
+    },
+    "sync": {
+      "title": "Cloudsynchronisatie instellen",
+      "body": "Tik rechtsboven op het wolkicoon en meld je aan met je e-mailadres via een magic link – helemaal zonder wachtwoord. Zodra je die link in je mailbox opent, zijn al je categorieën, jingles en bijsnedes automatisch aan je account gekoppeld en beschikbaar op elk ander apparaat zodra je je daar ook aanmeldt. Zonder aanmelden blijft de app volledig offline en lokaal op dit apparaat werken."
+    },
+    "music": {
+      "title": "Royaltyvrije muziek vinden",
+      "body": "Gebruik bij het aanmaken van een nieuwe jingle de tabbladen \"Sound Effects\" (Freesound, uitsluitend CC0-content) en \"Music\" (Jamendo, zonder NC-licenties) om rechtstreeks te zoeken naar royaltyvrije muziek en geluiden, in plaats van een eigen bestand te uploaden. Beluister resultaten met ▶ en gebruik \"Selecteren\" om de juiste te importeren – bron en licentie worden automatisch permanent bij de jingle opgeslagen. Zo blijft altijd duidelijk waar een geluid vandaan komt en waar je bij gebruik rekening mee moet houden."
+    },
+    "hotkeys": {
+      "title": "Sneltoetsen",
+      "body": "Wijs een jingle in het bewerkvenster via \"Sneltoets\" een cijfer van 1 tot 9 toe, eventueel samen met Ctrl voor meer beschikbare combinaties. De sneltoets werkt daarna overal in de app en speelt de bijbehorende jingle direct af, zolang er geen tekstveld actief is. Is een sneltoets al in gebruik, dan meldt de app dit wanneer je hem probeert toe te wijzen."
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "q1": "Werkt de app ook offline?",
+      "a1": "Ja. Alle categorieën, jingles en instellingen worden lokaal op je apparaat opgeslagen, waardoor de app ook volledig zonder internetverbinding werkt. Alleen cloudsynchronisatie en het zoeken naar royaltyvrije muziek vereisen een verbinding.",
+      "q2": "Hoe maak ik een back-up van mijn gegevens of zet ik ze over naar een nieuw apparaat?",
+      "a2": "Gebruik in Instellingen \"Alle gegevens exporteren\" om een ZIP-bestand met al je categorieën en jingles te downloaden. Gebruik op een ander apparaat \"Gegevens importeren\" om dat bestand weer in te laden – naar keuze samengevoegd met bestaande gegevens of als volledige vervanging.",
+      "q3": "Wat gebeurt er met mijn gegevens – is de app privacyvriendelijk?",
+      "a3": "Zonder gebruikersaccount verlaat geen enkele byte je apparaat. Als je je aanmeldt voor cloudsynchronisatie, wordt alleen de door jou aangemaakte content op EU-servers opgeslagen – details vind je in het privacybeleid onderaan de pagina.",
+      "q4": "Kost het gebruik van de app iets?",
+      "a4": "Nee, Random Jingle is volledig gratis te gebruiken en wordt gefinancierd met optionele reclame waar je actief toestemming voor moet geven. Wil je de ontwikkeling extra ondersteunen, dan vind je onderaan de pagina een vrijwillige donatielink.",
+      "q5": "Hoe verwijder ik jingles definitief of mijn hele account?",
+      "a5": "Verwijderde jingles komen eerst 24 uur in de prullenbak terecht (Instellingen → Prullenbak) en worden daarna automatisch definitief verwijderd; je kunt ze in die periode altijd herstellen. Wil je je hele account inclusief alle cloudgegevens laten verwijderen, neem dan contact met ons op via het e-mailadres in het colofon."
+    }
+  },
   "toast": {
     "categoryUpdated": "Categorie bijgewerkt.",
     "categoryCreated": "Categorie aangemaakt.",

@@ -208,6 +208,42 @@
     "colRegistered": "Registrato il",
     "colJingles": "Jingle"
   },
+  "help": {
+    "toggleTitle": "Guida e aiuto",
+    "gettingStarted": {
+      "title": "Per iniziare",
+      "body": "Inizia creando una nuova categoria tramite il menu + in alto a destra, ad es. \"Applausi\" o \"Effetti\". Apri poi di nuovo il menu + e scegli \"Nuovo jingle\" per caricare un file audio e assegnarlo a quella categoria. Nella schermata principale ti basta toccare il pulsante Random di una categoria per riprodurre casualmente uno dei suoi jingle – potrai poi passare a un ordine di riproduzione fisso nelle impostazioni della categoria, se preferisci."
+    },
+    "trimming": {
+      "title": "Tagliare un jingle",
+      "body": "Durante la modifica di un jingle, apri l'editor di taglio con la visualizzazione della forma d'onda tramite \"✂️ Taglia…\". Trascina i due indicatori di inizio e fine nella posizione desiderata, oppure tocca direttamente la forma d'onda per spostare lì l'indicatore più vicino. \"▶ Anteprima\" riproduce solo la parte tagliata, \"▶ Riproduci originale\" l'intero file originale, e \"Salva\" applica il taglio per la riproduzione sul soundboard."
+    },
+    "sync": {
+      "title": "Configurare la sincronizzazione cloud",
+      "body": "Tocca l'icona della nuvola in alto a destra e accedi con il tuo indirizzo e-mail tramite un link magico – senza alcuna password. Una volta aperto quel link dalla tua casella di posta, tutte le tue categorie, jingle e tagli vengono automaticamente collegati al tuo account e resi disponibili su qualsiasi altro dispositivo non appena accedi anche lì. Senza effettuare l'accesso, l'app continua a funzionare completamente offline e in locale su questo dispositivo."
+    },
+    "music": {
+      "title": "Trovare musica royalty-free",
+      "body": "Quando crei un nuovo jingle, usa le schede \"Sound Effects\" (Freesound, solo contenuti CC0) e \"Music\" (Jamendo, licenze NC escluse) per cercare direttamente musica e suoni royalty-free invece di caricare un tuo file. Ascolta i risultati in anteprima con ▶ e usa \"Seleziona\" per importare quello giusto – fonte e licenza vengono salvate automaticamente e in modo permanente insieme al jingle. Così saprai sempre da dove proviene un suono e cosa tenere presente per il suo utilizzo."
+    },
+    "hotkeys": {
+      "title": "Scorciatoie da tastiera",
+      "body": "Nella finestra di modifica di un jingle, assegnagli una cifra da 1 a 9 tramite \"Scorciatoia da tastiera\", eventualmente insieme a Ctrl per avere più combinazioni disponibili. La scorciatoia funziona poi ovunque nell'app e riproduce immediatamente il jingle corrispondente, purché nessun campo di testo sia attivo in quel momento. Se una scorciatoia è già assegnata, l'app te lo segnala quando provi ad assegnarla."
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "q1": "L'app funziona anche offline?",
+      "a1": "Sì. Tutte le categorie, i jingle e le impostazioni vengono salvati localmente sul tuo dispositivo, quindi l'app funziona anche senza alcuna connessione internet. Solo la sincronizzazione cloud e la ricerca di musica royalty-free richiedono una connessione.",
+      "q2": "Come faccio a fare un backup dei miei dati o a trasferirli su un nuovo dispositivo?",
+      "a2": "Usa \"Esporta tutti i dati\" nelle impostazioni per scaricare un file ZIP con tutte le tue categorie e i tuoi jingle. Su un altro dispositivo, usa \"Importa dati\" per ricaricare quel file – a scelta unendolo ai dati esistenti o sostituendoli completamente.",
+      "q3": "Cosa succede ai miei dati – l'app rispetta la privacy?",
+      "a3": "Senza un account utente, nemmeno un byte lascia mai il tuo dispositivo. Se accedi per la sincronizzazione cloud, sui server nell'UE viene memorizzato solo il contenuto che hai creato tu – i dettagli sono nell'informativa sulla privacy nel footer.",
+      "q4": "L'utilizzo dell'app è a pagamento?",
+      "a4": "No, Random Jingle è completamente gratuita e finanziata da pubblicità facoltativa a cui devi acconsentire attivamente. Se vuoi sostenere ulteriormente lo sviluppo, nel footer trovi un link facoltativo per una donazione.",
+      "q5": "Come elimino definitivamente dei jingle o l'intero account?",
+      "a5": "I jingle eliminati restano prima 24 ore nel cestino (Impostazioni → Cestino) e vengono poi rimossi automaticamente e definitivamente; durante questo periodo puoi ripristinarli in qualsiasi momento. Per eliminare l'intero account insieme a tutti i dati cloud, contattaci all'indirizzo e-mail indicato nelle note legali."
+    }
+  },
   "toast": {
     "categoryUpdated": "Categoria aggiornata.",
     "categoryCreated": "Categoria creata.",

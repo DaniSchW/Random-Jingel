@@ -1,5 +1,5 @@
 /* Service Worker for Random Jingle - caches the app shell for offline use. */
-const CACHE_VERSION = 'random-jingle-v34';
+const CACHE_VERSION = 'random-jingle-v35';
 const APP_SHELL = [
   './',
   './index.html',

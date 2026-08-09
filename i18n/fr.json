@@ -208,6 +208,42 @@
     "colRegistered": "Inscrit le",
     "colJingles": "Jingles"
   },
+  "help": {
+    "toggleTitle": "Guide et aide",
+    "gettingStarted": {
+      "title": "Premiers pas",
+      "body": "Commencez par créer une nouvelle catégorie via le menu + en haut à droite, p. ex. « Applaudissements » ou « Effets ». Ouvrez ensuite à nouveau le menu + et choisissez « Nouveau jingle » pour importer un fichier audio et l'associer à cette catégorie. Sur l'écran principal, il suffit de toucher le bouton Random d'une catégorie pour lire l'un de ses jingles au hasard – vous pourrez ensuite passer à un ordre de lecture fixe dans les paramètres de la catégorie si vous le souhaitez."
+    },
+    "trimming": {
+      "title": "Découper un jingle",
+      "body": "Lors de la modification d'un jingle, ouvrez l'éditeur de découpe via « ✂️ Découper… » pour afficher sa forme d'onde. Faites glisser les deux marqueurs de début et de fin à la position souhaitée, ou touchez directement la forme d'onde pour déplacer le marqueur le plus proche à cet endroit. « ▶ Écouter » ne lit que l'extrait découpé, « ▶ Lire l'original » lit le fichier original complet, et « Enregistrer » applique la découpe pour la lecture dans le soundboard."
+    },
+    "sync": {
+      "title": "Configurer la synchronisation cloud",
+      "body": "Touchez l'icône du nuage en haut à droite et connectez-vous avec votre adresse e-mail via un lien magique – sans aucun mot de passe. Une fois ce lien ouvert depuis votre boîte de réception, toutes vos catégories, jingles et découpes sont automatiquement liés à votre compte et disponibles sur tout autre appareil dès que vous vous y connectez également. Sans connexion, l'application continue de fonctionner entièrement hors ligne et localement sur cet appareil."
+    },
+    "music": {
+      "title": "Trouver de la musique libre de droits",
+      "body": "Lors de la création d'un nouveau jingle, utilisez les onglets « Sound Effects » (Freesound, contenus CC0 uniquement) et « Music » (Jamendo, licences NC exclues) pour rechercher directement de la musique et des sons libres de droits, au lieu d'importer votre propre fichier. Écoutez les résultats avec ▶ et utilisez « Sélectionner » pour importer celui qui vous convient – la source et la licence sont automatiquement enregistrées de façon permanente avec le jingle. Vous savez ainsi toujours d'où vient un son et ce qu'il faut respecter lors de son utilisation."
+    },
+    "hotkeys": {
+      "title": "Raccourcis clavier",
+      "body": "Dans la boîte de dialogue de modification d'un jingle, attribuez-lui un chiffre de 1 à 9 via « Raccourci clavier », éventuellement combiné avec Ctrl pour disposer de plus de combinaisons. Le raccourci fonctionne ensuite partout dans l'application et lit immédiatement le jingle correspondant, tant qu'aucun champ de texte n'est actif. Si un raccourci est déjà attribué, l'application vous le signale lorsque vous essayez de l'assigner."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "q1": "L'application fonctionne-t-elle aussi hors ligne ?",
+      "a1": "Oui. Toutes les catégories, jingles et paramètres sont stockés localement sur votre appareil, de sorte que l'application fonctionne aussi sans aucune connexion internet. Seules la synchronisation cloud et la recherche de musique libre de droits nécessitent une connexion.",
+      "q2": "Comment sauvegarder mes données ou les transférer vers un nouvel appareil ?",
+      "a2": "Utilisez « Exporter toutes les données » dans les paramètres pour télécharger un fichier ZIP contenant toutes vos catégories et jingles. Sur un autre appareil, utilisez « Importer des données » pour recharger ce fichier – au choix fusionné avec les données existantes ou en remplacement complet.",
+      "q3": "Que deviennent mes données – l'application respecte-t-elle la vie privée ?",
+      "a3": "Sans compte utilisateur, aucun octet ne quitte jamais votre appareil. Si vous vous connectez pour la synchronisation cloud, seul le contenu que vous avez créé est stocké sur des serveurs situés dans l'UE – les détails figurent dans la politique de confidentialité accessible depuis le pied de page.",
+      "q4": "L'utilisation de l'application est-elle payante ?",
+      "a4": "Non, Random Jingle est entièrement gratuite et financée par de la publicité optionnelle nécessitant votre consentement actif. Si vous souhaitez soutenir davantage son développement, un lien de don facultatif se trouve dans le pied de page.",
+      "q5": "Comment supprimer définitivement des jingles ou tout mon compte ?",
+      "a5": "Les jingles supprimés restent d'abord 24 heures dans la corbeille (Paramètres → Corbeille) avant d'être définitivement supprimés automatiquement ; vous pouvez les restaurer à tout moment pendant ce délai. Pour supprimer l'intégralité de votre compte ainsi que toutes les données cloud associées, contactez-nous à l'adresse e-mail indiquée dans les mentions légales."
+    }
+  },
   "toast": {
     "categoryUpdated": "Catégorie mise à jour.",
     "categoryCreated": "Catégorie créée.",

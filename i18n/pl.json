@@ -208,6 +208,42 @@
     "colRegistered": "Zarejestrowano",
     "colJingles": "Jingle"
   },
+  "help": {
+    "toggleTitle": "Instrukcja i pomoc",
+    "gettingStarted": {
+      "title": "Pierwsze kroki",
+      "body": "Najpierw utwórz nową kategorię za pomocą menu + w prawym górnym rogu, np. „Brawa” lub „Efekty”. Następnie otwórz menu + ponownie i wybierz „Nowy jingiel”, aby przesłać plik audio i przypisać go do tej kategorii. Na ekranie głównym wystarczy dotknąć przycisku Random w danej kategorii, aby odtworzyć losowy jingiel z tej kategorii – w razie potrzeby możesz to później zmienić w ustawieniach kategorii na stałą kolejność odtwarzania."
+    },
+    "trimming": {
+      "title": "Przycinanie jingla",
+      "body": "Podczas edycji jingla otwórz edytor przycinania z widokiem przebiegu fali za pomocą „✂️ Przytnij…”. Przeciągnij oba znaczniki początku i końca w wybrane miejsce lub dotknij bezpośrednio przebiegu fali, aby przesunąć tam najbliższy znacznik. „▶ Odsłuch” odtwarza tylko przycięty fragment, „▶ Odtwórz oryginał” całą oryginalną ścieżkę, a „Zapisz” zapisuje przycięcie do odtwarzania na tablicy dźwięków."
+    },
+    "sync": {
+      "title": "Konfiguracja synchronizacji w chmurze",
+      "body": "Dotknij ikony chmury w prawym górnym rogu i zaloguj się swoim adresem e-mail za pomocą magicznego linku – zupełnie bez hasła. Po otwarciu tego linku w swojej skrzynce pocztowej wszystkie Twoje kategorie, jingle i przycięcia są automatycznie powiązane z kontem i dostępne na każdym kolejnym urządzeniu, gdy tylko się tam również zalogujesz. Bez logowania aplikacja nadal działa w pełni offline i lokalnie na tym urządzeniu."
+    },
+    "music": {
+      "title": "Wyszukiwanie muzyki wolnej od tantiem",
+      "body": "Podczas tworzenia nowego jingla możesz skorzystać z kart „Sound Effects” (Freesound, wyłącznie treści CC0) i „Music” (Jamendo, bez licencji NC), aby wyszukać muzykę i dźwięki wolne od tantiem zamiast przesyłać własny plik. Odsłuchaj wyniki za pomocą ▶ i użyj „Wybierz”, aby zaimportować odpowiedni – źródło i licencja są automatycznie i trwale zapisywane przy jinglu. Dzięki temu zawsze wiadomo, skąd pochodzi dźwięk i na co zwrócić uwagę przy jego wykorzystaniu."
+    },
+    "hotkeys": {
+      "title": "Skróty klawiszowe",
+      "body": "W oknie edycji jingla przypisz mu cyfrę od 1 do 9 w polu „Skrót klawiszowy”, opcjonalnie w połączeniu z Ctrl, aby uzyskać więcej dostępnych kombinacji. Skrót działa następnie w dowolnym miejscu aplikacji i natychmiast odtwarza powiązany jingiel, o ile żadne pole tekstowe nie jest aktywne. Jeśli skrót jest już zajęty, aplikacja poinformuje o tym podczas próby jego przypisania."
+    },
+    "faq": {
+      "title": "Najczęściej zadawane pytania",
+      "q1": "Czy aplikacja działa również offline?",
+      "a1": "Tak. Wszystkie kategorie, jingle i ustawienia są zapisywane lokalnie na Twoim urządzeniu, dzięki czemu aplikacja działa również bez połączenia z internetem. Połączenia wymagają jedynie synchronizacja w chmurze i wyszukiwanie muzyki wolnej od tantiem.",
+      "q2": "Jak wykonać kopię zapasową danych lub przenieść je na nowe urządzenie?",
+      "a2": "Użyj opcji „Eksportuj wszystkie dane” w ustawieniach, aby pobrać plik ZIP ze wszystkimi kategoriami i jinglami. Na innym urządzeniu użyj „Importuj dane”, aby wczytać ten plik ponownie – do wyboru scalenie z istniejącymi danymi lub pełne zastąpienie.",
+      "q3": "Co dzieje się z moimi danymi – czy aplikacja szanuje prywatność?",
+      "a3": "Bez konta użytkownika żaden bajt nigdy nie opuszcza Twojego urządzenia. Jeśli zalogujesz się w celu synchronizacji w chmurze, na serwerach w UE przechowywana jest wyłącznie zawartość utworzona przez Ciebie – szczegóły znajdziesz w polityce prywatności w stopce.",
+      "q4": "Czy korzystanie z aplikacji jest płatne?",
+      "a4": "Nie, Random Jingle jest całkowicie bezpłatna i finansowana z opcjonalnych reklam wymagających Twojej aktywnej zgody. Jeśli chcesz dodatkowo wesprzeć rozwój aplikacji, w stopce znajdziesz dobrowolny link do wpłat.",
+      "q5": "Jak trwale usunąć jingle lub całe konto?",
+      "a5": "Usunięte jingle trafiają najpierw na 24 godziny do kosza (Ustawienia → Kosz), a następnie są automatycznie usuwane na stałe; w tym czasie możesz je w każdej chwili przywrócić. Aby usunąć całe konto wraz ze wszystkimi danymi w chmurze, skontaktuj się z nami pod adresem e-mail podanym w nocie prawnej."
+    }
+  },
   "toast": {
     "categoryUpdated": "Kategoria zaktualizowana.",
     "categoryCreated": "Kategoria utworzona.",

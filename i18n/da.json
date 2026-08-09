@@ -208,6 +208,42 @@
     "colRegistered": "Registreret den",
     "colJingles": "Jingles"
   },
+  "help": {
+    "toggleTitle": "Vejledning & hjælp",
+    "gettingStarted": {
+      "title": "Kom godt i gang",
+      "body": "Opret først en ny kategori via +-menuen øverst til højre, f.eks. \"Klapsalve\" eller \"Effekter\". Åbn derefter +-menuen igen, og vælg \"Ny jingle\" for at uploade en lydfil og tilknytte den til kategorien. På startskærmen trykker du blot på en kategoris Random-knap for at afspille en tilfældig jingle fra den – det kan senere ændres til fast rækkefølge i kategoriindstillingerne, hvis du foretrækker det."
+    },
+    "trimming": {
+      "title": "Beskær en jingle",
+      "body": "Åbn beskæringsværktøjet med lydbølgevisningen via \"✂️ Beskær…\", når du redigerer en jingle. Træk de to markører for start og slut til den ønskede position, eller tryk direkte på lydbølgen for at flytte den nærmeste markør derhen. \"▶ Forhør\" afspiller kun det beskårne udsnit, \"▶ Afspil original\" afspiller hele originalfilen, og \"Gem\" gemmer beskæringen til afspilning på tavlen."
+    },
+    "sync": {
+      "title": "Opsæt cloud-synkronisering",
+      "body": "Tryk på skyikonet øverst til højre, og log ind med din e-mailadresse via et magisk link – helt uden adgangskode. Når du åbner linket i din indbakke, bliver alle dine kategorier, jingles og beskæringer automatisk knyttet til din konto og tilgængelige på ethvert andet enhed, så snart du logger ind der også. Uden login fungerer appen fortsat helt offline og lokalt på denne enhed."
+    },
+    "music": {
+      "title": "Find royalty-fri musik",
+      "body": "Når du opretter en ny jingle, kan du bruge fanerne \"Sound Effects\" (Freesound, udelukkende CC0-indhold) og \"Music\" (Jamendo, uden NC-licenser) til at søge direkte efter royalty-fri musik og lyde i stedet for at uploade din egen fil. Hør resultater på forhånd med ▶, og brug \"Vælg\" til at hente den rigtige – kilde og licens gemmes automatisk permanent på jinglen. Sådan kan du altid se, hvor en lyd kommer fra, og hvad du skal være opmærksom på ved brug af den."
+    },
+    "hotkeys": {
+      "title": "Tastaturgenveje",
+      "body": "Tildel en jingle et ciffer fra 1-9 via \"Tastaturgenvej\" i redigeringsvinduet, eventuelt sammen med Ctrl for flere tilgængelige kombinationer. Genvejen virker herefter overalt i appen og afspiller den tilknyttede jingle med det samme, så længe der ikke er fokus på et tekstfelt. Er en genvej allerede i brug, gør appen dig opmærksom på det, når du forsøger at tildele den."
+    },
+    "faq": {
+      "title": "Ofte stillede spørgsmål",
+      "q1": "Fungerer appen også offline?",
+      "a1": "Ja. Alle kategorier, jingles og indstillinger gemmes lokalt på din enhed, så appen også fungerer helt uden internetforbindelse. Kun cloud-synkronisering og søgning efter royalty-fri musik kræver en forbindelse.",
+      "q2": "Hvordan sikkerhedskopierer jeg mine data eller flytter dem til en ny enhed?",
+      "a2": "Brug \"Eksportér alle data\" under Indstillinger for at downloade en ZIP-fil med alle dine kategorier og jingles. Brug \"Importér data\" på en anden enhed for at indlæse filen igen – enten flettet med eksisterende data eller som en fuld erstatning.",
+      "q3": "Hvad sker der med mine data – er appen fortrolighedsvenlig?",
+      "a3": "Uden en brugerkonto forlader intet eneste byte din enhed. Logger du ind for at bruge cloud-synkronisering, gemmes kun det indhold, du selv har oprettet, på servere i EU – detaljer finder du i privatlivspolitikken i bunden af siden.",
+      "q4": "Koster det noget at bruge appen?",
+      "a4": "Nej, Random Jingle er helt gratis at bruge og finansieres via valgfri reklamer, som kræver dit aktive samtykke. Vil du støtte den videre udvikling yderligere, finder du et frivilligt donationslink i bunden af siden.",
+      "q5": "Hvordan sletter jeg jingles permanent eller hele min konto?",
+      "a5": "Slettede jingles havner først i papirkurven i 24 timer (Indstillinger → Papirkurv) og fjernes derefter automatisk permanent; du kan altid gendanne dem i den periode. For at få slettet hele din konto samt alle cloud-data kan du kontakte os på den e-mailadresse, der står under \"Om udgiveren\"."
+    }
+  },
   "toast": {
     "categoryUpdated": "Kategori opdateret.",
     "categoryCreated": "Kategori oprettet.",
