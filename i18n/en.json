@@ -208,6 +208,42 @@
     "colRegistered": "Registered on",
     "colJingles": "Jingles"
   },
+  "help": {
+    "toggleTitle": "Guide & Help",
+    "gettingStarted": {
+      "title": "Getting Started",
+      "body": "Start by creating a new category via the +-menu in the top right, e.g. \"Applause\" or \"Effects\". Then open the +-menu again and choose \"New jingle\" to upload an audio file and assign it to that category. On the main screen, just tap a category's Random button to play one of its jingles at random — you can switch that to a fixed play-through order later in the category settings if you prefer."
+    },
+    "trimming": {
+      "title": "Trimming a Jingle",
+      "body": "While editing a jingle, open the trim editor via \"✂️ Trim…\" to see its waveform. Drag the two markers at the start and end to the position you want, or tap directly on the waveform to move the nearest marker there. \"▶ Preview\" plays back only the trimmed section, \"▶ Play original\" plays the full original file, and \"Save\" applies the trim for playback on the soundboard."
+    },
+    "sync": {
+      "title": "Setting Up Cloud Sync",
+      "body": "Tap the cloud icon in the top right and sign in with your email address via a magic link — no password required. Once you open that link from your inbox, all your categories, jingles and trims are automatically tied to your account and available on any other device as soon as you sign in there too. Without signing in, the app keeps working fully offline and locally on this device."
+    },
+    "music": {
+      "title": "Finding Royalty-Free Music",
+      "body": "When creating a new jingle, use the \"Sound Effects\" (Freesound, CC0 content only) and \"Music\" (Jamendo, NC licenses excluded) tabs to search for royalty-free music and sounds instead of uploading your own file. Preview results with ▶ and use \"Select\" to import the one you want — the source and license are automatically saved with the jingle for good. That way you can always tell where a sound came from and what to keep in mind when using it."
+    },
+    "hotkeys": {
+      "title": "Keyboard Shortcuts",
+      "body": "In a jingle's edit dialog, assign it a digit from 1–9 under \"Keyboard shortcut\", optionally combined with Ctrl for more available combinations. The shortcut then works anywhere in the app and plays that jingle instantly, as long as no text field is currently focused. If a shortcut is already taken, the app tells you when you try to assign it."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "Does the app work offline?",
+      "a1": "Yes. All categories, jingles and settings are stored locally on your device, so the app keeps working without any internet connection. Only cloud sync and the royalty-free music search require one.",
+      "q2": "How do I back up my data or move it to a new device?",
+      "a2": "Use \"Export all data\" in Settings to download a ZIP file with all your categories and jingles. On another device, use \"Import data\" to load that file back in — either merged with existing data or as a full replacement.",
+      "q3": "What happens to my data — is the app privacy-friendly?",
+      "a3": "Without a user account, not a single byte ever leaves your device. If you sign in for cloud sync, only the content you created is stored on EU servers — details are in the Privacy Policy linked in the footer.",
+      "q4": "Does using the app cost anything?",
+      "a4": "No, Random Jingle is completely free to use and funded by optional advertising you have to actively consent to. If you'd like to support development further, there's a voluntary donation link in the footer.",
+      "q5": "How do I permanently delete jingles or my whole account?",
+      "a5": "Deleted jingles first sit in the trash for 24 hours (Settings → Trash) and are then removed automatically for good — you can restore them any time during that window. To delete your entire account along with all cloud data, contact us at the email address listed in the Imprint."
+    }
+  },
   "toast": {
     "categoryUpdated": "Category updated.",
     "categoryCreated": "Category created.",

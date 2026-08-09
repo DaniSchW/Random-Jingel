@@ -71,6 +71,73 @@
              data-ad-slot="9134213973"></ins>
       </div>
     </div>
+
+    <!-- Guide/help accordion: collapsed by default, pure text content that
+         costs effectively nothing while collapsed (display:none), so it's
+         simplest to render statically like the rest of the app's i18n
+         content rather than building a separate lazy-mount code path for
+         a few KB of text. -->
+    <section id="helpSection" class="help-section">
+      <button type="button" id="helpToggle" class="help-toggle" aria-expanded="false" aria-controls="helpPanel">
+        <span class="help-toggle-icon" aria-hidden="true">▸</span>
+        <span data-i18n="help.toggleTitle">Anleitung &amp; Hilfe</span>
+      </button>
+      <div id="helpPanel" class="help-panel hidden" aria-labelledby="helpToggle">
+        <div class="help-subsection">
+          <button type="button" class="help-sub-toggle" aria-expanded="false" aria-controls="helpBodyGettingStarted">
+            <span data-i18n="help.gettingStarted.title">Erste Schritte</span>
+            <span class="help-sub-toggle-icon" aria-hidden="true">▸</span>
+          </button>
+          <p id="helpBodyGettingStarted" class="help-sub-body hidden" data-i18n="help.gettingStarted.body">Lege zuerst über das +-Menü oben rechts eine neue Kategorie an.</p>
+        </div>
+        <div class="help-subsection">
+          <button type="button" class="help-sub-toggle" aria-expanded="false" aria-controls="helpBodyTrimming">
+            <span data-i18n="help.trimming.title">Jingle zuschneiden</span>
+            <span class="help-sub-toggle-icon" aria-hidden="true">▸</span>
+          </button>
+          <p id="helpBodyTrimming" class="help-sub-body hidden" data-i18n="help.trimming.body">Öffne beim Bearbeiten eines Jingles den Zuschnitt-Editor.</p>
+        </div>
+        <div class="help-subsection">
+          <button type="button" class="help-sub-toggle" aria-expanded="false" aria-controls="helpBodySync">
+            <span data-i18n="help.sync.title">Cloud-Sync einrichten</span>
+            <span class="help-sub-toggle-icon" aria-hidden="true">▸</span>
+          </button>
+          <p id="helpBodySync" class="help-sub-body hidden" data-i18n="help.sync.body">Tippe oben rechts auf das Wolken-Symbol, um dich anzumelden.</p>
+        </div>
+        <div class="help-subsection">
+          <button type="button" class="help-sub-toggle" aria-expanded="false" aria-controls="helpBodyMusic">
+            <span data-i18n="help.music.title">Gemafreie Musik finden</span>
+            <span class="help-sub-toggle-icon" aria-hidden="true">▸</span>
+          </button>
+          <p id="helpBodyMusic" class="help-sub-body hidden" data-i18n="help.music.body">Beim Anlegen eines neuen Jingles kannst du gemafreie Musik suchen.</p>
+        </div>
+        <div class="help-subsection">
+          <button type="button" class="help-sub-toggle" aria-expanded="false" aria-controls="helpBodyHotkeys">
+            <span data-i18n="help.hotkeys.title">Tastenkürzel</span>
+            <span class="help-sub-toggle-icon" aria-hidden="true">▸</span>
+          </button>
+          <p id="helpBodyHotkeys" class="help-sub-body hidden" data-i18n="help.hotkeys.body">Weise einem Jingle eine Ziffer als Tastenkürzel zu.</p>
+        </div>
+        <div class="help-subsection">
+          <button type="button" class="help-sub-toggle" aria-expanded="false" aria-controls="helpBodyFaq">
+            <span data-i18n="help.faq.title">Häufige Fragen</span>
+            <span class="help-sub-toggle-icon" aria-hidden="true">▸</span>
+          </button>
+          <div id="helpBodyFaq" class="help-sub-body help-faq hidden">
+            <p class="help-faq-q" data-i18n="help.faq.q1">Funktioniert die App auch offline?</p>
+            <p class="help-faq-a" data-i18n="help.faq.a1">Ja.</p>
+            <p class="help-faq-q" data-i18n="help.faq.q2">Wie sichere ich meine Daten?</p>
+            <p class="help-faq-a" data-i18n="help.faq.a2">Über Export/Import in den Einstellungen.</p>
+            <p class="help-faq-q" data-i18n="help.faq.q3">Was passiert mit meinen Daten?</p>
+            <p class="help-faq-a" data-i18n="help.faq.a3">Details in der Datenschutzerklärung.</p>
+            <p class="help-faq-q" data-i18n="help.faq.q4">Kostet die Nutzung etwas?</p>
+            <p class="help-faq-a" data-i18n="help.faq.a4">Nein, die App ist kostenlos.</p>
+            <p class="help-faq-q" data-i18n="help.faq.q5">Wie lösche ich Jingles oder mein Konto?</p>
+            <p class="help-faq-a" data-i18n="help.faq.a5">Papierkorb bzw. Kontakt per E-Mail.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- Admin dashboard (Phase 4): reachable via #/admin, only ever populated

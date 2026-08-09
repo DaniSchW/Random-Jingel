@@ -200,6 +200,109 @@ button {
 
 .ad-slot.hidden { display: none; }
 
+/* ---------- Guide/help accordion ---------- */
+.help-section {
+  margin: 24px 16px 8px;
+}
+
+.help-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.help-toggle-icon {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.help-toggle[aria-expanded="true"] .help-toggle-icon {
+  transform: rotate(90deg);
+}
+
+.help-toggle[aria-expanded="true"] {
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.help-panel {
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: var(--bg-elevated-2);
+  padding: 4px 16px;
+}
+
+.help-panel.hidden { display: none; }
+
+.help-subsection {
+  border-bottom: 1px solid var(--border);
+}
+
+.help-subsection:last-child {
+  border-bottom: none;
+}
+
+.help-sub-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 2px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.help-sub-toggle-icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  transition: transform 0.15s ease;
+}
+
+.help-sub-toggle[aria-expanded="true"] .help-sub-toggle-icon {
+  transform: rotate(90deg);
+}
+
+.help-sub-body {
+  margin: 0;
+  padding: 0 2px 14px;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.help-sub-body.hidden { display: none; }
+
+.help-faq-q {
+  color: var(--text);
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.help-faq-a {
+  margin: 0 0 12px;
+}
+
+.help-faq-a:last-child {
+  margin-bottom: 0;
+}
+
 /* ---------- Cookie consent banner ---------- */
 .consent-banner {
   position: sticky;

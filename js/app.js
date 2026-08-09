@@ -100,6 +100,9 @@
     footerTermsLink.href = `agb${suffix}.html`;
   }
 
+  const helpToggle = document.getElementById('helpToggle');
+  const helpPanel = document.getElementById('helpPanel');
+
   const appViewEl = document.getElementById('appView');
   const adminBtn = document.getElementById('adminBtn');
   const adminView = document.getElementById('adminView');
@@ -1463,6 +1466,23 @@
 
   window.addEventListener('online', updateAdArea);
   window.addEventListener('offline', updateAdArea);
+
+  // ---- Help/guide accordion: plain expand/collapse, no exclusivity
+  // between sections (opening one doesn't close the others) - the content
+  // is short text, so there's no real cost to letting several sections
+  // stay open at once. ----
+  function wireAccordionToggle(toggleBtn, panelEl) {
+    toggleBtn.addEventListener('click', () => {
+      const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!expanded));
+      panelEl.classList.toggle('hidden', expanded);
+    });
+  }
+  wireAccordionToggle(helpToggle, helpPanel);
+  helpPanel.querySelectorAll('.help-sub-toggle').forEach((subToggle) => {
+    const body = document.getElementById(subToggle.getAttribute('aria-controls'));
+    wireAccordionToggle(subToggle, body);
+  });
 
   // ---- Init ----
   async function boot() {

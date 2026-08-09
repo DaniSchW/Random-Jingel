@@ -208,6 +208,42 @@
     "colRegistered": "Registriert am",
     "colJingles": "Jingles"
   },
+  "help": {
+    "toggleTitle": "Anleitung & Hilfe",
+    "gettingStarted": {
+      "title": "Erste Schritte",
+      "body": "Lege zuerst über das +-Menü oben rechts eine neue Kategorie an, z. B. „Applaus“ oder „Effekte“. Öffne danach erneut das +-Menü und wähle „Neuer Jingle“, um eine Audiodatei hochzuladen und der Kategorie zuzuordnen. Auf der Startseite tippst du einfach auf den Random-Button einer Kategorie, um zufällig einen ihrer Jingles abzuspielen – bei Bedarf lässt sich das später in den Kategorie-Einstellungen auf feste Reihenfolge umstellen."
+    },
+    "trimming": {
+      "title": "Jingle zuschneiden",
+      "body": "Öffne beim Bearbeiten eines Jingles über „✂️ Zuschneiden…“ den Zuschnitt-Editor mit der Wellenformansicht. Ziehe die beiden Marker an Start und Ende an die gewünschte Stelle, oder tippe direkt auf die Wellenform, um den nächstgelegenen Marker dorthin zu setzen. Mit „▶ Vorhören“ prüfst du nur den zugeschnittenen Ausschnitt, mit „▶ Original abspielen“ die komplette Originaldatei – „Speichern“ übernimmt den Zuschnitt für die Wiedergabe im Soundboard."
+    },
+    "sync": {
+      "title": "Cloud-Sync einrichten",
+      "body": "Tippe oben rechts auf das Wolken-Symbol und melde dich mit deiner E-Mail-Adresse per Magic Link an – ganz ohne Passwort. Nach dem Öffnen des Links in deiner Mailbox sind alle deine Kategorien, Jingles und Zuschnitte automatisch mit deinem Konto verknüpft und stehen dir auf jedem weiteren Gerät zur Verfügung, sobald du dich dort ebenfalls anmeldest. Ohne Anmeldung funktioniert die App weiterhin vollständig offline und lokal auf diesem Gerät."
+    },
+    "music": {
+      "title": "Gemafreie Musik finden",
+      "body": "Beim Anlegen eines neuen Jingles kannst du über die Reiter „Sound Effects“ (Freesound, ausschließlich CC0-Inhalte) und „Music“ (Jamendo, ohne NC-Lizenzen) direkt nach gemafreier Musik und Sounds suchen, statt eine eigene Datei hochzuladen. Höre Treffer per ▶ vorab an und übernimm den passenden mit „Auswählen“ – Quelle und Lizenz werden automatisch dauerhaft am Jingle vermerkt. So bleibt für dich jederzeit nachvollziehbar, woher ein Sound stammt und was bei der Nutzung zu beachten ist."
+    },
+    "hotkeys": {
+      "title": "Tastenkürzel",
+      "body": "Weise einem Jingle im Bearbeiten-Dialog über „Tastenkürzel“ eine Ziffer von 1 bis 9 zu, optional zusammen mit Strg für mehr verfügbare Kombinationen. Das Kürzel funktioniert anschließend überall in der App und spielt den zugehörigen Jingle sofort ab, solange gerade kein Textfeld fokussiert ist. Ist ein Kürzel bereits vergeben, weist dich die App beim Zuweisen darauf hin."
+    },
+    "faq": {
+      "title": "Häufige Fragen",
+      "q1": "Funktioniert die App auch offline?",
+      "a1": "Ja. Alle Kategorien, Jingles und Einstellungen werden lokal auf deinem Gerät gespeichert, sodass die App auch ganz ohne Internetverbindung funktioniert. Nur die Cloud-Synchronisierung und die Suche nach gemafreier Musik benötigen eine Verbindung.",
+      "q2": "Wie sichere ich meine Daten oder übertrage sie auf ein neues Gerät?",
+      "a2": "Nutze in den Einstellungen „Alle Daten exportieren“, um eine ZIP-Datei mit allen Kategorien und Jingles herunterzuladen. Über „Daten importieren“ spielst du diese Datei auf einem anderen Gerät wieder ein – wahlweise zusammengeführt mit vorhandenen Daten oder als vollständiger Ersatz.",
+      "q3": "Was passiert mit meinen Daten – ist die App datenschutzfreundlich?",
+      "a3": "Ohne Nutzerkonto verlässt kein einziges Byte dein Gerät. Meldest du dich für die Cloud-Synchronisierung an, werden nur die von dir angelegten Inhalte auf EU-Servern gespeichert – Details findest du in der Datenschutzerklärung im Footer.",
+      "q4": "Kostet die Nutzung der App etwas?",
+      "a4": "Nein, Random Jingle ist komplett kostenlos nutzbar und finanziert sich über optionale, zustimmungspflichtige Werbung. Wer die Entwicklung zusätzlich unterstützen möchte, findet im Footer einen freiwilligen Spenden-Link.",
+      "q5": "Wie lösche ich Jingles endgültig oder mein ganzes Konto?",
+      "a5": "Gelöschte Jingles landen zunächst 24 Stunden im Papierkorb (Einstellungen → Papierkorb) und werden danach automatisch endgültig entfernt; du kannst sie in dieser Zeit jederzeit wiederherstellen. Für die Löschung deines gesamten Kontos samt aller Cloud-Daten kontaktierst du uns über die im Impressum angegebene E-Mail-Adresse."
+    }
+  },
   "toast": {
     "categoryUpdated": "Kategorie aktualisiert.",
     "categoryCreated": "Kategorie angelegt.",
