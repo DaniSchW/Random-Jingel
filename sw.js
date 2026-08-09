@@ -1,5 +1,5 @@
 /* Service Worker for Random Jingle - caches the app shell for offline use. */
-const CACHE_VERSION = 'random-jingle-v35';
+const CACHE_VERSION = 'random-jingle-v36';
 const APP_SHELL = [
   './',
   './index.html',
@@ -42,7 +42,26 @@ const APP_SHELL = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_VERSION)
-      .then((cache) => cache.addAll(APP_SHELL))
+      .then((cache) => Promise.all(
+        // cache.addAll(urls) would fetch with the browser's default HTTP
+        // cache behavior — if a file was already fetched recently (no
+        // explicit Cache-Control on most static files), the browser can
+        // hand back that STALE response instead of hitting the network,
+        // even though CACHE_VERSION just changed specifically to pick up
+        // new content. { cache: 'reload' } forces every precache fetch to
+        // bypass the HTTP cache, so an update always gets the real,
+        // current file instead of silently re-caching old bytes under
+        // the new version name.
+        APP_SHELL.map((url) => fetch(new Request(url, { cache: 'reload' }))
+          .then((response) => {
+            // Match cache.addAll()'s own safety behavior: fail the whole
+            // install (leaving the previous, working SW in control) rather
+            // than caching a broken response under a URL the app expects
+            // to always resolve.
+            if (!response.ok) throw new Error(`Precache fehlgeschlagen für ${url}: ${response.status}`);
+            return cache.put(url, response);
+          }))
+      ))
       .then(() => self.skipWaiting())
   );
 });
