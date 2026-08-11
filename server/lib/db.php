@@ -58,6 +58,33 @@ function rj_ms_to_datetime(?int $ms): ?string {
   return gmdate('Y-m-d H:i:s', $seconds) . '.' . str_pad((string)$millis, 3, '0', STR_PAD_LEFT);
 }
 
+// Formats a MySQL DATETIME(3) string (already UTC, see rj_ms_to_datetime)
+// as an ISO 8601 string with a Z suffix - the exact shape
+// Date.parse()/new Date(...).toISOString() on the client expect, so the
+// row-mapping functions in js/sync.js need no changes from the Supabase
+// version.
+function rj_datetime_to_iso(?string $dt): ?string {
+  if ($dt === null) return null;
+  $ms = rj_datetime_to_ms($dt);
+  if ($ms === null) return null;
+  $wholeSeconds = intdiv($ms, 1000);
+  $millis = $ms % 1000;
+  return gmdate('Y-m-d\TH:i:s', $wholeSeconds) . '.' . str_pad((string)$millis, 3, '0', STR_PAD_LEFT) . 'Z';
+}
+
+// Parses a client-sent ISO 8601 string (new Date(...).toISOString()) into
+// a MySQL DATETIME(3)-compatible string. Returns null for null/invalid
+// input so callers can decide whether that's acceptable for the column.
+function rj_iso_to_datetime(?string $iso): ?string {
+  if ($iso === null || $iso === '') return null;
+  try {
+    $dt = new DateTime($iso, new DateTimeZone('UTC'));
+  } catch (Exception $e) {
+    return null;
+  }
+  return $dt->format('Y-m-d H:i:s.v');
+}
+
 function rj_datetime_to_ms(?string $dt): ?int {
   if ($dt === null) return null;
   $parsed = DateTime::createFromFormat('Y-m-d H:i:s.u', $dt, new DateTimeZone('UTC'));
