@@ -1,0 +1,13 @@
+# Jingle audio files live here, one per user/jingle. They must NEVER be
+# directly reachable by URL - only server/api/audio.php may read them,
+# after checking the requesting session actually owns the file. Same
+# deny-all pattern as deploy/.well-known/.htaccess, just with the opposite
+# intent (that one force-allows a public folder, this one force-denies a
+# private one).
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Deny from all
+</IfModule>
