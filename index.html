@@ -6,6 +6,13 @@
 <title>Random Jingle</title>
 <meta name="description" content="Random Jingle – lokale Soundboard-PWA">
 <meta name="theme-color" content="#121212">
+<!-- Pins every relative URL in this document (css/js/manifest/icons, plus
+     the SW registration's 'sw.js') to the real domain root, regardless of
+     what path this exact HTML got served from. Without this, a request
+     for a nonexistent nested path that falls through to index.html (see
+     the .well-known/ case in deploy/.htaccess) would resolve all assets
+     relative to THAT path instead and break outright. -->
+<base href="/">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="app-icons/icon-192.png">
 <link rel="apple-touch-icon" href="app-icons/icon-192.png">

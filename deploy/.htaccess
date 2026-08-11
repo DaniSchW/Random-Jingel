@@ -24,6 +24,17 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 #    still resolves correctly: only requests that don't match an existing
 #    file or directory (impressum.html, manifest.json, app-icons/, etc. all
 #    still serve directly) fall through to index.html.
+#
+#    .well-known/ is excluded on purpose: it holds verification files
+#    (assetlinks.json for Android App Links/TWA, ACME challenges, etc.)
+#    that MUST 404 cleanly when missing. Without this exclusion, a
+#    not-yet-uploaded or mistyped file under .well-known/ silently gets
+#    served index.html's full HTML instead - which breaks Digital Asset
+#    Link verification for a TWA-packaged APK (it expects JSON or a clean
+#    404, never an HTML page) and, since that HTML's asset paths are
+#    relative with no <base> tag, renders broken if loaded from that
+#    nested path at all.
+RewriteCond %{REQUEST_URI} !^/\.well-known/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [L]
