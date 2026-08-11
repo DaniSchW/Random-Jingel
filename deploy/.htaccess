@@ -25,16 +25,19 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 #    file or directory (impressum.html, manifest.json, app-icons/, etc. all
 #    still serve directly) fall through to index.html.
 #
-#    .well-known/ is excluded on purpose: it holds verification files
-#    (assetlinks.json for Android App Links/TWA, ACME challenges, etc.)
-#    that MUST 404 cleanly when missing. Without this exclusion, a
-#    not-yet-uploaded or mistyped file under .well-known/ silently gets
-#    served index.html's full HTML instead - which breaks Digital Asset
-#    Link verification for a TWA-packaged APK (it expects JSON or a clean
-#    404, never an HTML page) and, since that HTML's asset paths are
-#    relative with no <base> tag, renders broken if loaded from that
-#    nested path at all.
+#    .well-known/ and server/ are excluded on the same principle: both
+#    must 404 cleanly on a missing/mistyped path instead of silently
+#    getting index.html's full HTML back.
+#    - .well-known/ holds verification files (assetlinks.json for Android
+#      App Links/TWA, ACME challenges, etc.) that Digital Asset Link
+#      verification expects to be JSON or a clean 404, never HTML.
+#    - server/ is the PHP API (server/api/...) - js/sync.js's fetch calls
+#      check response.ok and then parse JSON; a typo'd/removed endpoint
+#      masked as a 200 HTML page would fail with a confusing "unexpected
+#      token '<'" JSON-parse error instead of the clean 404 the client
+#      actually handles.
 RewriteCond %{REQUEST_URI} !^/\.well-known/
+RewriteCond %{REQUEST_URI} !^/server/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [L]
@@ -56,9 +59,11 @@ RewriteRule ^ index.html [L]
 </IfModule>
 
 # Defense in depth: never serve dotfiles (.htaccess itself, or a .env/.git
-# that ends up here by accident) - nothing at runtime needs them; the only
-# secret-shaped value the app uses (the Supabase anon key in js/config.js)
-# is meant to be public, safe to ship in client-side code.
+# that ends up here by accident) - nothing at runtime needs them. The one
+# real secret this deployment has, the MySQL password in
+# server/config.php, isn't a dotfile and isn't reachable this way either -
+# see that file's own comment for why it's safe (PHP source files are
+# executed, never served as text, by any correctly configured PHP host).
 #
 # FilesMatch only ever matches the requested file's basename, not its
 # directory - so a request for /.well-known/assetlinks.json (basename

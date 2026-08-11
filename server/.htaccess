@@ -1,0 +1,17 @@
+# Belt-and-suspenders: on any correctly configured PHP host, config.php is
+# always executed (never served as raw text), so this "shouldn't" be
+# reachable anyway - but it holds the one real secret this deployment has
+# (the MySQL password), so it gets an explicit deny here too rather than
+# relying solely on that assumption. server/api/*.php and server/lib/*.php
+# are deliberately NOT blocked here: the api/ scripts are the actual
+# endpoints and must stay reachable, and lib/*.php only defines functions
+# (no top-level side effects), so a stray direct request to one is inert.
+<FilesMatch "^config(\.example)?\.php$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
