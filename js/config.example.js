@@ -1,16 +1,13 @@
 /*
  * Template only — not loaded by index.html.
- * The real js/config.js is generated from .env by `npm run config`
- * (see scripts/gen-config.js) and IS committed to the repo — its values
- * (a Supabase project URL and public/publishable key) are meant to be
- * public, and a static site with no build step needs them checked in for
- * every production deploy to actually have them. If you fork this project
- * for your own Supabase project, copy this file's shape into js/config.js
- * to swap in your own values.
+ * The real js/config.js IS committed to the repo — API_BASE_URL is just a
+ * path, not a secret (the actual DB credentials live server-side in
+ * server/config.php, which is gitignored). If you fork this project and
+ * host your own copy of server/, copy this file's shape into
+ * js/config.js and point API_BASE_URL at wherever you deployed server/.
  */
 window.RJ_CONFIG = {
-  SUPABASE_URL: 'https://your-project-ref.supabase.co',
-  SUPABASE_ANON_KEY: 'your-anon-public-key',
+  API_BASE_URL: '/server/api',
   // Optional: leave empty to hide the Sound-Effects search tab entirely.
   // Get a free key at https://freesound.org/apiv2/apply/
   FREESOUND_API_KEY: '',

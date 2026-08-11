@@ -150,8 +150,8 @@
   <!-- Admin dashboard (Phase 4): reachable via #/admin, only ever populated
        for an authenticated admin. The frontend hides #adminBtn and shows
        adminDenied for everyone else, but that's a UX nicety — the real
-       gate is server-side (admin_user_stats() re-checks the role itself,
-       see supabase/schema.sql). -->
+       gate is server-side (server/api/admin/stats.php re-checks the role
+       itself via rj_require_admin()). -->
   <div id="adminView" class="admin-view hidden">
     <div class="admin-view-header">
       <h2 data-i18n="admin.dashboardTitle">Admin-Dashboard</h2>
@@ -527,7 +527,6 @@
 
 <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
-<script src="js/vendor/supabase.js"></script>
 <script src="js/config.js"></script>
 <script src="js/db.js"></script>
 <script src="js/audio.js"></script>

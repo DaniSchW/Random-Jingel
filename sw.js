@@ -1,11 +1,10 @@
 /* Service Worker for Random Jingle - caches the app shell for offline use. */
-const CACHE_VERSION = 'random-jingle-v37';
+const CACHE_VERSION = 'random-jingle-v38';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
   './css/style.css',
-  './js/vendor/supabase.js',
   './js/db.js',
   './js/audio.js',
   './js/trim.js',
@@ -79,6 +78,18 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
+
+  // Never cache the backend API (sync/auth/admin/audio) here. It's all
+  // dynamic per-user data - caching a GET response the way the app-shell
+  // logic below does would mean the FIRST pull.php/me.php/admin/stats.php
+  // response gets served forever afterward, silently freezing sync, login
+  // checks, and the admin dashboard. Audio downloads still benefit from
+  // caching, just via the browser's own ordinary HTTP cache honoring
+  // audio.php's long-lived Cache-Control header, not this layer.
+  if (new URL(request.url).pathname.startsWith('/server/api/')) {
+    event.respondWith(fetch(request));
+    return;
+  }
 
   // Reads (cache.match) and writes (cache.put) both go through this same,
   // explicitly-opened CACHE_VERSION cache — unlike the bare caches.match()
