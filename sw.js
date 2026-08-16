@@ -1,5 +1,5 @@
 /* Service Worker for Random Jingle - caches the app shell for offline use. */
-const CACHE_VERSION = 'random-jingle-v38';
+const CACHE_VERSION = 'random-jingle-v39';
 const APP_SHELL = [
   './',
   './index.html',
@@ -107,12 +107,17 @@ self.addEventListener('fetch', (event) => {
             }
             return response;
           })
-          .catch(() => {
-            if (request.mode === 'navigate') {
-              return cache.match('./index.html');
-            }
-            return undefined;
-          });
+          .catch(() =>
+            // respondWith() must always resolve to a real Response - ever
+            // returning undefined here (as this used to for the
+            // non-navigate branch, and could even for the navigate branch
+            // if index.html itself weren't cached) throws "Failed to
+            // convert value to 'Response'" in the page that made the
+            // request, which is a much more confusing failure than a
+            // plain failed fetch would have been.
+            (request.mode === 'navigate' ? cache.match('./index.html') : Promise.resolve(null))
+              .then((fallback) => fallback || new Response('', { status: 503, statusText: 'Offline' }))
+          );
       })
     )
   );
