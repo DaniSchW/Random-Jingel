@@ -1,0 +1,6 @@
+# Deploy target: document root of the MAIN domain random-jingle.com
+# (NOT app.random-jingle.com / random-jingle.app - the PWA's own dist/
+# build in this repo never includes this file, on purpose, so it can
+# never end up on the wrong host by accident). Upload this file directly
+# to random-jingle.com's webroot as /ads.txt.
+google.com, pub-8453553622026562, DIRECT, f08c47fec0942fa0
