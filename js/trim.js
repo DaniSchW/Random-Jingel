@@ -38,6 +38,11 @@ const RJTrimUI = (() => {
   let duration = 0;
   let start = 0;
   let end = 0;
+  // Where "Original abspielen" starts/resumes from. Lets a whole song be
+  // scrubbed to e.g. the halfway point (by clicking the waveform) before
+  // previewing or setting a cut marker there, instead of always having to
+  // listen from 0:00 first.
+  let playhead = 0;
   let currentBlob = null;
   let onSaveCb = null;
   let previewing = false;
@@ -141,9 +146,11 @@ const RJTrimUI = (() => {
 
   // Clicking anywhere on the waveform itself (not on a handle, which has
   // its own drag logic above) moves whichever marker — start or end — is
-  // currently closer to the clicked position. Works the same whether the
-  // full original is playing or not, so a spot heard while listening can
-  // be marked immediately.
+  // currently closer to the clicked position, AND jumps the "Original
+  // abspielen" playhead there (seeking immediately if it's already
+  // playing). That pairing is deliberate: clicking a spot in a long,
+  // freshly-uploaded song both marks it as a candidate cut point and lets
+  // you instantly hear from there, without listening through from 0:00.
   wrap.addEventListener('click', (e) => {
     if (e.target === handleStart || e.target === handleEnd) return;
     const rect = wrap.getBoundingClientRect();
@@ -152,6 +159,12 @@ const RJTrimUI = (() => {
       setRange(t, end, 'start');
     } else {
       setRange(start, t, 'end');
+    }
+    if (playingOriginal) {
+      playOriginalFrom(t);
+    } else {
+      playhead = clamp(t, 0, duration);
+      renderPlayhead();
     }
   });
 
@@ -190,11 +203,12 @@ const RJTrimUI = (() => {
   });
 
   // ---- Full-original playback + its own progress bar/time readout ----
-  // Entirely separate from the start/end-selection preview above: always
-  // plays start=0 for the whole decoded duration, and drives its own DOM
-  // elements (trimOriginalProgress/trimOriginalTime) instead of touching
-  // trimSelection or the handles, which stay exactly where the user left
-  // them regardless of playback.
+  // Entirely separate from the start/end-selection preview above: plays
+  // from the current playhead (0:00 by default, or wherever the waveform
+  // was last clicked) to the end of the decoded audio, and drives its own
+  // DOM elements (trimOriginalProgress/trimOriginalTime) instead of
+  // touching trimSelection or the handles, which stay exactly where the
+  // user left them regardless of playback.
   function formatTime(seconds) {
     const s = Math.max(0, Math.floor(seconds));
     return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
@@ -205,10 +219,25 @@ const RJTrimUI = (() => {
   }
 
   function resetOriginalProgressUI() {
+    playhead = 0;
     originalProgressEl.style.width = '0%';
     originalTimeEl.classList.add('hidden');
   }
 
+  // Reflects the current playhead in the red progress fill and the time
+  // readout, without touching playback itself — used right after a
+  // waveform click (seeking while stopped) and on every playback tick.
+  function renderPlayhead() {
+    const pct = duration > 0 ? Math.min(100, (playhead / duration) * 100) : 0;
+    originalProgressEl.style.width = `${pct}%`;
+    originalTimeEl.classList.remove('hidden');
+    originalTimeEl.textContent = `${formatTime(playhead)} / ${formatTime(duration)}`;
+  }
+
+  // RJAudio.stop() still fires the source's native `ended` event (see
+  // js/audio.js), which runs the same onEnd callback a natural finish
+  // does — so a manual stop resets to 0:00 just like it already does for
+  // every other progress bar in the app, rather than pausing in place.
   function stopOriginalPlayback() {
     RJAudio.stop(PREVIEW_FULL_ID);
     playingOriginal = false;
@@ -216,23 +245,21 @@ const RJTrimUI = (() => {
     resetOriginalProgressUI();
   }
 
-  playOriginalBtn.addEventListener('click', async () => {
-    if (playingOriginal) {
-      stopOriginalPlayback();
-      return;
-    }
+  // Starts (or seeks, if already playing — RJAudio.play() hard-stops the
+  // running source first) playback of the full original from seekStart.
+  async function playOriginalFrom(seekStart) {
+    playhead = clamp(seekStart, 0, duration);
+    renderPlayhead();
     playingOriginal = true;
     setPlayOriginalLabel(true);
-    originalTimeEl.classList.remove('hidden');
     try {
       RJAudio.ensureContext();
       await RJAudio.play(PREVIEW_FULL_ID, currentBlob, {
-        start: 0,
-        duration,
-        onProgress: (elapsed, total) => {
-          const pct = total > 0 ? Math.min(100, (elapsed / total) * 100) : 0;
-          originalProgressEl.style.width = `${pct}%`;
-          originalTimeEl.textContent = `${formatTime(elapsed)} / ${formatTime(total)}`;
+        start: playhead,
+        duration: Math.max(0.01, duration - playhead),
+        onProgress: (elapsed) => {
+          playhead = seekStart + elapsed;
+          renderPlayhead();
         },
         onEnd: () => {
           playingOriginal = false;
@@ -246,6 +273,14 @@ const RJTrimUI = (() => {
       setPlayOriginalLabel(false);
       resetOriginalProgressUI();
     }
+  }
+
+  playOriginalBtn.addEventListener('click', () => {
+    if (playingOriginal) {
+      stopOriginalPlayback();
+      return;
+    }
+    playOriginalFrom(playhead);
   });
 
   function stopAllTrimAudio() {
