@@ -358,6 +358,17 @@
       <div id="trimHandleStart" class="trim-handle trim-handle-start" tabindex="0" role="slider" aria-label="Start" data-i18n-aria-label="trim.startLabel"></div>
       <div id="trimHandleEnd" class="trim-handle trim-handle-end" tabindex="0" role="slider" aria-label="Ende" data-i18n-aria-label="trim.endLabel"></div>
     </div>
+    <!-- Dedicated playback scrubber: a conventional player seek bar,
+         deliberately separate from the start/end trim markers above so
+         scrubbing around a long original to find a spot never nudges a
+         marker by accident. Click the track to jump, drag the thumb to
+         scrub, or focus it and use the arrow keys. -->
+    <div id="trimScrubber" class="trim-scrubber">
+      <div id="trimScrubberTrack" class="trim-scrubber-track">
+        <div id="trimScrubberFill" class="trim-scrubber-fill"></div>
+        <div id="trimScrubberThumb" class="trim-scrubber-thumb" tabindex="0" role="slider" aria-label="Wiedergabeposition" data-i18n-aria-label="trim.scrubberLabel" aria-valuemin="0"></div>
+      </div>
+    </div>
     <p id="trimOriginalTime" class="field-hint trim-original-time hidden"></p>
 
     <div class="trim-fields">

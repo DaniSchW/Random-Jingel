@@ -1107,6 +1107,60 @@ button.footer-link {
 
 .trim-original-time.hidden { display: none; }
 
+/* Dedicated playback scrubber (separate from the purple start/end trim
+   handles above): a conventional seek-bar track + round thumb, sized for
+   both mouse dragging and touch. Fill/thumb position are set directly in
+   trim.js, same non-transitioned approach as .trim-original-progress, to
+   track the playhead every animation frame without CSS transition lag. */
+.trim-scrubber {
+  padding: 10px 0;
+  margin-bottom: 2px;
+  touch-action: none;
+}
+
+.trim-scrubber-track {
+  position: relative;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.trim-scrubber-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: #ef4444;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+.trim-scrubber-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  margin-top: -8px;
+  background: #ef4444;
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  cursor: grab;
+}
+
+.trim-scrubber-thumb:active {
+  cursor: grabbing;
+}
+
+.trim-scrubber-thumb:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
 .trim-handle {
   position: absolute;
   top: 0;

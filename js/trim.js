@@ -27,6 +27,9 @@ const RJTrimUI = (() => {
   const selectionEl = document.getElementById('trimSelection');
   const handleStart = document.getElementById('trimHandleStart');
   const handleEnd = document.getElementById('trimHandleEnd');
+  const scrubberTrack = document.getElementById('trimScrubberTrack');
+  const scrubberFill = document.getElementById('trimScrubberFill');
+  const scrubberThumb = document.getElementById('trimScrubberThumb');
   const loadingEl = document.getElementById('trimLoading');
   const startInput = document.getElementById('trimStartInput');
   const endInput = document.getElementById('trimEndInput');
@@ -160,12 +163,7 @@ const RJTrimUI = (() => {
     } else {
       setRange(start, t, 'end');
     }
-    if (playingOriginal) {
-      playOriginalFrom(t);
-    } else {
-      playhead = clamp(t, 0, duration);
-      renderPlayhead();
-    }
+    seekTo(t);
   });
 
   startInput.addEventListener('change', () => setRange(Number(startInput.value) || 0, end, 'start'));
@@ -222,17 +220,82 @@ const RJTrimUI = (() => {
     playhead = 0;
     originalProgressEl.style.width = '0%';
     originalTimeEl.classList.add('hidden');
+    scrubberFill.style.width = '0%';
+    scrubberThumb.style.left = '0%';
+    scrubberThumb.setAttribute('aria-valuenow', '0');
   }
 
-  // Reflects the current playhead in the red progress fill and the time
-  // readout, without touching playback itself — used right after a
-  // waveform click (seeking while stopped) and on every playback tick.
+  // Reflects the current playhead in the red progress fill, the scrubber
+  // bar, and the time readout, without touching playback itself — used
+  // right after a waveform/scrubber click or drag (seeking while stopped)
+  // and on every playback tick.
   function renderPlayhead() {
     const pct = duration > 0 ? Math.min(100, (playhead / duration) * 100) : 0;
     originalProgressEl.style.width = `${pct}%`;
     originalTimeEl.classList.remove('hidden');
     originalTimeEl.textContent = `${formatTime(playhead)} / ${formatTime(duration)}`;
+    scrubberFill.style.width = `${pct}%`;
+    scrubberThumb.style.left = `${pct}%`;
+    scrubberThumb.setAttribute('aria-valuemax', Math.round(duration));
+    scrubberThumb.setAttribute('aria-valuenow', Math.round(playhead));
   }
+
+  // Shared by the scrubber's click-to-jump and drag-to-scrub: seeks
+  // immediately if the original is already playing, otherwise just moves
+  // the (stopped) playhead so the next "Play original" press starts there.
+  function seekTo(t) {
+    if (playingOriginal) {
+      playOriginalFrom(t);
+    } else {
+      playhead = clamp(t, 0, duration);
+      renderPlayhead();
+    }
+  }
+
+  function timeFromScrubberEvent(e) {
+    const rect = scrubberTrack.getBoundingClientRect();
+    return duration > 0 ? clamp(((e.clientX - rect.left) / rect.width) * duration, 0, duration) : 0;
+  }
+
+  // Click anywhere on the track jumps straight there.
+  scrubberTrack.addEventListener('click', (e) => {
+    if (e.target === scrubberThumb) return; // handled by the thumb's own drag below
+    seekTo(timeFromScrubberEvent(e));
+  });
+
+  // Dragging the thumb only *previews* the position (so a long drag
+  // doesn't repeatedly hard-restart the audio source on every pixel of
+  // movement) and commits the seek once on release — same single-restart
+  // path as a plain click/seekTo.
+  let scrubDragging = false;
+  let scrubWasPlaying = false;
+  scrubberThumb.addEventListener('pointerdown', (e) => {
+    scrubDragging = true;
+    scrubWasPlaying = playingOriginal;
+    scrubberThumb.setPointerCapture(e.pointerId);
+  });
+  scrubberThumb.addEventListener('pointermove', (e) => {
+    if (!scrubDragging) return;
+    playhead = timeFromScrubberEvent(e);
+    renderPlayhead();
+  });
+  function endScrubDrag() {
+    if (!scrubDragging) return;
+    scrubDragging = false;
+    if (scrubWasPlaying) playOriginalFrom(playhead);
+  }
+  scrubberThumb.addEventListener('pointerup', endScrubDrag);
+  scrubberThumb.addEventListener('pointercancel', endScrubDrag);
+  scrubberThumb.addEventListener('keydown', (e) => {
+    const delta = e.shiftKey ? 1 : 0.1;
+    if (e.key === 'ArrowLeft') {
+      seekTo(playhead - delta);
+      e.preventDefault();
+    } else if (e.key === 'ArrowRight') {
+      seekTo(playhead + delta);
+      e.preventDefault();
+    }
+  });
 
   // RJAudio.stop() still fires the source's native `ended` event (see
   // js/audio.js), which runs the same onEnd callback a natural finish
@@ -258,6 +321,11 @@ const RJTrimUI = (() => {
         start: playhead,
         duration: Math.max(0.01, duration - playhead),
         onProgress: (elapsed) => {
+          // While the scrubber thumb is actively being dragged, its own
+          // pointermove handler owns `playhead` for the live preview —
+          // letting this still-running rAF loop overwrite it every frame
+          // would fight the drag and snap the thumb back under the cursor.
+          if (scrubDragging) return;
           playhead = seekStart + elapsed;
           renderPlayhead();
         },

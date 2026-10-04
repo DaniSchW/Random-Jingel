@@ -117,6 +117,7 @@
     "preview": "▶ Preview",
     "stopPreview": "⏹ Stop",
     "playOriginal": "▶ Play original",
+    "scrubberLabel": "Playback position",
     "saved": "Trim saved."
   },
   "account": {

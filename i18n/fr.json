@@ -117,6 +117,7 @@
     "preview": "▶ Écouter",
     "stopPreview": "⏹ Arrêter",
     "playOriginal": "▶ Lire l'original",
+    "scrubberLabel": "Position de lecture",
     "saved": "Découpe enregistrée."
   },
   "account": {
